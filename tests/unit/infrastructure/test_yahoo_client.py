@@ -36,7 +36,7 @@ class TestYahooFinanceClient:
 
     def test_ticker_mapping(self, client):
         """Test ticker mapping for convenience names."""
-        assert client.TICKER_MAPPING["murban"] == "CL=F"  # WTI as proxy
+        assert client.TICKER_MAPPING["wti"] == "CL=F"
         assert client.TICKER_MAPPING["brent"] == "BZ=F"
 
     @patch("yfinance.Ticker")
@@ -70,19 +70,19 @@ class TestYahooFinanceClient:
             )
 
     @patch("yfinance.Ticker")
-    def test_fetch_historical_data_with_murban_shortcut(self, mock_ticker, client, sample_df):
-        """Test fetch using 'murban' shortcut."""
+    def test_fetch_historical_data_with_wti_shortcut(self, mock_ticker, client, sample_df):
+        """Test fetch using 'wti' shortcut."""
         mock_instance = MagicMock()
         mock_instance.history.return_value = sample_df
         mock_ticker.return_value = mock_instance
 
         client.fetch_historical_data(
-            "murban",
+            "wti",
             datetime(2024, 1, 1),
             datetime(2024, 1, 15),
         )
 
-        mock_ticker.assert_called_with("CL=F")  # WTI as proxy for Murban
+        mock_ticker.assert_called_with("CL=F")
 
     @patch("yfinance.Ticker")
     def test_fetch_historical_data_exception(self, mock_ticker, client):
@@ -147,5 +147,5 @@ class TestYahooFinanceClient:
 
     def test_convenience_methods(self, client):
         """Test convenience methods exist."""
-        assert hasattr(client, "fetch_murban_data")
+        assert hasattr(client, "fetch_wti_data")
         assert hasattr(client, "fetch_brent_data")

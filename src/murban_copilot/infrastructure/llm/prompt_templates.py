@@ -21,9 +21,9 @@ class TraderTalkTemplate:
 Your style is professional but accessible, using common trading terminology.
 Provide concise, actionable insights based on the data provided.
 Always maintain a balanced perspective and acknowledge uncertainty.
-Focus on the Murban-Brent spread dynamics and what they might indicate."""
+Focus on the WTI-Brent spread dynamics and what they might indicate."""
 
-    ANALYSIS_TEMPLATE = """Analyze the following Murban-Brent crude oil spread data and provide a brief market signal.
+    ANALYSIS_TEMPLATE = """Analyze the following WTI-Brent crude oil spread data and provide a brief market signal.
 
 ## Current Market Data
 - Current Spread: ${current_spread:.2f}/barrel
@@ -64,7 +64,7 @@ Keep your analysis concise (2-3 paragraphs max). Use clear trader language."""
         """
         sorted_spreads = sorted(spread_data, key=lambda x: x.date, reverse=True)[:5]
         recent_history = "\n".join(
-            f"- {s.date.strftime('%Y-%m-%d')}: Murban ${s.murban_close:.2f}, "
+            f"- {s.date.strftime('%Y-%m-%d')}: WTI ${s.wti_close:.2f}, "
             f"Brent ${s.brent_close:.2f}, Spread ${s.spread:+.2f}"
             for s in sorted_spreads
         )

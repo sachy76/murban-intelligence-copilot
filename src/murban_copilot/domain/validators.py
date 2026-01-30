@@ -59,14 +59,14 @@ def validate_ohlc(data: dict[str, Any]) -> bool:
 
 
 def validate_spread_data(
-    murban_data: Sequence[MarketData],
+    wti_data: Sequence[MarketData],
     brent_data: Sequence[MarketData],
 ) -> bool:
     """
     Validate spread calculation input data.
 
     Args:
-        murban_data: Sequence of Murban market data
+        wti_data: Sequence of WTI market data
         brent_data: Sequence of Brent market data
 
     Returns:
@@ -75,19 +75,19 @@ def validate_spread_data(
     Raises:
         ValidationError: If validation fails
     """
-    if not murban_data:
-        raise ValidationError("Murban data cannot be empty", field="murban_data")
+    if not wti_data:
+        raise ValidationError("WTI data cannot be empty", field="wti_data")
 
     if not brent_data:
         raise ValidationError("Brent data cannot be empty", field="brent_data")
 
-    murban_dates = {d.date.date() for d in murban_data}
+    wti_dates = {d.date.date() for d in wti_data}
     brent_dates = {d.date.date() for d in brent_data}
 
-    common_dates = murban_dates & brent_dates
+    common_dates = wti_dates & brent_dates
     if not common_dates:
         raise ValidationError(
-            "No common dates between Murban and Brent data",
+            "No common dates between WTI and Brent data",
             field="dates",
         )
 

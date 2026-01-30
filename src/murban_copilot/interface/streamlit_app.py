@@ -1,4 +1,4 @@
-"""Streamlit dashboard for Murban Crude Intelligence Copilot."""
+"""Streamlit dashboard for WTI Crude Intelligence Copilot."""
 
 import streamlit as st
 import plotly.graph_objects as go
@@ -19,7 +19,7 @@ from murban_copilot.application.generate_signal import GenerateSignalUseCase
 
 # Page config
 st.set_page_config(
-    page_title="Murban Intelligence Copilot",
+    page_title="WTI Intelligence Copilot",
     page_icon="🛢️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -86,25 +86,25 @@ def create_spread_chart(
         shared_xaxes=True,
         vertical_spacing=0.1,
         row_heights=[0.7, 0.3],
-        subplot_titles=("Murban-Brent Spread", "Spread Value"),
+        subplot_titles=("WTI-Brent Spread", "Spread Value"),
     )
 
     sorted_spread = sorted(spread_data, key=lambda x: x.date)
     sorted_ma = sorted(moving_averages, key=lambda x: x.date)
 
     dates = [d.date for d in sorted_spread]
-    murban_prices = [d.murban_close for d in sorted_spread]
+    wti_prices = [d.wti_close for d in sorted_spread]
     brent_prices = [d.brent_close for d in sorted_spread]
     spreads = [d.spread for d in sorted_spread]
 
-    # Murban price line
+    # WTI price line
     fig.add_trace(
         go.Scatter(
             x=dates,
-            y=murban_prices,
-            name="Murban",
+            y=wti_prices,
+            name="WTI",
             line=dict(color="#48bb78", width=2),
-            hovertemplate="Murban: $%{y:.2f}<extra></extra>",
+            hovertemplate="WTI: $%{y:.2f}<extra></extra>",
         ),
         row=1, col=1,
     )
@@ -224,8 +224,8 @@ def main():
     init_services()
 
     # Header
-    st.title("🛢️ Murban Intelligence Copilot")
-    st.markdown("*AI-powered Murban-Brent crude oil spread analysis*")
+    st.title("🛢️ WTI Intelligence Copilot")
+    st.markdown("*AI-powered WTI-Brent crude oil spread analysis*")
 
     # Sidebar
     with st.sidebar:
@@ -233,7 +233,7 @@ def main():
 
         ticker_option = st.selectbox(
             "Base Ticker",
-            options=["Murban vs Brent", "Custom"],
+            options=["WTI vs Brent", "Custom"],
             index=0,
         )
 
@@ -261,7 +261,7 @@ def main():
     with st.spinner("Fetching market data..."):
         try:
             fetch_use_case = FetchMarketDataUseCase(st.session_state.market_client)
-            murban_data, brent_data = fetch_use_case.execute(days=days)
+            wti_data, brent_data = fetch_use_case.execute(days=days)
         except Exception as e:
             st.error(f"Failed to fetch market data: {str(e)}")
             st.info("This may be due to market data unavailability. Using sample data for demonstration.")
@@ -271,24 +271,24 @@ def main():
             import random
 
             base_date = datetime.now()
-            murban_data = []
+            wti_data = []
             brent_data = []
 
-            murban_base = 85.0
+            wti_base = 85.0
             brent_base = 82.0
 
             for i in range(days, 0, -1):
                 date = base_date - timedelta(days=i)
-                murban_base += random.uniform(-1, 1)
+                wti_base += random.uniform(-1, 1)
                 brent_base += random.uniform(-1, 1)
 
-                murban_data.append(MarketData(
+                wti_data.append(MarketData(
                     date=date,
-                    open=murban_base - 0.5,
-                    high=murban_base + 0.5,
-                    low=murban_base - 0.7,
-                    close=murban_base,
-                    ticker="MURBAN",
+                    open=wti_base - 0.5,
+                    high=wti_base + 0.5,
+                    low=wti_base - 0.7,
+                    close=wti_base,
+                    ticker="WTI",
                 ))
                 brent_data.append(MarketData(
                     date=date,
@@ -303,7 +303,7 @@ def main():
         try:
             analyze_use_case = AnalyzeSpreadUseCase(st.session_state.spread_calculator)
             spread_data, moving_averages, trend_summary = analyze_use_case.execute(
-                murban_data, brent_data
+                wti_data, brent_data
             )
             stats = analyze_use_case.get_spread_statistics(spread_data)
         except Exception as e:

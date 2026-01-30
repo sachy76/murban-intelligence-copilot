@@ -16,10 +16,10 @@ class YahooFinanceClient:
     """Client for fetching market data from Yahoo Finance."""
 
     BRENT_TICKER = "BZ=F"
-    MURBAN_TICKER = "CL=F"  # Using WTI as proxy (Murban ADM=F not available on Yahoo Finance)
+    WTI_TICKER = "CL=F"
 
     TICKER_MAPPING = {
-        "murban": MURBAN_TICKER,
+        "wti": WTI_TICKER,
         "brent": BRENT_TICKER,
     }
 
@@ -42,7 +42,7 @@ class YahooFinanceClient:
         Fetch historical market data for a given ticker.
 
         Args:
-            ticker: The ticker symbol (can use 'murban' or 'brent' shortcuts)
+            ticker: The ticker symbol (can use 'wti' or 'brent' shortcuts)
             start_date: Start date for data range
             end_date: End date for data range
 
@@ -181,13 +181,13 @@ class YahooFinanceClient:
 
         return result
 
-    def fetch_murban_data(
+    def fetch_wti_data(
         self,
         start_date: datetime,
         end_date: datetime,
     ) -> Sequence[MarketData]:
-        """Convenience method to fetch Murban crude data."""
-        return self.fetch_historical_data("murban", start_date, end_date)
+        """Convenience method to fetch WTI crude data."""
+        return self.fetch_historical_data("wti", start_date, end_date)
 
     def fetch_brent_data(
         self,

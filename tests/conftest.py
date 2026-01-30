@@ -22,8 +22,8 @@ def sample_date() -> datetime:
 
 
 @pytest.fixture
-def sample_murban_data(sample_date: datetime) -> list[MarketData]:
-    """Generate sample Murban market data."""
+def sample_wti_data(sample_date: datetime) -> list[MarketData]:
+    """Generate sample WTI market data."""
     data = []
     base_price = 85.0
 
@@ -39,7 +39,7 @@ def sample_murban_data(sample_date: datetime) -> list[MarketData]:
                 low=price - 0.5,
                 close=price,
                 volume=1000000.0 + i * 10000,
-                ticker="MURBAN",
+                ticker="WTI",
             )
         )
 
@@ -73,12 +73,12 @@ def sample_brent_data(sample_date: datetime) -> list[MarketData]:
 
 @pytest.fixture
 def sample_spread_data(
-    sample_murban_data: list[MarketData],
+    sample_wti_data: list[MarketData],
     sample_brent_data: list[MarketData],
 ) -> list[SpreadData]:
     """Generate sample spread data from market data."""
     calculator = SpreadCalculator()
-    return calculator.calculate_spread(sample_murban_data, sample_brent_data)
+    return calculator.calculate_spread(sample_wti_data, sample_brent_data)
 
 
 @pytest.fixture

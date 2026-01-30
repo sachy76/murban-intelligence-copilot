@@ -12,37 +12,37 @@ from murban_copilot.domain.spread_calculator import SpreadCalculator
 class TestSpreadCalculator:
     """Tests for SpreadCalculator."""
 
-    def test_calculate_spread_basic(self, sample_murban_data, sample_brent_data):
+    def test_calculate_spread_basic(self, sample_wti_data, sample_brent_data):
         """Test basic spread calculation."""
         calculator = SpreadCalculator()
-        spreads = calculator.calculate_spread(sample_murban_data, sample_brent_data)
+        spreads = calculator.calculate_spread(sample_wti_data, sample_brent_data)
 
         assert len(spreads) > 0
         assert all(isinstance(s, SpreadData) for s in spreads)
 
         for spread in spreads:
-            expected = spread.murban_close - spread.brent_close
+            expected = spread.wti_close - spread.brent_close
             assert abs(spread.spread - expected) < 0.0001
 
-    def test_calculate_spread_empty_murban(self, sample_brent_data):
-        """Test spread calculation with empty Murban data."""
+    def test_calculate_spread_empty_wti(self, sample_brent_data):
+        """Test spread calculation with empty WTI data."""
         calculator = SpreadCalculator()
 
         with pytest.raises(SpreadCalculationError, match="empty data"):
             calculator.calculate_spread([], sample_brent_data)
 
-    def test_calculate_spread_empty_brent(self, sample_murban_data):
+    def test_calculate_spread_empty_brent(self, sample_wti_data):
         """Test spread calculation with empty Brent data."""
         calculator = SpreadCalculator()
 
         with pytest.raises(SpreadCalculationError, match="empty data"):
-            calculator.calculate_spread(sample_murban_data, [])
+            calculator.calculate_spread(sample_wti_data, [])
 
     def test_calculate_spread_no_common_dates(self):
         """Test spread calculation with no common dates."""
         calculator = SpreadCalculator()
 
-        murban = [
+        wti = [
             MarketData(
                 date=datetime(2024, 1, 15),
                 open=85.0, high=86.0, low=84.0, close=85.0,
@@ -56,12 +56,12 @@ class TestSpreadCalculator:
         ]
 
         with pytest.raises(SpreadCalculationError, match="No common dates"):
-            calculator.calculate_spread(murban, brent)
+            calculator.calculate_spread(wti, brent)
 
-    def test_calculate_spread_sorted_by_date(self, sample_murban_data, sample_brent_data):
+    def test_calculate_spread_sorted_by_date(self, sample_wti_data, sample_brent_data):
         """Test that spreads are sorted by date."""
         calculator = SpreadCalculator()
-        spreads = calculator.calculate_spread(sample_murban_data, sample_brent_data)
+        spreads = calculator.calculate_spread(sample_wti_data, sample_brent_data)
 
         dates = [s.date for s in spreads]
         assert dates == sorted(dates)
@@ -163,7 +163,7 @@ class TestSpreadCalculator:
             spreads.append(
                 SpreadData(
                     date=base_date + timedelta(days=i),
-                    murban_close=val + 80,
+                    wti_close=val + 80,
                     brent_close=80.0,
                     spread=val,
                 )

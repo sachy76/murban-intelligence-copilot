@@ -33,14 +33,14 @@ class SpreadCalculator:
 
     def calculate_spread(
         self,
-        murban_data: Sequence[MarketData],
+        wti_data: Sequence[MarketData],
         brent_data: Sequence[MarketData],
     ) -> list[SpreadData]:
         """
-        Calculate the spread between Murban and Brent crude prices.
+        Calculate the spread between WTI and Brent crude prices.
 
         Args:
-            murban_data: Sequence of Murban market data
+            wti_data: Sequence of WTI market data
             brent_data: Sequence of Brent market data
 
         Returns:
@@ -49,35 +49,35 @@ class SpreadCalculator:
         Raises:
             SpreadCalculationError: If calculation fails
         """
-        if not murban_data or not brent_data:
+        if not wti_data or not brent_data:
             raise SpreadCalculationError(
                 "Cannot calculate spread with empty data",
-                murban_data=murban_data,
+                wti_data=wti_data,
                 brent_data=brent_data,
             )
 
-        murban_by_date = {d.date.date(): d for d in murban_data}
+        wti_by_date = {d.date.date(): d for d in wti_data}
         brent_by_date = {d.date.date(): d for d in brent_data}
 
-        common_dates = sorted(set(murban_by_date.keys()) & set(brent_by_date.keys()))
+        common_dates = sorted(set(wti_by_date.keys()) & set(brent_by_date.keys()))
 
         if not common_dates:
             raise SpreadCalculationError(
-                "No common dates between Murban and Brent data",
-                murban_data=murban_data,
+                "No common dates between WTI and Brent data",
+                wti_data=wti_data,
                 brent_data=brent_data,
             )
 
         spreads = []
         for date in common_dates:
-            murban = murban_by_date[date]
+            wti = wti_by_date[date]
             brent = brent_by_date[date]
-            spread = murban.close - brent.close
+            spread = wti.close - brent.close
 
             spreads.append(
                 SpreadData(
                     date=datetime.combine(date, datetime.min.time()),
-                    murban_close=murban.close,
+                    wti_close=wti.close,
                     brent_close=brent.close,
                     spread=spread,
                 )

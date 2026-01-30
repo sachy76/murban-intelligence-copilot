@@ -31,16 +31,16 @@ class SpreadData:
     """Represents the spread between two crude oil benchmarks."""
 
     date: datetime
-    murban_close: float
+    wti_close: float
     brent_close: float
     spread: float
 
     def __post_init__(self) -> None:
-        expected_spread = self.murban_close - self.brent_close
+        expected_spread = self.wti_close - self.brent_close
         if abs(self.spread - expected_spread) > 0.0001:
             raise ValueError(
                 f"Spread ({self.spread}) does not match "
-                f"murban_close - brent_close ({expected_spread})"
+                f"wti_close - brent_close ({expected_spread})"
             )
 
 

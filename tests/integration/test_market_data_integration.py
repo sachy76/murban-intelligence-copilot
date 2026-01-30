@@ -36,19 +36,18 @@ class TestMarketDataIntegration:
         except MarketDataFetchError as e:
             pytest.skip(f"Market data unavailable: {e}")
 
-    def test_fetch_murban_data(self, client):
-        """Test fetching real Murban crude data."""
+    def test_fetch_wti_data(self, client):
+        """Test fetching real WTI crude data."""
         end_date = datetime.now()
         start_date = end_date - timedelta(days=30)
 
         try:
-            data = client.fetch_historical_data("murban", start_date, end_date)
+            data = client.fetch_historical_data("wti", start_date, end_date)
 
-            # Murban may not be available in Yahoo Finance
             if len(data) > 0:
                 assert all(isinstance(d, MarketData) for d in data)
         except MarketDataFetchError:
-            pytest.skip("Murban data not available in Yahoo Finance")
+            pytest.skip("WTI data not available in Yahoo Finance")
 
     def test_get_latest_price(self, client):
         """Test getting latest price."""

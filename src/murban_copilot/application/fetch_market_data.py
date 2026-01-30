@@ -29,14 +29,14 @@ class FetchMarketDataUseCase:
         end_date: datetime | None = None,
     ) -> tuple[Sequence[MarketData], Sequence[MarketData]]:
         """
-        Fetch Murban and Brent market data.
+        Fetch WTI and Brent market data.
 
         Args:
             days: Number of days of historical data
             end_date: End date for data range (default: today)
 
         Returns:
-            Tuple of (murban_data, brent_data)
+            Tuple of (wti_data, brent_data)
 
         Raises:
             MarketDataFetchError: If fetching fails
@@ -51,16 +51,16 @@ class FetchMarketDataUseCase:
         )
 
         try:
-            murban_data = self.data_source.fetch_historical_data(
-                "murban", start_date, end_date
+            wti_data = self.data_source.fetch_historical_data(
+                "wti", start_date, end_date
             )
-            logger.info(f"Fetched {len(murban_data)} Murban records")
+            logger.info(f"Fetched {len(wti_data)} WTI records")
         except MarketDataFetchError:
             raise
         except Exception as e:
             raise MarketDataFetchError(
-                f"Failed to fetch Murban data: {str(e)}",
-                ticker="murban",
+                f"Failed to fetch WTI data: {str(e)}",
+                ticker="wti",
                 original_error=e,
             )
 
@@ -78,10 +78,10 @@ class FetchMarketDataUseCase:
                 original_error=e,
             )
 
-        if not murban_data:
+        if not wti_data:
             raise MarketDataFetchError(
-                "No Murban data available",
-                ticker="murban",
+                "No WTI data available",
+                ticker="wti",
             )
 
         if not brent_data:
@@ -90,7 +90,7 @@ class FetchMarketDataUseCase:
                 ticker="brent",
             )
 
-        return murban_data, brent_data
+        return wti_data, brent_data
 
     def fetch_single_ticker(
         self,

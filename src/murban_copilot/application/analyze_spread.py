@@ -12,7 +12,7 @@ logger = get_logger(__name__)
 
 
 class AnalyzeSpreadUseCase:
-    """Use case for analyzing Murban-Brent spread."""
+    """Use case for analyzing WTI-Brent spread."""
 
     def __init__(
         self,
@@ -28,14 +28,14 @@ class AnalyzeSpreadUseCase:
 
     def execute(
         self,
-        murban_data: Sequence[MarketData],
+        wti_data: Sequence[MarketData],
         brent_data: Sequence[MarketData],
     ) -> tuple[list[SpreadData], list[MovingAverages], dict[str, object]]:
         """
-        Analyze the spread between Murban and Brent crude.
+        Analyze the spread between WTI and Brent crude.
 
         Args:
-            murban_data: Murban market data
+            wti_data: WTI market data
             brent_data: Brent market data
 
         Returns:
@@ -46,13 +46,13 @@ class AnalyzeSpreadUseCase:
             InsufficientDataError: If not enough data
         """
         logger.info(
-            f"Analyzing spread with {len(murban_data)} Murban and "
+            f"Analyzing spread with {len(wti_data)} WTI and "
             f"{len(brent_data)} Brent records"
         )
 
-        validate_spread_data(murban_data, brent_data)
+        validate_spread_data(wti_data, brent_data)
 
-        spread_data = self.calculator.calculate_spread(murban_data, brent_data)
+        spread_data = self.calculator.calculate_spread(wti_data, brent_data)
         logger.info(f"Calculated {len(spread_data)} spread data points")
 
         if len(spread_data) < 5:

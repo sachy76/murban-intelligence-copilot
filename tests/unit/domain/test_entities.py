@@ -24,7 +24,7 @@ class TestMarketData:
             low=84.0,
             close=85.5,
             volume=1000000.0,
-            ticker="MURBAN",
+            ticker="WTI",
         )
 
         assert data.open == 85.0
@@ -32,7 +32,7 @@ class TestMarketData:
         assert data.low == 84.0
         assert data.close == 85.5
         assert data.volume == 1000000.0
-        assert data.ticker == "MURBAN"
+        assert data.ticker == "WTI"
 
     def test_market_data_immutable(self):
         """Test that MarketData is immutable."""
@@ -100,12 +100,12 @@ class TestSpreadData:
         """Test creating valid SpreadData."""
         data = SpreadData(
             date=datetime(2024, 1, 15),
-            murban_close=85.0,
+            wti_close=85.0,
             brent_close=82.0,
             spread=3.0,
         )
 
-        assert data.murban_close == 85.0
+        assert data.wti_close == 85.0
         assert data.brent_close == 82.0
         assert data.spread == 3.0
 
@@ -114,7 +114,7 @@ class TestSpreadData:
         with pytest.raises(ValueError, match="Spread.*does not match"):
             SpreadData(
                 date=datetime(2024, 1, 15),
-                murban_close=85.0,
+                wti_close=85.0,
                 brent_close=82.0,
                 spread=5.0,  # Should be 3.0
             )
@@ -123,7 +123,7 @@ class TestSpreadData:
         """Test that negative spreads are valid."""
         data = SpreadData(
             date=datetime(2024, 1, 15),
-            murban_close=80.0,
+            wti_close=80.0,
             brent_close=82.0,
             spread=-2.0,
         )

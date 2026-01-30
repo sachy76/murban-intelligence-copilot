@@ -91,23 +91,23 @@ class TestValidateOHLC:
 class TestValidateSpreadData:
     """Tests for validate_spread_data function."""
 
-    def test_valid_spread_data(self, sample_murban_data, sample_brent_data):
+    def test_valid_spread_data(self, sample_wti_data, sample_brent_data):
         """Test validation of valid spread data."""
-        assert validate_spread_data(sample_murban_data, sample_brent_data) is True
+        assert validate_spread_data(sample_wti_data, sample_brent_data) is True
 
-    def test_empty_murban_data(self, sample_brent_data):
-        """Test validation with empty Murban data."""
-        with pytest.raises(ValidationError, match="Murban data cannot be empty"):
+    def test_empty_wti_data(self, sample_brent_data):
+        """Test validation with empty WTI data."""
+        with pytest.raises(ValidationError, match="WTI data cannot be empty"):
             validate_spread_data([], sample_brent_data)
 
-    def test_empty_brent_data(self, sample_murban_data):
+    def test_empty_brent_data(self, sample_wti_data):
         """Test validation with empty Brent data."""
         with pytest.raises(ValidationError, match="Brent data cannot be empty"):
-            validate_spread_data(sample_murban_data, [])
+            validate_spread_data(sample_wti_data, [])
 
     def test_no_common_dates(self):
         """Test validation with no common dates."""
-        murban = [
+        wti = [
             MarketData(
                 date=datetime(2024, 1, 15),
                 open=85.0, high=86.0, low=84.0, close=85.0,
@@ -121,7 +121,7 @@ class TestValidateSpreadData:
         ]
 
         with pytest.raises(ValidationError, match="No common dates"):
-            validate_spread_data(murban, brent)
+            validate_spread_data(wti, brent)
 
 
 class TestValidateLLMInput:
@@ -141,7 +141,7 @@ class TestValidateLLMInput:
         spread_data = [
             SpreadData(
                 date=datetime(2024, 1, i),
-                murban_close=85.0,
+                wti_close=85.0,
                 brent_close=82.0,
                 spread=3.0,
             )
@@ -156,7 +156,7 @@ class TestValidateLLMInput:
         spread_data = [
             SpreadData(
                 date=datetime(2024, 1, i),
-                murban_close=85.0,
+                wti_close=85.0,
                 brent_close=82.0,
                 spread=3.0,
             )

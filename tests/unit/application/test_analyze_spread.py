@@ -17,56 +17,56 @@ class TestAnalyzeSpreadUseCase:
         return AnalyzeSpreadUseCase()
 
     def test_execute_returns_tuple(
-        self, use_case, sample_murban_data, sample_brent_data
+        self, use_case, sample_wti_data, sample_brent_data
     ):
         """Test that execute returns a tuple of spreads, MAs, and summary."""
-        result = use_case.execute(sample_murban_data, sample_brent_data)
+        result = use_case.execute(sample_wti_data, sample_brent_data)
 
         assert isinstance(result, tuple)
         assert len(result) == 3
 
     def test_execute_returns_spread_data(
-        self, use_case, sample_murban_data, sample_brent_data
+        self, use_case, sample_wti_data, sample_brent_data
     ):
         """Test that execute returns SpreadData list."""
-        spreads, _, _ = use_case.execute(sample_murban_data, sample_brent_data)
+        spreads, _, _ = use_case.execute(sample_wti_data, sample_brent_data)
 
         assert all(isinstance(s, SpreadData) for s in spreads)
 
     def test_execute_returns_moving_averages(
-        self, use_case, sample_murban_data, sample_brent_data
+        self, use_case, sample_wti_data, sample_brent_data
     ):
         """Test that execute returns MovingAverages list."""
-        _, mas, _ = use_case.execute(sample_murban_data, sample_brent_data)
+        _, mas, _ = use_case.execute(sample_wti_data, sample_brent_data)
 
         assert all(isinstance(m, MovingAverages) for m in mas)
 
     def test_execute_returns_trend_summary(
-        self, use_case, sample_murban_data, sample_brent_data
+        self, use_case, sample_wti_data, sample_brent_data
     ):
         """Test that execute returns trend summary dict."""
-        _, _, summary = use_case.execute(sample_murban_data, sample_brent_data)
+        _, _, summary = use_case.execute(sample_wti_data, sample_brent_data)
 
         assert isinstance(summary, dict)
         assert "current_spread" in summary
         assert "trend" in summary
 
     def test_execute_with_custom_calculator(
-        self, sample_murban_data, sample_brent_data
+        self, sample_wti_data, sample_brent_data
     ):
         """Test execute with custom spread calculator."""
         custom_calc = SpreadCalculator(short_ma_window=3, long_ma_window=10)
         use_case = AnalyzeSpreadUseCase(spread_calculator=custom_calc)
 
-        spreads, mas, _ = use_case.execute(sample_murban_data, sample_brent_data)
+        spreads, mas, _ = use_case.execute(sample_wti_data, sample_brent_data)
 
         # Custom calculator should produce different MA start indices
         assert len(mas) == len(spreads)
 
-    def test_execute_validates_data(self, use_case, sample_murban_data):
+    def test_execute_validates_data(self, use_case, sample_wti_data):
         """Test that execute validates input data."""
         with pytest.raises(ValidationError):
-            use_case.execute(sample_murban_data, [])
+            use_case.execute(sample_wti_data, [])
 
     def test_get_latest_spread(self, use_case, sample_spread_data):
         """Test getting latest spread."""

@@ -27,8 +27,8 @@ class ValidationError(MurbanCopilotError):
 class SpreadCalculationError(MurbanCopilotError):
     """Raised when spread calculation fails."""
 
-    def __init__(self, message: str, murban_data: object = None, brent_data: object = None) -> None:
-        self.murban_data = murban_data
+    def __init__(self, message: str, wti_data: object = None, brent_data: object = None) -> None:
+        self.wti_data = wti_data
         self.brent_data = brent_data
         super().__init__(message)
 

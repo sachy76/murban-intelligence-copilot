@@ -46,7 +46,7 @@ class TestTraderTalkTemplate:
         spread_data = [
             SpreadData(
                 date=datetime(2024, 1, i),
-                murban_close=85.0,
+                wti_close=85.0,
                 brent_close=82.0,
                 spread=3.0,
             )

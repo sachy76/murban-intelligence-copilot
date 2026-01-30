@@ -251,7 +251,7 @@ class MockLlamaClient:
 
     @staticmethod
     def _get_default_response() -> str:
-        return """Based on the current Murban-Brent spread data, the market shows a neutral to slightly bullish bias.
+        return """Based on the current WTI-Brent spread data, the market shows a neutral to slightly bullish bias.
 
 The spread has remained relatively stable over the past week, with the 5-day moving average hovering around the 20-day MA. This suggests consolidation rather than a strong directional move.
 
