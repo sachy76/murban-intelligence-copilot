@@ -156,3 +156,102 @@
 2026-01-30T15:46:09.821Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
 2026-01-30T15:46:09.855Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
 2026-01-30T15:46:10.340Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-30T18:04:52.995Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
+2026-01-30T18:04:54.106Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
+2026-01-30T18:04:54.106Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-30T18:04:54.107Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:04:54.107Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-30T18:04:54.205Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:07:44.413Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
+2026-01-30T18:07:45.028Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
+2026-01-30T18:07:45.028Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-30T18:07:45.029Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:07:45.029Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:07:45.070Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:08:01.966Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
+2026-01-30T18:08:01.968Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
+2026-01-30T18:08:01.968Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-30T18:08:01.969Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:08:01.969Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:08:01.988Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:09:03.711Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
+2026-01-30T18:09:03.713Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
+2026-01-30T18:09:03.714Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-30T18:09:03.714Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:03.714Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:09:03.739Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:09:21.172Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
+2026-01-30T18:09:21.174Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
+2026-01-30T18:09:21.174Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-30T18:09:21.175Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:21.175Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:09:21.209Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:09:34.668Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-03 to 2026-01-30
+2026-01-30T18:09:34.674Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 48 Murban and 48 Brent records
+2026-01-30T18:09:34.674Z | INFO     | murban_copilot.application.analyze_spread | Calculated 48 spread data points
+2026-01-30T18:09:34.675Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:34.675Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-30T18:09:34.712Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:09:38.245Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-10-22 to 2026-01-30
+2026-01-30T18:09:38.248Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 90 Murban and 90 Brent records
+2026-01-30T18:09:38.249Z | INFO     | murban_copilot.application.analyze_spread | Calculated 90 spread data points
+2026-01-30T18:09:38.250Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:38.250Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-30T18:09:38.281Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:09:43.034Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
+2026-01-30T18:09:43.038Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
+2026-01-30T18:09:43.038Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
+2026-01-30T18:09:43.038Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:43.038Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:09:43.072Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:09:45.477Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
+2026-01-30T18:09:45.479Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
+2026-01-30T18:09:45.479Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
+2026-01-30T18:09:45.480Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:45.480Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:09:46.695Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
+2026-01-30T18:09:46.700Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
+2026-01-30T18:09:46.700Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
+2026-01-30T18:09:46.700Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:46.700Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-30T18:09:46.735Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:09:47.437Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
+2026-01-30T18:09:47.441Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
+2026-01-30T18:09:47.442Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
+2026-01-30T18:09:47.442Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:47.442Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-30T18:09:49.388Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
+2026-01-30T18:09:49.391Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
+2026-01-30T18:09:49.392Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
+2026-01-30T18:09:49.392Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:49.392Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-30T18:09:49.422Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:09:50.800Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
+2026-01-30T18:09:50.805Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
+2026-01-30T18:09:50.805Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
+2026-01-30T18:09:50.806Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:50.806Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:09:53.461Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
+2026-01-30T18:09:53.465Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
+2026-01-30T18:09:53.465Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
+2026-01-30T18:09:53.466Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:09:53.466Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:09:53.493Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:16:32.386Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
+2026-01-30T18:16:32.394Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
+2026-01-30T18:16:32.394Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-30T18:16:32.395Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:16:32.396Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-30T18:16:32.423Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:16:50.340Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
+2026-01-30T18:16:50.343Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
+2026-01-30T18:16:50.344Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-30T18:16:50.344Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:16:50.344Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:16:50.380Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-30T18:51:09.324Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
+2026-01-30T18:51:09.330Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
+2026-01-30T18:51:09.330Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-30T18:51:09.331Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-30T18:51:09.332Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-30T18:51:09.363Z | INFO     | murban_copilot.application.generate_signal | Generating market signal

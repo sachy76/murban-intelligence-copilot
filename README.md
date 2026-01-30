@@ -63,7 +63,7 @@ src/murban_copilot/
 ### Running the Dashboard
 
 ```bash
-streamlit run src/murban_copilot/interface/streamlit_app.py
+PYTHONPATH=src streamlit run src/murban_copilot/interface/streamlit_app.py
 ```
 
 The dashboard will open in your browser at `http://localhost:8501`.
@@ -79,27 +79,27 @@ The dashboard will open in your browser at `http://localhost:8501`.
 
 ### All Tests
 ```bash
-pytest
+PYTHONPATH=src pytest
 ```
 
 ### Unit Tests Only
 ```bash
-pytest tests/unit/
+PYTHONPATH=src pytest tests/unit/
 ```
 
 ### Integration Tests (requires network)
 ```bash
-pytest -m integration
+PYTHONPATH=src pytest -m integration
 ```
 
 ### Skip Slow Tests
 ```bash
-pytest -m "not slow"
+PYTHONPATH=src pytest -m "not slow"
 ```
 
 ### With Coverage Report
 ```bash
-pytest --cov=src/murban_copilot --cov-report=html
+PYTHONPATH=src pytest --cov=src/murban_copilot --cov-report=html
 open htmlcov/index.html
 ```
 
