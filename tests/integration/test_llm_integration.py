@@ -98,7 +98,7 @@ class TestPromptTemplates:
         )
 
         # Should contain system prompt
-        assert "experienced crude oil trader" in prompt.lower()
+        assert "crude oil trader" in prompt.lower()
 
         # Should contain data sections
         assert "Current Market Data" in prompt

@@ -87,44 +87,49 @@ class TestGenerateSignalUseCase:
             sample_trend_summary,
         )
 
-        assert mock_llm.call_count == 1
+        assert mock_llm.call_count == 2  # Analysis + extraction
         assert mock_llm.last_prompt is not None
 
     def test_extract_signal_bullish(self, use_case):
         """Test signal extraction for bullish analysis."""
-        analysis = "Market is bullish. SIGNAL: bullish CONFIDENCE: 0.8"
-        signal, confidence = use_case._extract_signal(analysis)
+        extraction_response = "SIGNAL: bullish CONFIDENCE: 0.8"
+        original_analysis = "Market is bullish."
+        signal, confidence = use_case._extract_signal(extraction_response, original_analysis)
 
         assert signal == "bullish"
         assert confidence == 0.8
 
     def test_extract_signal_bearish(self, use_case):
         """Test signal extraction for bearish analysis."""
-        analysis = "SIGNAL: bearish\nCONFIDENCE: 0.65"
-        signal, confidence = use_case._extract_signal(analysis)
+        extraction_response = "SIGNAL: bearish\nCONFIDENCE: 0.65"
+        original_analysis = "Market is bearish."
+        signal, confidence = use_case._extract_signal(extraction_response, original_analysis)
 
         assert signal == "bearish"
         assert confidence == 0.65
 
     def test_extract_signal_neutral(self, use_case):
         """Test signal extraction for neutral analysis."""
-        analysis = "SIGNAL: neutral CONFIDENCE: 0.5"
-        signal, confidence = use_case._extract_signal(analysis)
+        extraction_response = "SIGNAL: neutral CONFIDENCE: 0.5"
+        original_analysis = "Market is neutral."
+        signal, confidence = use_case._extract_signal(extraction_response, original_analysis)
 
         assert signal == "neutral"
         assert confidence == 0.5
 
     def test_extract_signal_from_keywords(self, use_case):
         """Test signal extraction from keywords when explicit signal missing."""
-        analysis = "The market shows bullish upward positive momentum"
-        signal, _ = use_case._extract_signal(analysis)
+        extraction_response = "Unable to determine signal"  # No SIGNAL: in extraction
+        original_analysis = "The market shows bullish upward positive momentum"
+        signal, _ = use_case._extract_signal(extraction_response, original_analysis)
 
         assert signal == "bullish"
 
     def test_extract_signal_defaults(self, use_case):
         """Test signal extraction defaults."""
-        analysis = "Unclear market conditions"
-        signal, confidence = use_case._extract_signal(analysis)
+        extraction_response = "Unable to parse"
+        original_analysis = "Unclear market conditions"
+        signal, confidence = use_case._extract_signal(extraction_response, original_analysis)
 
         assert signal == "neutral"
         assert confidence == 0.5
