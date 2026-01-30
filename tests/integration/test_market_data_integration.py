@@ -69,7 +69,9 @@ class TestMarketDataIntegration:
             data = client.fetch_historical_data("BZ=F", start_date, end_date)
 
             for d in data:
-                assert d.date >= start_date - timedelta(days=1)
-                assert d.date <= end_date + timedelta(days=1)
+                # Strip timezone for comparison (Yahoo returns tz-aware dates)
+                date_naive = d.date.replace(tzinfo=None) if d.date.tzinfo else d.date
+                assert date_naive >= start_date - timedelta(days=1)
+                assert date_naive <= end_date + timedelta(days=1)
         except MarketDataFetchError as e:
             pytest.skip(f"Market data unavailable: {e}")

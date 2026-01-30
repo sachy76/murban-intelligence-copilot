@@ -36,7 +36,7 @@ class TestYahooFinanceClient:
 
     def test_ticker_mapping(self, client):
         """Test ticker mapping for convenience names."""
-        assert client.TICKER_MAPPING["murban"] == "MURBAN.ME"
+        assert client.TICKER_MAPPING["murban"] == "CL=F"  # WTI as proxy
         assert client.TICKER_MAPPING["brent"] == "BZ=F"
 
     @patch("yfinance.Ticker")
@@ -82,7 +82,7 @@ class TestYahooFinanceClient:
             datetime(2024, 1, 15),
         )
 
-        mock_ticker.assert_called_with("MURBAN.ME")
+        mock_ticker.assert_called_with("CL=F")  # WTI as proxy for Murban
 
     @patch("yfinance.Ticker")
     def test_fetch_historical_data_exception(self, mock_ticker, client):

@@ -6,15 +6,17 @@ from typing import Sequence
 import pandas as pd
 import yfinance as yf
 
+from murban_copilot.infrastructure.logging import get_logger
 from murban_copilot.domain.entities import MarketData
 from murban_copilot.domain.exceptions import MarketDataFetchError
 
+logger = get_logger(__name__)
 
 class YahooFinanceClient:
     """Client for fetching market data from Yahoo Finance."""
 
-    MURBAN_TICKER = "MURBAN.ME"
     BRENT_TICKER = "BZ=F"
+    MURBAN_TICKER = "CL=F"  # Using WTI as proxy (Murban ADM=F not available on Yahoo Finance)
 
     TICKER_MAPPING = {
         "murban": MURBAN_TICKER,
@@ -58,6 +60,9 @@ class YahooFinanceClient:
                 start=start_date.strftime("%Y-%m-%d"),
                 end=end_date.strftime("%Y-%m-%d"),
                 timeout=self.timeout,
+            )
+            logger.info(
+                f"Market Data DF {yf_ticker.info}"
             )
 
             if df.empty:
