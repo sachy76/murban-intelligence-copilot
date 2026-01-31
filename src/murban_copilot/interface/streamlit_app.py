@@ -1,6 +1,7 @@
 """Streamlit dashboard for WTI Crude Intelligence Copilot."""
 
 import streamlit as st
+import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
@@ -10,7 +11,7 @@ from typing import Sequence
 from pathlib import Path
 
 from murban_copilot.domain.config import LLMConfig
-from murban_copilot.domain.entities import MovingAverages, SpreadData, MarketSignal
+from murban_copilot.domain.entities import MarketData, MovingAverages, SpreadData, MarketSignal
 from murban_copilot.domain.spread_calculator import SpreadCalculator
 from murban_copilot.infrastructure.market_data.yahoo_client import YahooFinanceClient
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient, MockLlamaClient
@@ -386,6 +387,211 @@ def display_signal_card(signal: MarketSignal) -> None:
     """, unsafe_allow_html=True)
 
 
+def create_data_explorer(
+    wti_data: Sequence[MarketData],
+    brent_data: Sequence[MarketData],
+    spread_data: Sequence[SpreadData],
+    moving_averages: Sequence[MovingAverages],
+) -> None:
+    """Create the data explorer section with tabbed views."""
+    st.divider()
+    st.subheader("📊 Data Explorer")
+
+    tab_wti, tab_brent, tab_spread, tab_analysis = st.tabs([
+        "WTI Data", "Brent Data", "Spread Data", "Analysis Summary"
+    ])
+
+    # WTI Data Tab
+    with tab_wti:
+        wti_df = pd.DataFrame([
+            {
+                "Date": d.date.strftime("%Y-%m-%d"),
+                "Open": f"${d.open:.2f}",
+                "High": f"${d.high:.2f}",
+                "Low": f"${d.low:.2f}",
+                "Close": f"${d.close:.2f}",
+                "Volume": f"{int(d.volume):,}" if d.volume else "N/A",
+            }
+            for d in sorted(wti_data, key=lambda x: x.date, reverse=True)
+        ])
+
+        # Summary stats
+        closes = [d.close for d in wti_data]
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Records", len(wti_data))
+        with col2:
+            st.metric("Min", f"${min(closes):.2f}")
+        with col3:
+            st.metric("Max", f"${max(closes):.2f}")
+        with col4:
+            st.metric("Avg", f"${sum(closes)/len(closes):.2f}")
+
+        st.dataframe(wti_df, use_container_width=True, hide_index=True)
+
+        # Download button
+        csv_wti = pd.DataFrame([
+            {
+                "Date": d.date.strftime("%Y-%m-%d"),
+                "Open": d.open,
+                "High": d.high,
+                "Low": d.low,
+                "Close": d.close,
+                "Volume": d.volume or "",
+            }
+            for d in sorted(wti_data, key=lambda x: x.date, reverse=True)
+        ]).to_csv(index=False)
+        st.download_button(
+            "📥 Download WTI Data (CSV)",
+            csv_wti,
+            "wti_data.csv",
+            "text/csv",
+            key="download_wti",
+        )
+
+    # Brent Data Tab
+    with tab_brent:
+        brent_df = pd.DataFrame([
+            {
+                "Date": d.date.strftime("%Y-%m-%d"),
+                "Open": f"${d.open:.2f}",
+                "High": f"${d.high:.2f}",
+                "Low": f"${d.low:.2f}",
+                "Close": f"${d.close:.2f}",
+                "Volume": f"{int(d.volume):,}" if d.volume else "N/A",
+            }
+            for d in sorted(brent_data, key=lambda x: x.date, reverse=True)
+        ])
+
+        # Summary stats
+        closes = [d.close for d in brent_data]
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Records", len(brent_data))
+        with col2:
+            st.metric("Min", f"${min(closes):.2f}")
+        with col3:
+            st.metric("Max", f"${max(closes):.2f}")
+        with col4:
+            st.metric("Avg", f"${sum(closes)/len(closes):.2f}")
+
+        st.dataframe(brent_df, use_container_width=True, hide_index=True)
+
+        # Download button
+        csv_brent = pd.DataFrame([
+            {
+                "Date": d.date.strftime("%Y-%m-%d"),
+                "Open": d.open,
+                "High": d.high,
+                "Low": d.low,
+                "Close": d.close,
+                "Volume": d.volume or "",
+            }
+            for d in sorted(brent_data, key=lambda x: x.date, reverse=True)
+        ]).to_csv(index=False)
+        st.download_button(
+            "📥 Download Brent Data (CSV)",
+            csv_brent,
+            "brent_data.csv",
+            "text/csv",
+            key="download_brent",
+        )
+
+    # Spread Data Tab
+    with tab_spread:
+        spread_df = pd.DataFrame([
+            {
+                "Date": d.date.strftime("%Y-%m-%d"),
+                "WTI Close": f"${d.wti_close:.2f}",
+                "Brent Close": f"${d.brent_close:.2f}",
+                "Spread": f"${d.spread:.2f}",
+            }
+            for d in sorted(spread_data, key=lambda x: x.date, reverse=True)
+        ])
+
+        # Summary stats
+        spreads = [d.spread for d in spread_data]
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Records", len(spread_data))
+        with col2:
+            st.metric("Min Spread", f"${min(spreads):.2f}")
+        with col3:
+            st.metric("Max Spread", f"${max(spreads):.2f}")
+        with col4:
+            st.metric("Avg Spread", f"${sum(spreads)/len(spreads):.2f}")
+
+        st.dataframe(spread_df, use_container_width=True, hide_index=True)
+
+        # Download button
+        csv_spread = pd.DataFrame([
+            {
+                "Date": d.date.strftime("%Y-%m-%d"),
+                "WTI_Close": d.wti_close,
+                "Brent_Close": d.brent_close,
+                "Spread": d.spread,
+            }
+            for d in sorted(spread_data, key=lambda x: x.date, reverse=True)
+        ]).to_csv(index=False)
+        st.download_button(
+            "📥 Download Spread Data (CSV)",
+            csv_spread,
+            "spread_data.csv",
+            "text/csv",
+            key="download_spread",
+        )
+
+    # Analysis Summary Tab
+    with tab_analysis:
+        analysis_df = pd.DataFrame([
+            {
+                "Date": d.date.strftime("%Y-%m-%d"),
+                "Spread": f"${d.spread:.2f}",
+                "5-Day MA": f"${d.ma_5:.2f}" if d.ma_5 else "N/A",
+                "20-Day MA": f"${d.ma_20:.2f}" if d.ma_20 else "N/A",
+                "Trend": d.trend_signal.title() if d.trend_signal else "N/A",
+            }
+            for d in sorted(moving_averages, key=lambda x: x.date, reverse=True)
+        ])
+
+        # Summary stats - count trends
+        trends = [d.trend_signal for d in moving_averages if d.trend_signal]
+        bullish_count = sum(1 for t in trends if t == "bullish")
+        bearish_count = sum(1 for t in trends if t == "bearish")
+        neutral_count = sum(1 for t in trends if t == "neutral")
+
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Records", len(moving_averages))
+        with col2:
+            st.metric("📈 Bullish Days", bullish_count)
+        with col3:
+            st.metric("📉 Bearish Days", bearish_count)
+        with col4:
+            st.metric("➡️ Neutral Days", neutral_count)
+
+        st.dataframe(analysis_df, use_container_width=True, hide_index=True)
+
+        # Download button
+        csv_analysis = pd.DataFrame([
+            {
+                "Date": d.date.strftime("%Y-%m-%d"),
+                "Spread": d.spread,
+                "MA_5": d.ma_5 or "",
+                "MA_20": d.ma_20 or "",
+                "Trend": d.trend_signal or "",
+            }
+            for d in sorted(moving_averages, key=lambda x: x.date, reverse=True)
+        ]).to_csv(index=False)
+        st.download_button(
+            "📥 Download Analysis Data (CSV)",
+            csv_analysis,
+            "analysis_data.csv",
+            "text/csv",
+            key="download_analysis",
+        )
+
+
 def main():
     """Main application entry point."""
     setup_logging(console_output=False)
@@ -547,6 +753,9 @@ def main():
             st.metric("Mean Spread", f"${stats['mean']:.2f}" if stats["mean"] else "N/A")
         with stat_col4:
             st.metric("Std Dev", f"${stats['std']:.2f}" if stats["std"] else "N/A")
+
+    # Data Explorer
+    create_data_explorer(wti_data, brent_data, spread_data, moving_averages)
 
     # AI Signal
     if use_llm:
