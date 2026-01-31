@@ -36,8 +36,8 @@ class TestYahooFinanceClient:
 
     def test_ticker_mapping(self, client):
         """Test ticker mapping for convenience names."""
-        assert client.TICKER_MAPPING["wti"] == "CL=F"
-        assert client.TICKER_MAPPING["brent"] == "BZ=F"
+        assert client.ticker_mapping["wti"] == "CL=F"
+        assert client.ticker_mapping["brent"] == "BZ=F"
 
     @patch("yfinance.Ticker")
     def test_fetch_historical_data_success(self, mock_ticker, client, sample_df):

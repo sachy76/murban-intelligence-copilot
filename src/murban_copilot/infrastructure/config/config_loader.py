@@ -1,4 +1,4 @@
-"""Configuration loader for LLM settings."""
+"""Configuration loader for application settings."""
 
 import os
 from pathlib import Path
@@ -6,7 +6,7 @@ from typing import Optional
 
 import yaml
 
-from murban_copilot.domain.config import LLMConfig
+from murban_copilot.domain.config import LLMConfig, AppConfig
 from murban_copilot.domain.exceptions import ConfigurationError
 from murban_copilot.infrastructure.logging import get_logger
 
@@ -14,12 +14,15 @@ logger = get_logger(__name__)
 
 
 class ConfigLoader:
-    """Loader for LLM configuration files."""
+    """Loader for application configuration files."""
 
     ENV_VAR = "MURBAN_LLM_CONFIG"
+    APP_CONFIG_ENV_VAR = "MURBAN_CONFIG"
     DEFAULT_PATHS = [
         "config/llm_config.yaml",
+        "config/app_config.yaml",
         "llm_config.yaml",
+        "app_config.yaml",
     ]
 
     def __init__(self, config_path: Optional[str] = None) -> None:
@@ -123,3 +126,43 @@ class ConfigLoader:
         config_data = {k: v for k, v in config_data.items() if v is not None}
 
         return LLMConfig.from_dict(config_data)
+
+    def load_app_config(self) -> AppConfig:
+        """
+        Load full application configuration from file.
+
+        Returns:
+            AppConfig with loaded or default values.
+
+        Raises:
+            ConfigurationError: If config file exists but is invalid.
+        """
+        config_path = self._find_config_path()
+
+        if config_path is None:
+            logger.info("No config file found, using default application configuration")
+            return AppConfig.get_default()
+
+        self._resolved_path = config_path
+        logger.info(f"Loading application configuration from {config_path}")
+
+        try:
+            with open(config_path, "r") as f:
+                data = yaml.safe_load(f)
+        except yaml.YAMLError as e:
+            raise ConfigurationError(
+                f"Invalid YAML in config file: {config_path}",
+                config_path=config_path,
+                original_error=e,
+            )
+        except Exception as e:
+            raise ConfigurationError(
+                f"Failed to read config file: {config_path}",
+                config_path=config_path,
+                original_error=e,
+            )
+
+        if data is None:
+            data = {}
+
+        return AppConfig.from_dict(data)

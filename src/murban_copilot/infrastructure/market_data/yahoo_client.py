@@ -1,7 +1,9 @@
 """Yahoo Finance client for fetching market data."""
 
+from __future__ import annotations
+
 from datetime import datetime, timedelta
-from typing import Sequence
+from typing import Sequence, TYPE_CHECKING
 
 import pandas as pd
 import yfinance as yf
@@ -16,6 +18,9 @@ from tenacity import (
 from murban_copilot.infrastructure.logging import get_logger
 from murban_copilot.domain.entities import MarketData
 from murban_copilot.domain.exceptions import MarketDataFetchError
+
+if TYPE_CHECKING:
+    from murban_copilot.domain.config import MarketDataConfig
 
 logger = get_logger(__name__)
 
@@ -41,25 +46,26 @@ def _is_retryable_error(exception: BaseException) -> bool:
 class YahooFinanceClient:
     """Client for fetching market data from Yahoo Finance."""
 
-    BRENT_TICKER = "BZ=F"
-    WTI_TICKER = "CL=F"
+    # Default ticker symbols
+    DEFAULT_BRENT_TICKER = "BZ=F"
+    DEFAULT_WTI_TICKER = "CL=F"
 
-    TICKER_MAPPING = {
-        "wti": WTI_TICKER,
-        "brent": BRENT_TICKER,
-    }
-
-    # Retry configuration
+    # Default retry configuration
+    DEFAULT_TIMEOUT = 60
     DEFAULT_MAX_RETRIES = 3
     DEFAULT_MIN_WAIT = 1  # seconds
     DEFAULT_MAX_WAIT = 10  # seconds
+    DEFAULT_LATEST_LOOKBACK_DAYS = 7
 
     def __init__(
         self,
-        timeout: int = 60,
+        timeout: int = DEFAULT_TIMEOUT,
         max_retries: int = DEFAULT_MAX_RETRIES,
         min_retry_wait: int = DEFAULT_MIN_WAIT,
         max_retry_wait: int = DEFAULT_MAX_WAIT,
+        wti_ticker: str = DEFAULT_WTI_TICKER,
+        brent_ticker: str = DEFAULT_BRENT_TICKER,
+        latest_price_lookback_days: int = DEFAULT_LATEST_LOOKBACK_DAYS,
     ) -> None:
         """
         Initialize the Yahoo Finance client.
@@ -69,11 +75,44 @@ class YahooFinanceClient:
             max_retries: Maximum number of retry attempts (default 3)
             min_retry_wait: Minimum wait between retries in seconds (default 1)
             max_retry_wait: Maximum wait between retries in seconds (default 10)
+            wti_ticker: WTI crude futures ticker symbol
+            brent_ticker: Brent crude futures ticker symbol
+            latest_price_lookback_days: Days to look back for latest price
         """
         self.timeout = timeout
         self.max_retries = max_retries
         self.min_retry_wait = min_retry_wait
         self.max_retry_wait = max_retry_wait
+        self.wti_ticker = wti_ticker
+        self.brent_ticker = brent_ticker
+        self.latest_price_lookback_days = latest_price_lookback_days
+
+        # Build ticker mapping from instance values
+        self.ticker_mapping = {
+            "wti": self.wti_ticker,
+            "brent": self.brent_ticker,
+        }
+
+    @classmethod
+    def from_config(cls, config: "MarketDataConfig") -> "YahooFinanceClient":
+        """
+        Create a YahooFinanceClient from MarketDataConfig.
+
+        Args:
+            config: Market data configuration
+
+        Returns:
+            Configured YahooFinanceClient instance
+        """
+        return cls(
+            timeout=config.timeout,
+            max_retries=config.max_retries,
+            min_retry_wait=config.min_retry_wait,
+            max_retry_wait=config.max_retry_wait,
+            wti_ticker=config.wti_ticker,
+            brent_ticker=config.brent_ticker,
+            latest_price_lookback_days=config.latest_price_lookback_days,
+        )
 
     def fetch_historical_data(
         self,
@@ -95,7 +134,7 @@ class YahooFinanceClient:
         Raises:
             MarketDataFetchError: If fetching fails after all retries
         """
-        resolved_ticker = self.TICKER_MAPPING.get(ticker.lower(), ticker)
+        resolved_ticker = self.ticker_mapping.get(ticker.lower(), ticker)
 
         return self._fetch_with_retry(resolved_ticker, start_date, end_date)
 
@@ -182,7 +221,7 @@ class YahooFinanceClient:
             MarketDataFetchError: If fetching fails
         """
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=7)
+        start_date = end_date - timedelta(days=self.latest_price_lookback_days)
 
         data = self.fetch_historical_data(ticker, start_date, end_date)
 

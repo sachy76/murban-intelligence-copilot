@@ -1,13 +1,18 @@
 """Spread calculation and moving average computations."""
 
+from __future__ import annotations
+
 from datetime import datetime
-from typing import Sequence
+from typing import Sequence, TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
 
 from .entities import MarketData, MovingAverages, SpreadData
 from .exceptions import InsufficientDataError, SpreadCalculationError
+
+if TYPE_CHECKING:
+    from .config import AnalysisConfig
 
 
 class SpreadCalculator:
@@ -30,6 +35,23 @@ class SpreadCalculator:
         self.short_ma_window = short_ma_window
         self.long_ma_window = long_ma_window
         self.outlier_threshold = outlier_threshold
+
+    @classmethod
+    def from_config(cls, config: "AnalysisConfig") -> "SpreadCalculator":
+        """
+        Create a SpreadCalculator from AnalysisConfig.
+
+        Args:
+            config: Analysis configuration
+
+        Returns:
+            Configured SpreadCalculator instance
+        """
+        return cls(
+            short_ma_window=config.short_ma_window,
+            long_ma_window=config.long_ma_window,
+            outlier_threshold=config.outlier_threshold,
+        )
 
     def calculate_spread(
         self,

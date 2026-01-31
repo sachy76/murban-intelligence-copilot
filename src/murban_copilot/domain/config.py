@@ -1,7 +1,150 @@
-"""Domain configuration entities for LLM settings."""
+"""Domain configuration entities for application settings."""
 
 from dataclasses import dataclass, field
 from typing import Any, Optional
+
+
+# =============================================================================
+# Market Data Configuration
+# =============================================================================
+
+
+@dataclass
+class MarketDataConfig:
+    """Configuration for market data fetching."""
+
+    # Ticker symbols
+    wti_ticker: str = "CL=F"
+    brent_ticker: str = "BZ=F"
+
+    # Request settings
+    timeout: int = 60
+    max_retries: int = 3
+    min_retry_wait: int = 1
+    max_retry_wait: int = 10
+
+    # Data fetching
+    buffer_days: int = 10
+    latest_price_lookback_days: int = 7
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "MarketDataConfig":
+        """Create config from dictionary."""
+        return cls(
+            wti_ticker=data.get("wti_ticker", "CL=F"),
+            brent_ticker=data.get("brent_ticker", "BZ=F"),
+            timeout=data.get("timeout", 60),
+            max_retries=data.get("max_retries", 3),
+            min_retry_wait=data.get("min_retry_wait", 1),
+            max_retry_wait=data.get("max_retry_wait", 10),
+            buffer_days=data.get("buffer_days", 10),
+            latest_price_lookback_days=data.get("latest_price_lookback_days", 7),
+        )
+
+
+# =============================================================================
+# Analysis Configuration
+# =============================================================================
+
+
+@dataclass
+class AnalysisConfig:
+    """Configuration for spread analysis calculations."""
+
+    # Moving average windows
+    short_ma_window: int = 5
+    long_ma_window: int = 20
+
+    # Outlier detection
+    outlier_threshold: float = 3.0
+
+    # Data processing
+    gap_fill_threshold: int = 2
+    min_data_points: int = 5
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "AnalysisConfig":
+        """Create config from dictionary."""
+        return cls(
+            short_ma_window=data.get("short_ma_window", 5),
+            long_ma_window=data.get("long_ma_window", 20),
+            outlier_threshold=data.get("outlier_threshold", 3.0),
+            gap_fill_threshold=data.get("gap_fill_threshold", 2),
+            min_data_points=data.get("min_data_points", 5),
+        )
+
+
+# =============================================================================
+# Signal Configuration
+# =============================================================================
+
+
+@dataclass
+class SignalConfig:
+    """Configuration for signal generation."""
+
+    # Default values when extraction fails
+    default_signal: str = "neutral"
+    default_confidence: float = 0.5
+
+    # Keywords for fallback classification
+    bullish_keywords: list[str] = field(
+        default_factory=lambda: ["bullish", "upward", "positive", "buy"]
+    )
+    bearish_keywords: list[str] = field(
+        default_factory=lambda: ["bearish", "downward", "negative", "sell"]
+    )
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "SignalConfig":
+        """Create config from dictionary."""
+        return cls(
+            default_signal=data.get("default_signal", "neutral"),
+            default_confidence=data.get("default_confidence", 0.5),
+            bullish_keywords=data.get(
+                "bullish_keywords", ["bullish", "upward", "positive", "buy"]
+            ),
+            bearish_keywords=data.get(
+                "bearish_keywords", ["bearish", "downward", "negative", "sell"]
+            ),
+        )
+
+
+# =============================================================================
+# UI Configuration
+# =============================================================================
+
+
+@dataclass
+class UIConfig:
+    """Configuration for Streamlit UI."""
+
+    # Historical days slider
+    min_historical_days: int = 7
+    max_historical_days: int = 90
+    default_historical_days: int = 30
+
+    # Sample data for demo mode
+    sample_wti_base_price: float = 85.0
+    sample_brent_base_price: float = 82.0
+    sample_price_variation: float = 0.5
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "UIConfig":
+        """Create config from dictionary."""
+        return cls(
+            min_historical_days=data.get("min_historical_days", 7),
+            max_historical_days=data.get("max_historical_days", 90),
+            default_historical_days=data.get("default_historical_days", 30),
+            sample_wti_base_price=data.get("sample_wti_base_price", 85.0),
+            sample_brent_base_price=data.get("sample_brent_base_price", 82.0),
+            sample_price_variation=data.get("sample_price_variation", 0.5),
+        )
+
+
+# =============================================================================
+# LLM Configuration
+# =============================================================================
 
 
 @dataclass
@@ -157,4 +300,54 @@ class LLMConfig:
             analysis=analysis,
             extraction=extraction,
             cache=cache,
+        )
+
+
+# =============================================================================
+# Application Configuration (Top-Level)
+# =============================================================================
+
+
+@dataclass
+class AppConfig:
+    """Complete application configuration."""
+
+    llm: LLMConfig = field(default_factory=LLMConfig)
+    market_data: MarketDataConfig = field(default_factory=MarketDataConfig)
+    analysis: AnalysisConfig = field(default_factory=AnalysisConfig)
+    signal: SignalConfig = field(default_factory=SignalConfig)
+    ui: UIConfig = field(default_factory=UIConfig)
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "AppConfig":
+        """Create config from dictionary."""
+        # Parse LLM config (handles nested 'llm' and 'cache' keys)
+        llm_data = data.get("llm", {})
+        cache_data = data.get("cache", {})
+        llm_combined = {**llm_data, "cache": cache_data} if cache_data else llm_data
+        llm = LLMConfig.from_dict(llm_combined)
+
+        # Parse other configs
+        market_data = MarketDataConfig.from_dict(data.get("market_data", {}))
+        analysis = AnalysisConfig.from_dict(data.get("analysis", {}))
+        signal = SignalConfig.from_dict(data.get("signal", {}))
+        ui = UIConfig.from_dict(data.get("ui", {}))
+
+        return cls(
+            llm=llm,
+            market_data=market_data,
+            analysis=analysis,
+            signal=signal,
+            ui=ui,
+        )
+
+    @classmethod
+    def get_default(cls) -> "AppConfig":
+        """Get the default application configuration."""
+        return cls(
+            llm=LLMConfig.get_default(),
+            market_data=MarketDataConfig(),
+            analysis=AnalysisConfig(),
+            signal=SignalConfig(),
+            ui=UIConfig(),
         )

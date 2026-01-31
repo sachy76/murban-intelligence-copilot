@@ -1,3 +1,10 @@
+# =============================================================================
+# Murban Intelligence Copilot - Application Configuration
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# LLM Configuration
+# -----------------------------------------------------------------------------
 llm:
   defaults:
     n_ctx: 4096
@@ -19,6 +26,76 @@ llm:
       max_tokens: 1024
       temperature: 0.3
 
+# -----------------------------------------------------------------------------
+# Cache Configuration
+# -----------------------------------------------------------------------------
 cache:
   directory: ".llm_cache"
   enabled: true
+
+# -----------------------------------------------------------------------------
+# Market Data Configuration
+# -----------------------------------------------------------------------------
+market_data:
+  # Ticker symbols (Yahoo Finance format)
+  wti_ticker: "CL=F"
+  brent_ticker: "BZ=F"
+
+  # Request settings
+  timeout: 60
+  max_retries: 3
+  min_retry_wait: 1
+  max_retry_wait: 10
+
+  # Data fetching
+  buffer_days: 10
+  latest_price_lookback_days: 7
+
+# -----------------------------------------------------------------------------
+# Analysis Configuration
+# -----------------------------------------------------------------------------
+analysis:
+  # Moving average windows (in days)
+  short_ma_window: 5
+  long_ma_window: 20
+
+  # Outlier detection threshold (MAD units)
+  outlier_threshold: 3.0
+
+  # Data processing
+  gap_fill_threshold: 2
+  min_data_points: 5
+
+# -----------------------------------------------------------------------------
+# Signal Generation Configuration
+# -----------------------------------------------------------------------------
+signal:
+  # Default values when extraction fails
+  default_signal: "neutral"
+  default_confidence: 0.5
+
+  # Keywords for fallback classification
+  bullish_keywords:
+    - "bullish"
+    - "upward"
+    - "positive"
+    - "buy"
+  bearish_keywords:
+    - "bearish"
+    - "downward"
+    - "negative"
+    - "sell"
+
+# -----------------------------------------------------------------------------
+# UI Configuration
+# -----------------------------------------------------------------------------
+ui:
+  # Historical days slider bounds
+  min_historical_days: 7
+  max_historical_days: 90
+  default_historical_days: 30
+
+  # Sample data for demo mode (when market data unavailable)
+  sample_wti_base_price: 85.0
+  sample_brent_base_price: 82.0
+  sample_price_variation: 0.5

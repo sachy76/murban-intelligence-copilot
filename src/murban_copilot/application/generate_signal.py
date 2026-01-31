@@ -1,8 +1,10 @@
 """Use case for generating market signals using LLM."""
 
+from __future__ import annotations
+
 import re
 from datetime import datetime
-from typing import Sequence
+from typing import Sequence, TYPE_CHECKING
 
 from murban_copilot.domain.entities import MarketSignal, MovingAverages, SpreadData
 from murban_copilot.domain.exceptions import LLMInferenceError, ValidationError
@@ -14,7 +16,16 @@ from murban_copilot.infrastructure.llm.prompt_templates import (
 from murban_copilot.infrastructure.llm.protocols import LLMInference
 from murban_copilot.infrastructure.logging import get_logger
 
+if TYPE_CHECKING:
+    from murban_copilot.domain.config import SignalConfig
+
 logger = get_logger(__name__)
+
+# Default fallback values
+DEFAULT_SIGNAL = "neutral"
+DEFAULT_CONFIDENCE = 0.5
+DEFAULT_BULLISH_KEYWORDS = ["bullish", "upward", "positive", "buy"]
+DEFAULT_BEARISH_KEYWORDS = ["bearish", "downward", "negative", "sell"]
 
 
 class GenerateSignalUseCase:
@@ -28,6 +39,7 @@ class GenerateSignalUseCase:
         analysis_temperature: float = 0.7,
         extraction_max_tokens: int = 1024,
         extraction_temperature: float = 0.3,
+        signal_config: "SignalConfig | None" = None,
     ) -> None:
         """
         Initialize the use case.
@@ -40,6 +52,7 @@ class GenerateSignalUseCase:
             analysis_temperature: Temperature for analysis generation
             extraction_max_tokens: Max tokens for extraction
             extraction_temperature: Temperature for extraction
+            signal_config: Optional signal configuration for defaults and keywords
         """
         self.llm = llm_client
         self.extraction_llm = extraction_client or llm_client
@@ -47,6 +60,18 @@ class GenerateSignalUseCase:
         self.analysis_temperature = analysis_temperature
         self.extraction_max_tokens = extraction_max_tokens
         self.extraction_temperature = extraction_temperature
+
+        # Signal extraction configuration
+        if signal_config:
+            self.default_signal = signal_config.default_signal
+            self.default_confidence = signal_config.default_confidence
+            self.bullish_keywords = signal_config.bullish_keywords
+            self.bearish_keywords = signal_config.bearish_keywords
+        else:
+            self.default_signal = DEFAULT_SIGNAL
+            self.default_confidence = DEFAULT_CONFIDENCE
+            self.bullish_keywords = DEFAULT_BULLISH_KEYWORDS
+            self.bearish_keywords = DEFAULT_BEARISH_KEYWORDS
 
     def execute(
         self,
@@ -131,8 +156,8 @@ class GenerateSignalUseCase:
         Returns:
             Tuple of (signal, confidence)
         """
-        signal = "neutral"
-        confidence = 0.5
+        signal = self.default_signal
+        confidence = self.default_confidence
 
         # Try to extract from structured extraction response first
         signal_match = re.search(
@@ -161,11 +186,9 @@ class GenerateSignalUseCase:
         if not signal_match:
             logger.debug("Extraction failed, falling back to keyword analysis")
             analysis_lower = original_analysis.lower()
-            bullish_keywords = ["bullish", "upward", "positive", "buy"]
-            bearish_keywords = ["bearish", "downward", "negative", "sell"]
 
-            bullish_count = sum(1 for kw in bullish_keywords if kw in analysis_lower)
-            bearish_count = sum(1 for kw in bearish_keywords if kw in analysis_lower)
+            bullish_count = sum(1 for kw in self.bullish_keywords if kw in analysis_lower)
+            bearish_count = sum(1 for kw in self.bearish_keywords if kw in analysis_lower)
 
             if bullish_count > bearish_count:
                 signal = "bullish"

@@ -14,14 +14,22 @@ logger = get_logger(__name__)
 class FetchMarketDataUseCase:
     """Use case for fetching and preparing market data."""
 
-    def __init__(self, market_data_source: MarketDataSource) -> None:
+    DEFAULT_BUFFER_DAYS = 10
+
+    def __init__(
+        self,
+        market_data_source: MarketDataSource,
+        buffer_days: int = DEFAULT_BUFFER_DAYS,
+    ) -> None:
         """
         Initialize the use case.
 
         Args:
             market_data_source: Data source for market data
+            buffer_days: Extra days to fetch for moving average calculations
         """
         self.data_source = market_data_source
+        self.buffer_days = buffer_days
 
     def execute(
         self,
@@ -44,7 +52,7 @@ class FetchMarketDataUseCase:
         if end_date is None:
             end_date = datetime.now()
 
-        start_date = end_date - timedelta(days=days + 10)
+        start_date = end_date - timedelta(days=days + self.buffer_days)
 
         logger.info(
             f"Fetching market data from {start_date.date()} to {end_date.date()}"
@@ -115,6 +123,6 @@ class FetchMarketDataUseCase:
         if end_date is None:
             end_date = datetime.now()
 
-        start_date = end_date - timedelta(days=days + 10)
+        start_date = end_date - timedelta(days=days + self.buffer_days)
 
         return self.data_source.fetch_historical_data(ticker, start_date, end_date)

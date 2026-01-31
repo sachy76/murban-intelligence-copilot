@@ -9,6 +9,7 @@ from typing import Sequence
 
 from pathlib import Path
 
+from murban_copilot.domain.config import LLMConfig
 from murban_copilot.domain.entities import MovingAverages, SpreadData, MarketSignal
 from murban_copilot.domain.spread_calculator import SpreadCalculator
 from murban_copilot.infrastructure.market_data.yahoo_client import YahooFinanceClient
@@ -73,54 +74,64 @@ st.markdown("""
 
 def init_services():
     """Initialize services with caching."""
-    if "market_client" not in st.session_state:
-        st.session_state.market_client = YahooFinanceClient()
-    if "spread_calculator" not in st.session_state:
-        st.session_state.spread_calculator = SpreadCalculator()
-
-    # Load LLM configuration
-    if "llm_config" not in st.session_state:
+    # Load full application configuration
+    if "app_config" not in st.session_state:
         config_loader = ConfigLoader()
-        st.session_state.llm_config = config_loader.load()
+        st.session_state.app_config = config_loader.load_app_config()
         config_path = config_loader.get_config_path()
         if config_path:
-            logger.info(f"Loaded LLM config from: {config_path}")
+            logger.info(f"Loaded application config from: {config_path}")
         else:
-            logger.info("Using default LLM configuration")
+            logger.info("Using default application configuration")
 
-    config = st.session_state.llm_config
-    cache_dir = Path.cwd() / config.cache.directory
+    config = st.session_state.app_config
+
+    # Initialize market data client from config
+    if "market_client" not in st.session_state:
+        st.session_state.market_client = YahooFinanceClient.from_config(config.market_data)
+        logger.info(f"Initialized market client with tickers: WTI={config.market_data.wti_ticker}, Brent={config.market_data.brent_ticker}")
+
+    # Initialize spread calculator from config
+    if "spread_calculator" not in st.session_state:
+        st.session_state.spread_calculator = SpreadCalculator.from_config(config.analysis)
+        logger.info(f"Initialized spread calculator with MA windows: {config.analysis.short_ma_window}/{config.analysis.long_ma_window}")
+
+    # For backward compatibility, also store llm_config reference
+    if "llm_config" not in st.session_state:
+        st.session_state.llm_config = config.llm
+
+    cache_dir = Path.cwd() / config.llm.cache.directory
 
     # Initialize analysis LLM client
     if "analysis_llm_client" not in st.session_state:
-        if config.analysis:
+        if config.llm.analysis:
             st.session_state.analysis_llm_client = LlamaClient.from_config(
-                config.analysis,
+                config.llm.analysis,
                 cache_dir=cache_dir,
-                cache_enabled=config.cache.enabled,
-                verbose=config.defaults.verbose,
+                cache_enabled=config.llm.cache.enabled,
+                verbose=config.llm.defaults.verbose,
             )
             logger.info(
-                f"Initialized analysis LLM: {config.analysis.model_repo}/{config.analysis.model_file}"
+                f"Initialized analysis LLM: {config.llm.analysis.model_repo}/{config.llm.analysis.model_file}"
             )
         else:
             st.session_state.analysis_llm_client = LlamaClient(
                 cache_dir=cache_dir,
-                cache_enabled=config.cache.enabled,
+                cache_enabled=config.llm.cache.enabled,
             )
             logger.info("Initialized analysis LLM with defaults")
 
     # Initialize extraction LLM client
     if "extraction_llm_client" not in st.session_state:
-        if config.extraction:
+        if config.llm.extraction:
             st.session_state.extraction_llm_client = LlamaClient.from_config(
-                config.extraction,
+                config.llm.extraction,
                 cache_dir=cache_dir,
-                cache_enabled=config.cache.enabled,
-                verbose=config.defaults.verbose,
+                cache_enabled=config.llm.cache.enabled,
+                verbose=config.llm.defaults.verbose,
             )
             logger.info(
-                f"Initialized extraction LLM: {config.extraction.model_repo}/{config.extraction.model_file}"
+                f"Initialized extraction LLM: {config.llm.extraction.model_repo}/{config.llm.extraction.model_file}"
             )
         else:
             # Fall back to using analysis client for extraction
@@ -279,6 +290,9 @@ def main():
     st.title("🛢️ Brent/WTI (West Texas Intermediate) Intelligence Copilot")
     st.markdown("*AI-powered WTI-Brent crude oil spread analysis*")
 
+    # Get UI config
+    ui_config = st.session_state.app_config.ui
+
     # Sidebar
     with st.sidebar:
         st.header("Settings")
@@ -291,9 +305,9 @@ def main():
 
         days = st.slider(
             "Historical Days",
-            min_value=7,
-            max_value=90,
-            value=30,
+            min_value=ui_config.min_historical_days,
+            max_value=ui_config.max_historical_days,
+            value=ui_config.default_historical_days,
             step=1,
         )
 
@@ -334,13 +348,16 @@ def main():
     # Main content
     with st.spinner("Fetching market data..."):
         try:
-            fetch_use_case = FetchMarketDataUseCase(st.session_state.market_client)
+            fetch_use_case = FetchMarketDataUseCase(
+                st.session_state.market_client,
+                buffer_days=st.session_state.app_config.market_data.buffer_days,
+            )
             wti_data, brent_data = fetch_use_case.execute(days=days)
         except Exception as e:
             st.error(f"Failed to fetch market data: {str(e)}")
             st.info("This may be due to market data unavailability. Using sample data for demonstration.")
 
-            # Create sample data for demo
+            # Create sample data for demo using config values
             from murban_copilot.domain.entities import MarketData
             import random
 
@@ -348,8 +365,9 @@ def main():
             wti_data = []
             brent_data = []
 
-            wti_base = 85.0
-            brent_base = 82.0
+            wti_base = ui_config.sample_wti_base_price
+            brent_base = ui_config.sample_brent_base_price
+            variation = ui_config.sample_price_variation
 
             for i in range(days, 0, -1):
                 date = base_date - timedelta(days=i)
@@ -358,17 +376,17 @@ def main():
 
                 wti_data.append(MarketData(
                     date=date,
-                    open=wti_base - 0.5,
-                    high=wti_base + 0.5,
-                    low=wti_base - 0.7,
+                    open=wti_base - variation,
+                    high=wti_base + variation,
+                    low=wti_base - variation * 1.4,
                     close=wti_base,
                     ticker="WTI",
                 ))
                 brent_data.append(MarketData(
                     date=date,
-                    open=brent_base - 0.5,
-                    high=brent_base + 0.5,
-                    low=brent_base - 0.7,
+                    open=brent_base - variation,
+                    high=brent_base + variation,
+                    low=brent_base - variation * 1.4,
                     close=brent_base,
                     ticker="BRENT",
                 ))
@@ -438,21 +456,25 @@ def main():
 
         with st.spinner("Generating AI analysis..."):
             try:
-                config = st.session_state.llm_config
+                app_config = st.session_state.app_config
+                llm_config = app_config.llm
 
-                # Get inference parameters from config
-                analysis_max_tokens = 2048
-                analysis_temperature = 0.7
-                extraction_max_tokens = 1024
-                extraction_temperature = 0.3
+                # Get inference parameters from config, with defaults from LLMConfig.get_default()
+                default_llm_config = LLMConfig.get_default()
 
-                if config.analysis and config.analysis.inference:
-                    analysis_max_tokens = config.analysis.inference.max_tokens
-                    analysis_temperature = config.analysis.inference.temperature
+                if llm_config.analysis and llm_config.analysis.inference:
+                    analysis_max_tokens = llm_config.analysis.inference.max_tokens
+                    analysis_temperature = llm_config.analysis.inference.temperature
+                else:
+                    analysis_max_tokens = default_llm_config.analysis.inference.max_tokens
+                    analysis_temperature = default_llm_config.analysis.inference.temperature
 
-                if config.extraction and config.extraction.inference:
-                    extraction_max_tokens = config.extraction.inference.max_tokens
-                    extraction_temperature = config.extraction.inference.temperature
+                if llm_config.extraction and llm_config.extraction.inference:
+                    extraction_max_tokens = llm_config.extraction.inference.max_tokens
+                    extraction_temperature = llm_config.extraction.inference.temperature
+                else:
+                    extraction_max_tokens = default_llm_config.extraction.inference.max_tokens
+                    extraction_temperature = default_llm_config.extraction.inference.temperature
 
                 signal_use_case = GenerateSignalUseCase(
                     llm_client=st.session_state.analysis_llm_client,
@@ -461,6 +483,7 @@ def main():
                     analysis_temperature=analysis_temperature,
                     extraction_max_tokens=extraction_max_tokens,
                     extraction_temperature=extraction_temperature,
+                    signal_config=app_config.signal,
                 )
                 signal = signal_use_case.execute(
                     spread_data, moving_averages, trend_summary
