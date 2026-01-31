@@ -152,7 +152,129 @@ ui:
 
 ## Docker Deployment
 
-### Docker Compose
+### Building the Image
+
+```bash
+# Build using Docker directly
+docker build -t murban-copilot:latest .
+
+# Build with a specific tag
+docker build -t murban-copilot:v1.0.0 .
+
+# Build using Docker Compose
+docker-compose build
+
+# Build with no cache (clean build)
+docker build --no-cache -t murban-copilot:latest .
+```
+
+### Running the Container
+
+```bash
+# Run with Docker (basic)
+docker run -p 8501:8501 murban-copilot:latest
+
+# Run in detached mode (background)
+docker run -d -p 8501:8501 --name murban-copilot murban-copilot:latest
+
+# Run with custom config file
+docker run -d -p 8501:8501 \
+  -v $(pwd)/config:/app/config:ro \
+  -e MURBAN_CONFIG=/app/config/llm_config.yaml \
+  murban-copilot:latest
+
+# Run with persistent cache and logs
+docker run -d -p 8501:8501 \
+  -v murban-llm-cache:/app/.llm_cache \
+  -v murban-logs:/app/logs \
+  --name murban-copilot \
+  murban-copilot:latest
+
+# Run with Docker Compose (recommended)
+docker-compose up -d
+```
+
+### Managing the Container
+
+```bash
+# View running containers
+docker ps
+
+# View container logs
+docker logs murban-copilot
+docker logs -f murban-copilot  # Follow logs
+
+# Check container health
+docker inspect --format='{{.State.Health.Status}}' murban-copilot
+
+# Stop the container
+docker stop murban-copilot
+
+# Start a stopped container
+docker start murban-copilot
+
+# Restart the container
+docker restart murban-copilot
+
+# Remove the container
+docker rm murban-copilot
+
+# Stop and remove with Docker Compose
+docker-compose down
+
+# Stop, remove, and delete volumes
+docker-compose down -v
+```
+
+### Docker Compose Commands
+
+```bash
+# Start services in background
+docker-compose up -d
+
+# Start and rebuild if needed
+docker-compose up -d --build
+
+# View logs
+docker-compose logs
+docker-compose logs -f  # Follow logs
+
+# Check service status
+docker-compose ps
+
+# Scale services (if needed)
+docker-compose up -d --scale murban-copilot=2
+
+# Stop services
+docker-compose stop
+
+# Stop and remove containers
+docker-compose down
+
+# Remove everything including volumes
+docker-compose down -v --rmi all
+```
+
+### Production Deployment
+
+```bash
+# Pull/build the latest image
+docker-compose pull || docker-compose build
+
+# Deploy with zero downtime (recreate containers)
+docker-compose up -d --force-recreate
+
+# View resource usage
+docker stats murban-copilot
+```
+
+### Docker Compose Configuration
+
+The `docker-compose.yml` includes:
+- Health checks with 60s start period
+- Automatic restart (`unless-stopped`)
+- Memory limits (4GB limit, 2GB reserved)
+- Persistent volumes for cache and logs
 
 ```yaml
 version: '3.8'
@@ -161,16 +283,29 @@ services:
     build: .
     ports:
       - "8501:8501"
-    volumes:
-      - ./config:/app/config:ro
-      - ./.llm_cache:/app/.llm_cache
     environment:
-      - MURBAN_CONFIG=/app/config/llm_config.yaml
+      - MURBAN_LLM_CONFIG=/app/config/llm_config.yaml
+      - MURBAN_LOG_LEVEL=INFO
+    volumes:
+      - llm_cache:/app/.llm_cache
+      - logs:/app/logs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 60s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+
+volumes:
+  llm_cache:
+  logs:
 ```
 
 ### Health Checks
