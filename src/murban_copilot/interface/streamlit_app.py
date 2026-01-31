@@ -19,7 +19,7 @@ from murban_copilot.application.generate_signal import GenerateSignalUseCase
 
 # Page config
 st.set_page_config(
-    page_title="WTI Intelligence Copilot",
+    page_title="Brent/WTI (West Texas Intermediate) Intelligence Copilot",
     page_icon="🛢️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -72,8 +72,7 @@ def init_services():
     if "spread_calculator" not in st.session_state:
         st.session_state.spread_calculator = SpreadCalculator()
     if "llm_client" not in st.session_state:
-        # Use mock client by default for demo; can be replaced with real LlamaClient
-        st.session_state.llm_client = MockLlamaClient()
+        st.session_state.llm_client = LlamaClient()
 
 
 def create_spread_chart(
@@ -224,7 +223,7 @@ def main():
     init_services()
 
     # Header
-    st.title("🛢️ WTI Intelligence Copilot")
+    st.title("🛢️ Brent/WTI (West Texas Intermediate) Intelligence Copilot")
     st.markdown("*AI-powered WTI-Brent crude oil spread analysis*")
 
     # Sidebar

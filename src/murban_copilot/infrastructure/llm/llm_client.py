@@ -15,8 +15,10 @@ logger = get_logger(__name__)
 class LlamaClient:
     """Client for local LLM inference using llama-cpp-python."""
 
-    DEFAULT_MODEL_REPO = "bartowski/gemma-2-9b-it-GGUF"
-    DEFAULT_MODEL_FILE = "gemma-2-9b-it-Q4_K_M.gguf"
+    #DEFAULT_MODEL_REPO = "bartowski/gemma-2-9b-it-GGUF"
+    #DEFAULT_MODEL_FILE = "gemma-2-9b-it-Q4_K_M.gguf"
+    DEFAULT_MODEL_REPO = "MaziyarPanahi/gemma-3-12b-it-GGUF"
+    DEFAULT_MODEL_FILE = "gemma-3-12b-it.Q6_K.gguf"
 
     def __init__(
         self,
@@ -104,7 +106,7 @@ class LlamaClient:
             prompt: The input prompt
             max_tokens: Maximum tokens to generate
             temperature: Sampling temperature (0.0 to 1.0)
-            use_cache: Whether to use response caching
+            use_cache: Whether to use response caching (default: True)
 
         Returns:
             Generated text

@@ -17,13 +17,14 @@ class TraderTalkTemplate:
         "Past performance is not indicative of future results."
     )
 
-    SYSTEM_PROMPT = """You are an experienced crude oil trader providing market analysis.
-Your style is professional but accessible, using common trading terminology.
-Provide concise, actionable insights based on the data provided.
-Always maintain a balanced perspective and acknowledge uncertainty.
-Focus on the WTI-Brent spread dynamics and what they might indicate."""
+    SYSTEM_PROMPT = """You are an Senior Quantitative Strategist crude oil trader providing market analysis.
+    Your style is professional but accessible, using common trading terminology.
+    Provide concise, actionable insights based on the data provided.
+    Always maintain a balanced perspective and acknowledge uncertainty.
+    Focus on the WTI-Brent spread dynamics and what they might indicate.
+"""
 
-    ANALYSIS_TEMPLATE = """Analyze the following WTI-Brent crude oil spread data and provide a brief market signal.
+    ANALYSIS_TEMPLATE = """Analyze the following WTI-Brent crude oil spread data and provide comprehensive market analysis.
 
 ## Current Market Data
 - Current Spread: ${current_spread:.2f}/barrel
@@ -37,12 +38,45 @@ Focus on the WTI-Brent spread dynamics and what they might indicate."""
 {recent_history}
 
 ## Your Task
-1. Assess the current market condition based on the spread data
-2. Identify any notable patterns or signals
-3. Provide a brief outlook (bullish/bearish/neutral) with reasoning
-4. Rate your confidence (low/medium/high)
+Generate a comprehensive "Executive Trading Brief" with the following sections:
 
-Keep your analysis concise (2-3 paragraphs max). Use clear trader language."""
+### 1. Market Overview
+- Current spread positioning relative to historical norms
+- Assessment of current market regime (contango/backwardation implications)
+
+### 2. Technical Analysis
+- Moving average crossover analysis (MA5 vs MA20)
+- Spread momentum and velocity assessment
+- Key support/resistance levels for the spread
+- Identify any chart patterns or divergences
+
+### 3. Fundamental Drivers
+- What macro factors could be driving the current spread dynamics
+- Regional supply/demand imbalances (US vs North Sea)
+- Refinery margin implications
+- Seasonal patterns and their current impact
+
+### 4. Risk Assessment
+- Downside risks to current positioning
+- Potential catalysts for spread widening/narrowing
+- Volatility outlook
+
+### 5. Trading Implications
+- Outlook: bullish/bearish/neutral with clear reasoning
+- Confidence level: low/medium/high (with justification)
+- Potential tactical opportunities (hedging, arbitrage, timing)
+- Recommended position sizing considerations
+
+### 6. Strategic Considerations
+- How does this market state impact trading strategy
+- Key levels to watch for position adjustments
+
+## OUTPUT FORMAT
+- Use professional trading terminology
+- Be specific with numbers and levels where possible
+- Acknowledge uncertainty and provide probability-weighted scenarios
+- End with: SIGNAL: [bullish/bearish/neutral], CONFIDENCE: [0.0-1.0]
+"""
 
     @classmethod
     def format_analysis_prompt(
@@ -116,13 +150,14 @@ class SignalExtractionTemplate:
 
     EXTRACTION_PROMPT = """Based on the following market analysis, extract the key signal information.
 
-Analysis:
-{analysis}
+    Analysis:
+    {analysis}
 
-Respond in exactly this format:
-SIGNAL: [bullish/bearish/neutral]
-CONFIDENCE: [0.0-1.0]
-SUMMARY: [One sentence summary]"""
+    Respond in exactly this format:
+    SIGNAL: [bullish/bearish/neutral]
+    CONFIDENCE: [0.0-1.0]
+    SUMMARY: [One sentence summary]
+    """
 
     @classmethod
     def format_extraction_prompt(cls, analysis: str) -> str:

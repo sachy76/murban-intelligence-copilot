@@ -63,10 +63,10 @@ class GenerateSignalUseCase:
         logger.debug(f"Generated prompt length: {len(prompt)} chars")
 
         try:
-            # Step 1: Generate free-form analysis
+            # Step 1: Generate comprehensive analysis
             analysis = self.llm.generate(
                 prompt,
-                max_tokens=1024,
+                max_tokens=2048,  # Increased for detailed analysis
                 temperature=0.7,
             )
             logger.debug("Step 1 complete: Generated analysis")
@@ -75,7 +75,7 @@ class GenerateSignalUseCase:
             extraction_prompt = SignalExtractionTemplate.format_extraction_prompt(analysis)
             extraction_response = self.llm.generate(
                 extraction_prompt,
-                max_tokens=128,
+                max_tokens=1024,
                 temperature=0.3,  # Lower temperature for more consistent extraction
             )
             logger.debug("Step 2 complete: Extracted signal")
