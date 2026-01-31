@@ -126,3 +126,27 @@ A requirement is complete only when:
 * Behavior matches `requirements.md` exactly
 
 **Do not proceed if any condition is unmet.**
+
+
+
+
+
+===============================================================
+Update application to be config driven for LLM execution.
+Different LLM model is required for Analysis prompt as against to Extraction.
+===============================================================
+Is this application production ready?
+If not then what all changes are required?
+===============================================================
+update readme.md with docker commands to build, deploy and run the images.
+===============================================================
+Ensure that application is config-driven.
+===============================================================
+Ensure all the fields/values on dashboard have contrast font color to dark theme.
+===============================================================
+Users wants to drill down on below data points:
+- Input Brent data
+- Input WTI data
+- Any other derived data points which are useful to user.
+Suggest a plan for drill down screen.
+After the changes, I would like to test them and be able to rollback the changes if I don't like the functionality.

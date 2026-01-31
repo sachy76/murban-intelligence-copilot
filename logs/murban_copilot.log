@@ -1,257 +1,798 @@
-2026-01-30T15:42:12.938Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:42:13.576Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:42:13.616Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:42:14.163Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:42:42.569Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:42:43.189Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:43:08.327Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:43:09.083Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:43:21.370Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:43:21.862Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:43:21.900Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:43:22.365Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:44:31.066Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:44:31.067Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:44:31.068Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:44:31.068Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:44:31.069Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:44:31.069Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:44:31.070Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:44:31.070Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:44:31.071Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:44:31.071Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:44:31.071Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:44:31.071Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:44:31.072Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:44:31.073Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:44:31.073Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:44:31.073Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:44:31.074Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:44:31.074Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:44:31.075Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:44:31.075Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:44:31.077Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 0 Brent records
-2026-01-30T15:44:31.083Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:44:31.083Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:44:31.083Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:44:31.085Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:44:31.085Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:44:31.085Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:44:31.086Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-21 to 2026-01-30
-2026-01-30T15:44:31.087Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:44:31.087Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:44:31.087Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
-2026-01-30T15:44:31.088Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:44:31.088Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:44:31.089Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:44:31.089Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Murban records
-2026-01-30T15:44:31.089Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
-2026-01-30T15:44:31.090Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:44:31.090Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:44:31.090Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
-2026-01-30T15:44:31.092Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:44:31.094Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:44:31.095Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:44:31.096Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:44:31.099Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:44:31.210Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:44:31.877Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:44:31.919Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:44:32.642Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:45:23.834Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:45:23.834Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:45:23.835Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:45:23.835Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:45:23.836Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:45:23.836Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:45:23.836Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:45:23.836Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:45:23.837Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:45:23.837Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:45:23.837Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:45:23.837Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:45:23.838Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:45:23.838Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:45:23.838Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:45:23.838Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:45:23.839Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:45:23.839Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:45:23.839Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:45:23.839Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:45:23.840Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 0 Brent records
-2026-01-30T15:45:23.843Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:45:23.843Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:45:23.843Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:45:23.844Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:45:23.844Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:45:23.844Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:45:23.845Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-21 to 2026-01-30
-2026-01-30T15:45:23.845Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:45:23.845Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:45:23.846Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
-2026-01-30T15:45:23.846Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:45:23.846Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:45:23.847Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:45:23.847Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Murban records
-2026-01-30T15:45:23.847Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
-2026-01-30T15:45:23.848Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:45:23.848Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:45:23.848Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
-2026-01-30T15:45:23.850Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:45:23.852Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:45:23.853Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:45:23.854Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:45:23.857Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:45:23.961Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:45:24.613Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:45:24.647Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:45:25.311Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:45:56.123Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:45:57.022Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:46:09.293Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:46:09.293Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:46:09.294Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:46:09.294Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:46:09.295Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:46:09.295Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:46:09.295Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:46:09.296Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:46:09.296Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:46:09.296Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:46:09.297Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:46:09.297Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:46:09.297Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:46:09.297Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:46:09.298Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:46:09.298Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:46:09.298Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T15:46:09.298Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T15:46:09.299Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T15:46:09.299Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T15:46:09.299Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 0 Brent records
-2026-01-30T15:46:09.303Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:46:09.303Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:46:09.303Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:46:09.304Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:46:09.304Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:46:09.304Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:46:09.305Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-21 to 2026-01-30
-2026-01-30T15:46:09.305Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:46:09.305Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:46:09.308Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
-2026-01-30T15:46:09.308Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:46:09.308Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
-2026-01-30T15:46:09.309Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:46:09.309Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Murban records
-2026-01-30T15:46:09.309Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
-2026-01-30T15:46:09.310Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T15:46:09.310Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Murban records
-2026-01-30T15:46:09.310Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
-2026-01-30T15:46:09.312Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:46:09.314Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:46:09.315Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:46:09.316Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:46:09.319Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T15:46:09.348Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:46:09.821Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T15:46:09.855Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
-2026-01-30T15:46:10.340Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
-2026-01-30T18:04:52.995Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T18:04:54.106Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T18:04:54.106Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T18:04:54.107Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:04:54.107Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
-2026-01-30T18:04:54.205Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:07:44.413Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T18:07:45.028Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T18:07:45.028Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T18:07:45.029Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:07:45.029Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:07:45.070Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:08:01.966Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T18:08:01.968Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T18:08:01.968Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T18:08:01.969Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:08:01.969Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:08:01.988Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:09:03.711Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T18:09:03.713Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T18:09:03.714Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T18:09:03.714Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:03.714Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:09:03.739Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:09:21.172Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T18:09:21.174Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T18:09:21.174Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T18:09:21.175Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:21.175Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:09:21.209Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:09:34.668Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-03 to 2026-01-30
-2026-01-30T18:09:34.674Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 48 Murban and 48 Brent records
-2026-01-30T18:09:34.674Z | INFO     | murban_copilot.application.analyze_spread | Calculated 48 spread data points
-2026-01-30T18:09:34.675Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:34.675Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
-2026-01-30T18:09:34.712Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:09:38.245Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-10-22 to 2026-01-30
-2026-01-30T18:09:38.248Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 90 Murban and 90 Brent records
-2026-01-30T18:09:38.249Z | INFO     | murban_copilot.application.analyze_spread | Calculated 90 spread data points
-2026-01-30T18:09:38.250Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:38.250Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
-2026-01-30T18:09:38.281Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:09:43.034Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
-2026-01-30T18:09:43.038Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
-2026-01-30T18:09:43.038Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
-2026-01-30T18:09:43.038Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:43.038Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:09:43.072Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:09:45.477Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
-2026-01-30T18:09:45.479Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
-2026-01-30T18:09:45.479Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
-2026-01-30T18:09:45.480Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:45.480Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:09:46.695Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
-2026-01-30T18:09:46.700Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
-2026-01-30T18:09:46.700Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
-2026-01-30T18:09:46.700Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:46.700Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
-2026-01-30T18:09:46.735Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:09:47.437Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
-2026-01-30T18:09:47.441Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
-2026-01-30T18:09:47.442Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
-2026-01-30T18:09:47.442Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:47.442Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
-2026-01-30T18:09:49.388Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
-2026-01-30T18:09:49.391Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
-2026-01-30T18:09:49.392Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
-2026-01-30T18:09:49.392Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:49.392Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
-2026-01-30T18:09:49.422Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:09:50.800Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
-2026-01-30T18:09:50.805Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
-2026-01-30T18:09:50.805Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
-2026-01-30T18:09:50.806Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:50.806Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:09:53.461Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-28 to 2026-01-30
-2026-01-30T18:09:53.465Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 23 Murban and 23 Brent records
-2026-01-30T18:09:53.465Z | INFO     | murban_copilot.application.analyze_spread | Calculated 23 spread data points
-2026-01-30T18:09:53.466Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:09:53.466Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:09:53.493Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:16:32.386Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T18:16:32.394Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T18:16:32.394Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T18:16:32.395Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:16:32.396Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
-2026-01-30T18:16:32.423Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:16:50.340Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T18:16:50.343Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T18:16:50.344Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T18:16:50.344Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:16:50.344Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:16:50.380Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
-2026-01-30T18:51:09.324Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-21 to 2026-01-30
-2026-01-30T18:51:09.330Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 Murban and 30 Brent records
-2026-01-30T18:51:09.330Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
-2026-01-30T18:51:09.331Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
-2026-01-30T18:51:09.332Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
-2026-01-30T18:51:09.363Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T07:47:27.066Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T07:47:27.067Z | INFO     | murban_copilot.__main__ | Loaded LLM config from: config/llm_config.yaml
+2026-01-31T07:47:27.067Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T07:47:27.067Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T07:47:27.068Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T07:47:28.046Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 65.42, 'open': 65.52, 'dayLow': 63.64, 'dayHigh': 66.11, 'regularMarketPreviousClose': 65.42, 'regularMarketOpen': 65.52, 'regularMarketDayLow': 63.64, 'regularMarketDayHigh': 66.11, 'volume': 419807, 'regularMarketVolume': 419812, 'averageVolume': 256450, 'averageVolume10days': 367036, 'averageDailyVolume10Day': 367036, 'bid': 65.7, 'ask': 65.95, 'askSize': 2200, 'expireDate': 1771545600, 'openInterest': 365455, 'fiftyTwoWeekLow': 54.98, 'fiftyTwoWeekHigh': 78.4, 'allTimeHigh': 147.27, 'allTimeLow': -40.32, 'fiftyDayAverage': 58.9596, 'twoHundredDayAverage': 62.27635, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'CL=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'contractSymbol': False, 'headSymbolAsString': 'CL=F', 'marketState': 'CLOSED', 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 967003200000, 'regularMarketChange': -0.20999908, 'regularMarketDayRange': '63.64 - 66.11', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 256450, 'fiftyTwoWeekLowChange': 10.23, 'fiftyTwoWeekLowChangePercent': 0.18606766, 'fiftyTwoWeekRange': '54.98 - 78.4', 'fiftyTwoWeekHighChange': -13.190002, 'fiftyTwoWeekHighChangePercent': -0.16823982, 'fiftyTwoWeekChangePercent': -10.866594, 'expireIsoDate': '2026-02-20T00:00:00Z', 'fiftyDayAverageChange': 6.2504005, 'fiftyDayAverageChangePercent': 0.106011584, 'twoHundredDayAverageChange': 2.933651, 'twoHundredDayAverageChangePercent': 0.047106985, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'corporateActions': [], 'regularMarketTime': 1769810399, 'underlyingSymbol': 'CL.NYM', 'underlyingExchangeSymbol': 'CLH26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'regularMarketChangePercent': -0.32100135, 'regularMarketPrice': 65.21, 'shortName': 'Crude Oil Mar 26', 'trailingPegRatio': None}
+2026-01-31T07:47:28.053Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T07:47:28.435Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 69.59, 'open': 69.6, 'dayLow': 67.78, 'dayHigh': 70.21, 'regularMarketPreviousClose': 69.59, 'regularMarketOpen': 69.6, 'regularMarketDayLow': 67.78, 'regularMarketDayHigh': 70.21, 'volume': 84500, 'regularMarketVolume': 84500, 'averageVolume': 39214, 'averageVolume10days': 38790, 'averageDailyVolume10Day': 38790, 'bid': 67.05, 'ask': 70.2, 'askSize': 1, 'expireDate': 1772409600, 'openInterest': 27256, 'fiftyTwoWeekLow': 58.39, 'fiftyTwoWeekHigh': 81.4, 'allTimeHigh': 147.43, 'allTimeLow': 16.0, 'fiftyDayAverage': 63.1372, 'twoHundredDayAverage': 65.73585, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'BZ=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'contractSymbol': False, 'headSymbolAsString': 'BZ=F', 'marketState': 'CLOSED', 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 1185768000000, 'regularMarketChange': -0.26999664, 'regularMarketDayRange': '67.78 - 70.21', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 39214, 'fiftyTwoWeekLowChange': 10.93, 'fiftyTwoWeekLowChangePercent': 0.1871896, 'fiftyTwoWeekRange': '58.39 - 81.4', 'fiftyTwoWeekHighChange': -12.080002, 'fiftyTwoWeekHighChangePercent': -0.14840297, 'fiftyTwoWeekChangePercent': -6.9378614, 'expireIsoDate': '2026-03-02T00:00:00Z', 'fiftyDayAverageChange': 6.1828003, 'fiftyDayAverageChangePercent': 0.09792642, 'twoHundredDayAverageChange': 3.5841522, 'twoHundredDayAverageChangePercent': 0.054523557, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'corporateActions': [], 'regularMarketTime': 1769810385, 'underlyingSymbol': 'BZ.NYM', 'underlyingExchangeSymbol': 'BZJ26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'regularMarketChangePercent': -0.38798198, 'regularMarketPrice': 69.32, 'shortName': 'Brent Crude Oil Last Day Financ', 'trailingPegRatio': None}
+2026-01-31T07:47:28.446Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T07:47:28.447Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T07:47:28.447Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T07:47:28.449Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T07:47:28.449Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T07:47:28.541Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T07:47:44.097Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-07 to 2026-01-31
+2026-01-31T07:47:44.473Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 65.42, 'open': 65.52, 'dayLow': 63.64, 'dayHigh': 66.11, 'regularMarketPreviousClose': 65.42, 'regularMarketOpen': 65.52, 'regularMarketDayLow': 63.64, 'regularMarketDayHigh': 66.11, 'volume': 419807, 'regularMarketVolume': 419812, 'averageVolume': 256450, 'averageVolume10days': 367036, 'averageDailyVolume10Day': 367036, 'bid': 65.7, 'ask': 65.95, 'askSize': 2200, 'expireDate': 1771545600, 'openInterest': 365455, 'fiftyTwoWeekLow': 54.98, 'fiftyTwoWeekHigh': 78.4, 'allTimeHigh': 147.27, 'allTimeLow': -40.32, 'fiftyDayAverage': 58.9596, 'twoHundredDayAverage': 62.27635, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'CL=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'CL=F', 'contractSymbol': False, 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 256450, 'fiftyTwoWeekLowChange': 10.23, 'fiftyTwoWeekLowChangePercent': 0.18606766, 'fiftyTwoWeekRange': '54.98 - 78.4', 'fiftyTwoWeekHighChange': -13.190002, 'fiftyTwoWeekHighChangePercent': -0.16823982, 'fiftyTwoWeekChangePercent': -10.866594, 'expireIsoDate': '2026-02-20T00:00:00Z', 'fiftyDayAverageChange': 6.2504005, 'fiftyDayAverageChangePercent': 0.106011584, 'twoHundredDayAverageChange': 2.933651, 'twoHundredDayAverageChangePercent': 0.047106985, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'regularMarketChangePercent': -0.32100135, 'regularMarketPrice': 65.21, 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 967003200000, 'regularMarketChange': -0.20999908, 'regularMarketDayRange': '63.64 - 66.11', 'marketState': 'CLOSED', 'cryptoTradeable': False, 'corporateActions': [], 'regularMarketTime': 1769810399, 'underlyingSymbol': 'CL.NYM', 'underlyingExchangeSymbol': 'CLH26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'shortName': 'Crude Oil Mar 26', 'trailingPegRatio': None}
+2026-01-31T07:47:44.479Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 40 WTI records
+2026-01-31T07:47:44.719Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 69.59, 'open': 69.6, 'dayLow': 67.78, 'dayHigh': 70.21, 'regularMarketPreviousClose': 69.59, 'regularMarketOpen': 69.6, 'regularMarketDayLow': 67.78, 'regularMarketDayHigh': 70.21, 'volume': 84500, 'regularMarketVolume': 84500, 'averageVolume': 39214, 'averageVolume10days': 38790, 'averageDailyVolume10Day': 38790, 'bid': 67.05, 'ask': 70.2, 'askSize': 1, 'expireDate': 1772409600, 'openInterest': 27256, 'fiftyTwoWeekLow': 58.39, 'fiftyTwoWeekHigh': 81.4, 'allTimeHigh': 147.43, 'allTimeLow': 16.0, 'fiftyDayAverage': 63.1372, 'twoHundredDayAverage': 65.73585, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'BZ=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'BZ=F', 'contractSymbol': False, 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 39214, 'fiftyTwoWeekLowChange': 10.93, 'fiftyTwoWeekLowChangePercent': 0.1871896, 'fiftyTwoWeekRange': '58.39 - 81.4', 'fiftyTwoWeekHighChange': -12.080002, 'fiftyTwoWeekHighChangePercent': -0.14840297, 'fiftyTwoWeekChangePercent': -6.9378614, 'expireIsoDate': '2026-03-02T00:00:00Z', 'fiftyDayAverageChange': 6.1828003, 'fiftyDayAverageChangePercent': 0.09792642, 'twoHundredDayAverageChange': 3.5841522, 'twoHundredDayAverageChangePercent': 0.054523557, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'regularMarketChangePercent': -0.38798198, 'regularMarketPrice': 69.32, 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 1185768000000, 'regularMarketChange': -0.26999664, 'regularMarketDayRange': '67.78 - 70.21', 'marketState': 'CLOSED', 'cryptoTradeable': False, 'corporateActions': [], 'regularMarketTime': 1769810385, 'underlyingSymbol': 'BZ.NYM', 'underlyingExchangeSymbol': 'BZJ26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'shortName': 'Brent Crude Oil Last Day Financ', 'trailingPegRatio': None}
+2026-01-31T07:47:44.728Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 40 Brent records
+2026-01-31T07:47:44.729Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 40 WTI and 40 Brent records
+2026-01-31T07:47:44.729Z | INFO     | murban_copilot.application.analyze_spread | Calculated 40 spread data points
+2026-01-31T07:47:44.730Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T07:47:44.731Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T07:47:44.769Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T07:47:51.453Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-13 to 2026-01-31
+2026-01-31T07:47:51.816Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 65.42, 'open': 65.52, 'dayLow': 63.64, 'dayHigh': 66.11, 'regularMarketPreviousClose': 65.42, 'regularMarketOpen': 65.52, 'regularMarketDayLow': 63.64, 'regularMarketDayHigh': 66.11, 'volume': 419807, 'regularMarketVolume': 419812, 'averageVolume': 256450, 'averageVolume10days': 367036, 'averageDailyVolume10Day': 367036, 'bid': 65.7, 'ask': 65.95, 'askSize': 2200, 'expireDate': 1771545600, 'openInterest': 365455, 'fiftyTwoWeekLow': 54.98, 'fiftyTwoWeekHigh': 78.4, 'allTimeHigh': 147.27, 'allTimeLow': -40.32, 'fiftyDayAverage': 58.9596, 'twoHundredDayAverage': 62.27635, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'CL=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'contractSymbol': False, 'headSymbolAsString': 'CL=F', 'marketState': 'CLOSED', 'shortName': 'Crude Oil Mar 26', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'esgPopulated': False, 'expireIsoDate': '2026-02-20T00:00:00Z', 'fiftyDayAverageChange': 6.2504005, 'fiftyDayAverageChangePercent': 0.106011584, 'twoHundredDayAverageChange': 2.933651, 'twoHundredDayAverageChangePercent': 0.047106985, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'regularMarketChangePercent': -0.32100135, 'regularMarketPrice': 65.21, 'regularMarketChange': -0.20999908, 'regularMarketDayRange': '63.64 - 66.11', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 256450, 'fiftyTwoWeekLowChange': 10.23, 'fiftyTwoWeekLowChangePercent': 0.18606766, 'fiftyTwoWeekRange': '54.98 - 78.4', 'fiftyTwoWeekHighChange': -13.190002, 'fiftyTwoWeekHighChangePercent': -0.16823982, 'fiftyTwoWeekChangePercent': -10.866594, 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 967003200000, 'corporateActions': [], 'regularMarketTime': 1769810399, 'underlyingSymbol': 'CL.NYM', 'underlyingExchangeSymbol': 'CLH26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'market': 'us24_market', 'trailingPegRatio': None}
+2026-01-31T07:47:51.828Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 57 WTI records
+2026-01-31T07:47:52.054Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 69.59, 'open': 69.6, 'dayLow': 67.78, 'dayHigh': 70.21, 'regularMarketPreviousClose': 69.59, 'regularMarketOpen': 69.6, 'regularMarketDayLow': 67.78, 'regularMarketDayHigh': 70.21, 'volume': 84500, 'regularMarketVolume': 84500, 'averageVolume': 39214, 'averageVolume10days': 38790, 'averageDailyVolume10Day': 38790, 'bid': 67.05, 'ask': 70.2, 'askSize': 1, 'expireDate': 1772409600, 'openInterest': 27256, 'fiftyTwoWeekLow': 58.39, 'fiftyTwoWeekHigh': 81.4, 'allTimeHigh': 147.43, 'allTimeLow': 16.0, 'fiftyDayAverage': 63.1372, 'twoHundredDayAverage': 65.73585, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'BZ=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'BZ=F', 'contractSymbol': False, 'corporateActions': [], 'regularMarketTime': 1769810385, 'underlyingSymbol': 'BZ.NYM', 'underlyingExchangeSymbol': 'BZJ26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'marketState': 'CLOSED', 'regularMarketChange': -0.26999664, 'regularMarketDayRange': '67.78 - 70.21', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 39214, 'fiftyTwoWeekLowChange': 10.93, 'fiftyTwoWeekLowChangePercent': 0.1871896, 'fiftyTwoWeekRange': '58.39 - 81.4', 'fiftyTwoWeekHighChange': -12.080002, 'fiftyTwoWeekHighChangePercent': -0.14840297, 'fiftyTwoWeekChangePercent': -6.9378614, 'expireIsoDate': '2026-03-02T00:00:00Z', 'fiftyDayAverageChange': 6.1828003, 'fiftyDayAverageChangePercent': 0.09792642, 'twoHundredDayAverageChange': 3.5841522, 'twoHundredDayAverageChangePercent': 0.054523557, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 1185768000000, 'shortName': 'Brent Crude Oil Last Day Financ', 'regularMarketChangePercent': -0.38798198, 'regularMarketPrice': 69.32, 'trailingPegRatio': None}
+2026-01-31T07:47:52.059Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 57 Brent records
+2026-01-31T07:47:52.060Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 57 WTI and 57 Brent records
+2026-01-31T07:47:52.060Z | INFO     | murban_copilot.application.analyze_spread | Calculated 57 spread data points
+2026-01-31T07:47:52.061Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T07:47:52.062Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T07:47:52.096Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T07:48:02.967Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-13 to 2026-01-31
+2026-01-31T07:48:03.287Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 65.42, 'open': 65.52, 'dayLow': 63.64, 'dayHigh': 66.11, 'regularMarketPreviousClose': 65.42, 'regularMarketOpen': 65.52, 'regularMarketDayLow': 63.64, 'regularMarketDayHigh': 66.11, 'volume': 419807, 'regularMarketVolume': 419812, 'averageVolume': 256450, 'averageVolume10days': 367036, 'averageDailyVolume10Day': 367036, 'bid': 65.7, 'ask': 65.95, 'askSize': 2200, 'expireDate': 1771545600, 'openInterest': 365455, 'fiftyTwoWeekLow': 54.98, 'fiftyTwoWeekHigh': 78.4, 'allTimeHigh': 147.27, 'allTimeLow': -40.32, 'fiftyDayAverage': 58.9596, 'twoHundredDayAverage': 62.27635, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'CL=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'contractSymbol': False, 'headSymbolAsString': 'CL=F', 'marketState': 'CLOSED', 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 967003200000, 'regularMarketChange': -0.20999908, 'regularMarketDayRange': '63.64 - 66.11', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 256450, 'fiftyTwoWeekLowChange': 10.23, 'fiftyTwoWeekLowChangePercent': 0.18606766, 'fiftyTwoWeekRange': '54.98 - 78.4', 'fiftyTwoWeekHighChange': -13.190002, 'fiftyTwoWeekHighChangePercent': -0.16823982, 'fiftyTwoWeekChangePercent': -10.866594, 'expireIsoDate': '2026-02-20T00:00:00Z', 'fiftyDayAverageChange': 6.2504005, 'fiftyDayAverageChangePercent': 0.106011584, 'twoHundredDayAverageChange': 2.933651, 'twoHundredDayAverageChangePercent': 0.047106985, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'corporateActions': [], 'regularMarketTime': 1769810399, 'underlyingSymbol': 'CL.NYM', 'underlyingExchangeSymbol': 'CLH26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'regularMarketChangePercent': -0.32100135, 'regularMarketPrice': 65.21, 'shortName': 'Crude Oil Mar 26', 'trailingPegRatio': None}
+2026-01-31T07:48:03.298Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 57 WTI records
+2026-01-31T07:48:03.494Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 69.59, 'open': 69.6, 'dayLow': 67.78, 'dayHigh': 70.21, 'regularMarketPreviousClose': 69.59, 'regularMarketOpen': 69.6, 'regularMarketDayLow': 67.78, 'regularMarketDayHigh': 70.21, 'volume': 84500, 'regularMarketVolume': 84500, 'averageVolume': 39214, 'averageVolume10days': 38790, 'averageDailyVolume10Day': 38790, 'bid': 67.05, 'ask': 70.2, 'askSize': 1, 'expireDate': 1772409600, 'openInterest': 27256, 'fiftyTwoWeekLow': 58.39, 'fiftyTwoWeekHigh': 81.4, 'allTimeHigh': 147.43, 'allTimeLow': 16.0, 'fiftyDayAverage': 63.1372, 'twoHundredDayAverage': 65.73585, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'BZ=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'BZ=F', 'contractSymbol': False, 'shortName': 'Brent Crude Oil Last Day Financ', 'corporateActions': [], 'regularMarketTime': 1769810385, 'underlyingSymbol': 'BZ.NYM', 'underlyingExchangeSymbol': 'BZJ26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'regularMarketChangePercent': -0.38798198, 'regularMarketPrice': 69.32, 'twoHundredDayAverageChange': 3.5841522, 'twoHundredDayAverageChangePercent': 0.054523557, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 1185768000000, 'regularMarketChange': -0.26999664, 'regularMarketDayRange': '67.78 - 70.21', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 39214, 'fiftyTwoWeekLowChange': 10.93, 'fiftyTwoWeekLowChangePercent': 0.1871896, 'fiftyTwoWeekRange': '58.39 - 81.4', 'fiftyTwoWeekHighChange': -12.080002, 'fiftyTwoWeekHighChangePercent': -0.14840297, 'fiftyTwoWeekChangePercent': -6.9378614, 'expireIsoDate': '2026-03-02T00:00:00Z', 'fiftyDayAverageChange': 6.1828003, 'fiftyDayAverageChangePercent': 0.09792642, 'marketState': 'CLOSED', 'trailingPegRatio': None}
+2026-01-31T07:48:03.505Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 57 Brent records
+2026-01-31T07:48:03.506Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 57 WTI and 57 Brent records
+2026-01-31T07:48:03.506Z | INFO     | murban_copilot.application.analyze_spread | Calculated 57 spread data points
+2026-01-31T07:48:03.508Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T07:48:03.508Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T07:48:03.547Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T07:51:54.402Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T07:51:54.403Z | INFO     | murban_copilot.__main__ | Loaded LLM config from: config/llm_config.yaml
+2026-01-31T07:51:54.403Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T07:51:54.403Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T07:51:54.404Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T07:51:55.089Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 65.42, 'open': 65.52, 'dayLow': 63.64, 'dayHigh': 66.11, 'regularMarketPreviousClose': 65.42, 'regularMarketOpen': 65.52, 'regularMarketDayLow': 63.64, 'regularMarketDayHigh': 66.11, 'volume': 419807, 'regularMarketVolume': 419812, 'averageVolume': 256450, 'averageVolume10days': 367036, 'averageDailyVolume10Day': 367036, 'bid': 65.7, 'ask': 65.95, 'askSize': 2200, 'expireDate': 1771545600, 'openInterest': 365455, 'fiftyTwoWeekLow': 54.98, 'fiftyTwoWeekHigh': 78.4, 'allTimeHigh': 147.27, 'allTimeLow': -40.32, 'fiftyDayAverage': 58.9596, 'twoHundredDayAverage': 62.27635, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'CL=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'CL=F', 'contractSymbol': False, 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 256450, 'fiftyTwoWeekLowChange': 10.23, 'fiftyTwoWeekLowChangePercent': 0.18606766, 'fiftyTwoWeekRange': '54.98 - 78.4', 'fiftyTwoWeekHighChange': -13.190002, 'fiftyTwoWeekHighChangePercent': -0.16823982, 'fiftyTwoWeekChangePercent': -10.866594, 'expireIsoDate': '2026-02-20T00:00:00Z', 'fiftyDayAverageChange': 6.2504005, 'fiftyDayAverageChangePercent': 0.106011584, 'twoHundredDayAverageChange': 2.933651, 'twoHundredDayAverageChangePercent': 0.047106985, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'regularMarketChangePercent': -0.32100135, 'regularMarketPrice': 65.21, 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 967003200000, 'regularMarketChange': -0.20999908, 'regularMarketDayRange': '63.64 - 66.11', 'marketState': 'CLOSED', 'cryptoTradeable': False, 'corporateActions': [], 'regularMarketTime': 1769810399, 'underlyingSymbol': 'CL.NYM', 'underlyingExchangeSymbol': 'CLH26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'shortName': 'Crude Oil Mar 26', 'trailingPegRatio': None}
+2026-01-31T07:51:55.098Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T07:51:55.456Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 69.59, 'open': 69.6, 'dayLow': 67.78, 'dayHigh': 70.21, 'regularMarketPreviousClose': 69.59, 'regularMarketOpen': 69.6, 'regularMarketDayLow': 67.78, 'regularMarketDayHigh': 70.21, 'volume': 84500, 'regularMarketVolume': 84500, 'averageVolume': 39214, 'averageVolume10days': 38790, 'averageDailyVolume10Day': 38790, 'bid': 67.05, 'ask': 70.2, 'askSize': 1, 'expireDate': 1772409600, 'openInterest': 27256, 'fiftyTwoWeekLow': 58.39, 'fiftyTwoWeekHigh': 81.4, 'allTimeHigh': 147.43, 'allTimeLow': 16.0, 'fiftyDayAverage': 63.1372, 'twoHundredDayAverage': 65.73585, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'BZ=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'contractSymbol': False, 'headSymbolAsString': 'BZ=F', 'expireIsoDate': '2026-03-02T00:00:00Z', 'fiftyDayAverageChange': 6.1828003, 'fiftyDayAverageChangePercent': 0.09792642, 'twoHundredDayAverageChange': 3.5841522, 'twoHundredDayAverageChangePercent': 0.054523557, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'marketState': 'CLOSED', 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 1185768000000, 'regularMarketChange': -0.26999664, 'regularMarketDayRange': '67.78 - 70.21', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 39214, 'fiftyTwoWeekLowChange': 10.93, 'fiftyTwoWeekLowChangePercent': 0.1871896, 'fiftyTwoWeekRange': '58.39 - 81.4', 'fiftyTwoWeekHighChange': -12.080002, 'fiftyTwoWeekHighChangePercent': -0.14840297, 'fiftyTwoWeekChangePercent': -6.9378614, 'corporateActions': [], 'regularMarketTime': 1769810385, 'underlyingSymbol': 'BZ.NYM', 'underlyingExchangeSymbol': 'BZJ26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'regularMarketChangePercent': -0.38798198, 'regularMarketPrice': 69.32, 'shortName': 'Brent Crude Oil Last Day Financ', 'trailingPegRatio': None}
+2026-01-31T07:51:55.466Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T07:51:55.467Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T07:51:55.467Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T07:51:55.468Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T07:51:55.468Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T07:51:55.553Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T07:51:55.623Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T07:52:02.853Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T07:54:18.907Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T07:55:21.832Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T07:57:37.376Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T07:57:37.378Z | INFO     | murban_copilot.__main__ | Loaded LLM config from: config/llm_config.yaml
+2026-01-31T07:57:37.379Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T07:57:37.379Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T07:57:37.381Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T07:57:37.744Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 65.42, 'open': 65.52, 'dayLow': 63.64, 'dayHigh': 66.11, 'regularMarketPreviousClose': 65.42, 'regularMarketOpen': 65.52, 'regularMarketDayLow': 63.64, 'regularMarketDayHigh': 66.11, 'volume': 419807, 'regularMarketVolume': 419812, 'averageVolume': 256450, 'averageVolume10days': 367036, 'averageDailyVolume10Day': 367036, 'bid': 65.7, 'ask': 65.95, 'askSize': 2200, 'expireDate': 1771545600, 'openInterest': 365455, 'fiftyTwoWeekLow': 54.98, 'fiftyTwoWeekHigh': 78.4, 'allTimeHigh': 147.27, 'allTimeLow': -40.32, 'fiftyDayAverage': 58.9596, 'twoHundredDayAverage': 62.27635, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'CL=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'CL=F', 'contractSymbol': False, 'shortName': 'Crude Oil Mar 26', 'regularMarketChangePercent': -0.32100135, 'regularMarketPrice': 65.21, 'underlyingSymbol': 'CL.NYM', 'underlyingExchangeSymbol': 'CLH26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'expireIsoDate': '2026-02-20T00:00:00Z', 'fiftyDayAverageChange': 6.2504005, 'fiftyDayAverageChangePercent': 0.106011584, 'twoHundredDayAverageChange': 2.933651, 'twoHundredDayAverageChangePercent': 0.047106985, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'marketState': 'CLOSED', 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 967003200000, 'regularMarketChange': -0.20999908, 'regularMarketDayRange': '63.64 - 66.11', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 256450, 'fiftyTwoWeekLowChange': 10.23, 'fiftyTwoWeekLowChangePercent': 0.18606766, 'fiftyTwoWeekRange': '54.98 - 78.4', 'fiftyTwoWeekHighChange': -13.190002, 'fiftyTwoWeekHighChangePercent': -0.16823982, 'fiftyTwoWeekChangePercent': -10.866594, 'regularMarketTime': 1769810399, 'corporateActions': [], 'trailingPegRatio': None}
+2026-01-31T07:57:37.758Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T07:57:37.942Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 69.59, 'open': 69.6, 'dayLow': 67.78, 'dayHigh': 70.21, 'regularMarketPreviousClose': 69.59, 'regularMarketOpen': 69.6, 'regularMarketDayLow': 67.78, 'regularMarketDayHigh': 70.21, 'volume': 84500, 'regularMarketVolume': 84500, 'averageVolume': 39214, 'averageVolume10days': 38790, 'averageDailyVolume10Day': 38790, 'bid': 67.05, 'ask': 70.2, 'askSize': 1, 'expireDate': 1772409600, 'openInterest': 27256, 'fiftyTwoWeekLow': 58.39, 'fiftyTwoWeekHigh': 81.4, 'allTimeHigh': 147.43, 'allTimeLow': 16.0, 'fiftyDayAverage': 63.1372, 'twoHundredDayAverage': 65.73585, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'BZ=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'BZ=F', 'contractSymbol': False, 'shortName': 'Brent Crude Oil Last Day Financ', 'regularMarketChangePercent': -0.38798198, 'regularMarketPrice': 69.32, 'underlyingSymbol': 'BZ.NYM', 'underlyingExchangeSymbol': 'BZJ26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'expireIsoDate': '2026-03-02T00:00:00Z', 'fiftyDayAverageChange': 6.1828003, 'fiftyDayAverageChangePercent': 0.09792642, 'twoHundredDayAverageChange': 3.5841522, 'twoHundredDayAverageChangePercent': 0.054523557, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'marketState': 'CLOSED', 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 1185768000000, 'regularMarketChange': -0.26999664, 'regularMarketDayRange': '67.78 - 70.21', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 39214, 'fiftyTwoWeekLowChange': 10.93, 'fiftyTwoWeekLowChangePercent': 0.1871896, 'fiftyTwoWeekRange': '58.39 - 81.4', 'fiftyTwoWeekHighChange': -12.080002, 'fiftyTwoWeekHighChangePercent': -0.14840297, 'fiftyTwoWeekChangePercent': -6.9378614, 'regularMarketTime': 1769810385, 'corporateActions': [], 'trailingPegRatio': None}
+2026-01-31T07:57:37.950Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T07:57:37.951Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T07:57:37.951Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T07:57:37.952Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T07:57:37.952Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T07:57:37.983Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T07:57:37.983Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T07:57:44.786Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T08:00:12.496Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T08:00:12.497Z | INFO     | murban_copilot.__main__ | Loaded LLM config from: config/llm_config.yaml
+2026-01-31T08:00:12.497Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T08:00:12.497Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T08:00:12.498Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T08:00:13.167Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 65.42, 'open': 65.52, 'dayLow': 63.64, 'dayHigh': 66.11, 'regularMarketPreviousClose': 65.42, 'regularMarketOpen': 65.52, 'regularMarketDayLow': 63.64, 'regularMarketDayHigh': 66.11, 'volume': 419807, 'regularMarketVolume': 419812, 'averageVolume': 256450, 'averageVolume10days': 367036, 'averageDailyVolume10Day': 367036, 'bid': 65.7, 'ask': 65.95, 'askSize': 2200, 'expireDate': 1771545600, 'openInterest': 365455, 'fiftyTwoWeekLow': 54.98, 'fiftyTwoWeekHigh': 78.4, 'allTimeHigh': 147.27, 'allTimeLow': -40.32, 'fiftyDayAverage': 58.9596, 'twoHundredDayAverage': 62.27635, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'CL=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'CL=F', 'contractSymbol': False, 'marketState': 'CLOSED', 'shortName': 'Crude Oil Mar 26', 'corporateActions': [], 'regularMarketTime': 1769810399, 'underlyingSymbol': 'CL.NYM', 'underlyingExchangeSymbol': 'CLH26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'regularMarketChangePercent': -0.32100135, 'regularMarketPrice': 65.21, 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 967003200000, 'regularMarketChange': -0.20999908, 'regularMarketDayRange': '63.64 - 66.11', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 256450, 'fiftyTwoWeekLowChange': 10.23, 'fiftyTwoWeekLowChangePercent': 0.18606766, 'fiftyTwoWeekRange': '54.98 - 78.4', 'fiftyTwoWeekHighChange': -13.190002, 'fiftyTwoWeekHighChangePercent': -0.16823982, 'fiftyTwoWeekChangePercent': -10.866594, 'expireIsoDate': '2026-02-20T00:00:00Z', 'fiftyDayAverageChange': 6.2504005, 'fiftyDayAverageChangePercent': 0.106011584, 'twoHundredDayAverageChange': 2.933651, 'twoHundredDayAverageChangePercent': 0.047106985, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'trailingPegRatio': None}
+2026-01-31T08:00:13.174Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T08:00:13.541Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 69.59, 'open': 69.6, 'dayLow': 67.78, 'dayHigh': 70.21, 'regularMarketPreviousClose': 69.59, 'regularMarketOpen': 69.6, 'regularMarketDayLow': 67.78, 'regularMarketDayHigh': 70.21, 'volume': 84500, 'regularMarketVolume': 84500, 'averageVolume': 39214, 'averageVolume10days': 38790, 'averageDailyVolume10Day': 38790, 'bid': 67.05, 'ask': 70.2, 'askSize': 1, 'expireDate': 1772409600, 'openInterest': 27256, 'fiftyTwoWeekLow': 58.39, 'fiftyTwoWeekHigh': 81.4, 'allTimeHigh': 147.43, 'allTimeLow': 16.0, 'fiftyDayAverage': 63.1372, 'twoHundredDayAverage': 65.73585, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'BZ=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'contractSymbol': False, 'headSymbolAsString': 'BZ=F', 'expireIsoDate': '2026-03-02T00:00:00Z', 'fiftyDayAverageChange': 6.1828003, 'fiftyDayAverageChangePercent': 0.09792642, 'twoHundredDayAverageChange': 3.5841522, 'twoHundredDayAverageChangePercent': 0.054523557, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'marketState': 'CLOSED', 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 1185768000000, 'regularMarketChange': -0.26999664, 'regularMarketDayRange': '67.78 - 70.21', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 39214, 'fiftyTwoWeekLowChange': 10.93, 'fiftyTwoWeekLowChangePercent': 0.1871896, 'fiftyTwoWeekRange': '58.39 - 81.4', 'fiftyTwoWeekHighChange': -12.080002, 'fiftyTwoWeekHighChangePercent': -0.14840297, 'fiftyTwoWeekChangePercent': -6.9378614, 'corporateActions': [], 'regularMarketTime': 1769810385, 'underlyingSymbol': 'BZ.NYM', 'underlyingExchangeSymbol': 'BZJ26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'regularMarketChangePercent': -0.38798198, 'regularMarketPrice': 69.32, 'shortName': 'Brent Crude Oil Last Day Financ', 'trailingPegRatio': None}
+2026-01-31T08:00:13.545Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T08:00:13.546Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T08:00:13.546Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T08:00:13.549Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T08:00:13.549Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T08:00:13.632Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T08:05:57.547Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T08:05:57.548Z | INFO     | murban_copilot.__main__ | Loaded LLM config from: config/llm_config.yaml
+2026-01-31T08:05:57.548Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T08:05:57.549Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T08:05:57.549Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T08:05:58.247Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 65.42, 'open': 65.52, 'dayLow': 63.64, 'dayHigh': 66.11, 'regularMarketPreviousClose': 65.42, 'regularMarketOpen': 65.52, 'regularMarketDayLow': 63.64, 'regularMarketDayHigh': 66.11, 'volume': 419807, 'regularMarketVolume': 419812, 'averageVolume': 256450, 'averageVolume10days': 367036, 'averageDailyVolume10Day': 367036, 'bid': 65.7, 'ask': 65.95, 'askSize': 2200, 'expireDate': 1771545600, 'openInterest': 365455, 'fiftyTwoWeekLow': 54.98, 'fiftyTwoWeekHigh': 78.4, 'allTimeHigh': 147.27, 'allTimeLow': -40.32, 'fiftyDayAverage': 58.9596, 'twoHundredDayAverage': 62.27635, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'CL=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'CL=F', 'contractSymbol': False, 'underlyingSymbol': 'CL.NYM', 'marketState': 'CLOSED', 'corporateActions': [], 'regularMarketTime': 1769810399, 'underlyingExchangeSymbol': 'CLH26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'regularMarketChangePercent': -0.32100135, 'regularMarketPrice': 65.21, 'shortName': 'Crude Oil Mar 26', 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 967003200000, 'regularMarketChange': -0.20999908, 'regularMarketDayRange': '63.64 - 66.11', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 256450, 'fiftyTwoWeekLowChange': 10.23, 'fiftyTwoWeekLowChangePercent': 0.18606766, 'fiftyTwoWeekRange': '54.98 - 78.4', 'fiftyTwoWeekHighChange': -13.190002, 'fiftyTwoWeekHighChangePercent': -0.16823982, 'fiftyTwoWeekChangePercent': -10.866594, 'expireIsoDate': '2026-02-20T00:00:00Z', 'fiftyDayAverageChange': 6.2504005, 'fiftyDayAverageChangePercent': 0.106011584, 'twoHundredDayAverageChange': 2.933651, 'twoHundredDayAverageChangePercent': 0.047106985, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'trailingPegRatio': None}
+2026-01-31T08:05:58.257Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T08:05:58.634Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Market Data DF {'maxAge': 86400, 'priceHint': 2, 'previousClose': 69.59, 'open': 69.6, 'dayLow': 67.78, 'dayHigh': 70.21, 'regularMarketPreviousClose': 69.59, 'regularMarketOpen': 69.6, 'regularMarketDayLow': 67.78, 'regularMarketDayHigh': 70.21, 'volume': 84500, 'regularMarketVolume': 84500, 'averageVolume': 39214, 'averageVolume10days': 38790, 'averageDailyVolume10Day': 38790, 'bid': 67.05, 'ask': 70.2, 'askSize': 1, 'expireDate': 1772409600, 'openInterest': 27256, 'fiftyTwoWeekLow': 58.39, 'fiftyTwoWeekHigh': 81.4, 'allTimeHigh': 147.43, 'allTimeLow': 16.0, 'fiftyDayAverage': 63.1372, 'twoHundredDayAverage': 65.73585, 'currency': 'USD', 'tradeable': False, 'quoteType': 'FUTURE', 'symbol': 'BZ=F', 'language': 'en-US', 'region': 'US', 'typeDisp': 'Futures', 'quoteSourceName': 'Delayed Quote', 'triggerable': False, 'customPriceAlertConfidence': 'NONE', 'headSymbolAsString': 'BZ=F', 'contractSymbol': False, 'corporateActions': [], 'regularMarketTime': 1769810385, 'underlyingSymbol': 'BZ.NYM', 'underlyingExchangeSymbol': 'BZJ26.NYM', 'exchange': 'NYM', 'exchangeTimezoneName': 'America/New_York', 'exchangeTimezoneShortName': 'EST', 'gmtOffSetMilliseconds': -18000000, 'market': 'us24_market', 'esgPopulated': False, 'marketState': 'CLOSED', 'regularMarketChange': -0.26999664, 'regularMarketDayRange': '67.78 - 70.21', 'fullExchangeName': 'NY Mercantile', 'averageDailyVolume3Month': 39214, 'fiftyTwoWeekLowChange': 10.93, 'fiftyTwoWeekLowChangePercent': 0.1871896, 'fiftyTwoWeekRange': '58.39 - 81.4', 'fiftyTwoWeekHighChange': -12.080002, 'fiftyTwoWeekHighChangePercent': -0.14840297, 'fiftyTwoWeekChangePercent': -6.9378614, 'expireIsoDate': '2026-03-02T00:00:00Z', 'fiftyDayAverageChange': 6.1828003, 'fiftyDayAverageChangePercent': 0.09792642, 'twoHundredDayAverageChange': 3.5841522, 'twoHundredDayAverageChangePercent': 0.054523557, 'sourceInterval': 30, 'exchangeDataDelayedBy': 10, 'cryptoTradeable': False, 'hasPrePostMarketData': False, 'firstTradeDateMilliseconds': 1185768000000, 'shortName': 'Brent Crude Oil Last Day Financ', 'regularMarketChangePercent': -0.38798198, 'regularMarketPrice': 69.32, 'trailingPegRatio': None}
+2026-01-31T08:05:58.643Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T08:05:58.644Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T08:05:58.645Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T08:05:58.646Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T08:05:58.646Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T08:05:58.741Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T13:56:44.344Z | WARNING  | murban_copilot.infrastructure.health.health_checker | Market data health check failed: Market data unavailable
+2026-01-31T13:58:18.583Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T13:58:18.583Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T13:58:19.585Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T13:58:19.586Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T13:58:20.595Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T13:58:20.595Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T13:58:21.597Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T13:59:02.212Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-28/test_load_config_and_create_cl0/llm_config.yaml
+2026-01-31T13:59:02.216Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-28/test_environment_variable_over0/custom_config.yaml
+2026-01-31T13:59:02.218Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T13:59:02.219Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-28/test_partial_config_with_defau0/partial.yaml
+2026-01-31T13:59:02.221Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T13:59:02.223Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T13:59:02.224Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T13:59:02.224Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T13:59:02.224Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T13:59:02.225Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T13:59:02.225Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T13:59:02.225Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T13:59:02.226Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T13:59:02.226Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T13:59:02.226Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T13:59:02.227Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T13:59:02.227Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T13:59:02.227Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T13:59:02.227Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T13:59:02.228Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T13:59:02.228Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T13:59:02.228Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T13:59:02.229Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T13:59:02.229Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T13:59:02.229Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T13:59:02.230Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 0 Brent records
+2026-01-31T13:59:02.233Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T13:59:02.233Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T13:59:02.233Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T13:59:02.234Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T13:59:02.235Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T13:59:02.235Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T13:59:02.235Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-22 to 2026-01-31
+2026-01-31T13:59:02.236Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T13:59:02.236Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T13:59:02.237Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
+2026-01-31T13:59:02.237Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T13:59:02.237Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T13:59:02.238Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T13:59:02.238Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 WTI records
+2026-01-31T13:59:02.238Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
+2026-01-31T13:59:02.239Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T13:59:02.239Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T13:59:02.239Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
+2026-01-31T13:59:02.241Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T13:59:02.242Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T13:59:02.244Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T13:59:02.245Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T13:59:02.249Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T13:59:02.250Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T13:59:02.251Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T13:59:02.283Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-28/test_load_from_file0/llm_config.yaml
+2026-01-31T13:59:02.285Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T13:59:02.287Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-28/test_load_from_environment_var0/llm_config.yaml
+2026-01-31T13:59:02.290Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from llm_config.yaml
+2026-01-31T13:59:02.292Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-28/test_load_raises_on_invalid_ya0/invalid.yaml
+2026-01-31T13:59:02.293Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-28/test_load_handles_partial_conf0/partial.yaml
+2026-01-31T13:59:02.296Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-28/test_explicit_path_overrides_e0/llm_config.yaml
+2026-01-31T13:59:02.299Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T13:59:02.305Z | WARNING  | murban_copilot.infrastructure.health.health_checker | Market data health check failed: Market data unavailable
+2026-01-31T13:59:02.409Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:00:50.889Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:00:51.433Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:00:52.862Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:02:27.272Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:02:27.273Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:02:28.276Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:02:28.277Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:02:29.284Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:02:29.284Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:02:30.289Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:37:07.019Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-29/test_load_config_and_create_cl0/llm_config.yaml
+2026-01-31T14:37:07.023Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-29/test_environment_variable_over0/custom_config.yaml
+2026-01-31T14:37:07.025Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T14:37:07.027Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-29/test_partial_config_with_defau0/partial.yaml
+2026-01-31T14:37:07.029Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T14:37:07.031Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:37:07.031Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:37:07.033Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:37:07.033Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:37:07.034Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:37:07.034Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:37:07.034Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:37:07.034Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:37:07.035Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:37:07.035Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:37:07.036Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:37:07.036Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:37:07.036Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:37:07.036Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:37:07.037Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:37:07.037Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:37:07.038Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:37:07.038Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:37:07.038Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:37:07.038Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:37:07.039Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 0 Brent records
+2026-01-31T14:37:07.042Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:37:07.042Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:37:07.042Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:37:07.044Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:37:07.044Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:37:07.044Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:37:07.045Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-22 to 2026-01-31
+2026-01-31T14:37:07.045Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:37:07.045Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:37:07.046Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
+2026-01-31T14:37:07.046Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:37:07.046Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:37:07.047Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:37:07.047Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 WTI records
+2026-01-31T14:37:07.047Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
+2026-01-31T14:37:07.048Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:37:07.048Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:37:07.048Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
+2026-01-31T14:37:07.051Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:37:07.052Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:37:07.053Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:37:07.054Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:37:07.059Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:37:07.060Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:37:07.061Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:37:07.096Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-29/test_load_from_file0/llm_config.yaml
+2026-01-31T14:37:07.098Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T14:37:07.099Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-29/test_load_from_environment_var0/llm_config.yaml
+2026-01-31T14:37:07.103Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from llm_config.yaml
+2026-01-31T14:37:07.105Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-29/test_load_raises_on_invalid_ya0/invalid.yaml
+2026-01-31T14:37:07.106Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-29/test_load_handles_partial_conf0/partial.yaml
+2026-01-31T14:37:07.109Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-29/test_explicit_path_overrides_e0/llm_config.yaml
+2026-01-31T14:37:07.112Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T14:37:07.118Z | WARNING  | murban_copilot.infrastructure.health.health_checker | Market data health check failed: Market data unavailable
+2026-01-31T14:37:07.222Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:37:15.752Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:37:15.933Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:37:21.469Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:38:48.095Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:38:48.096Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:38:49.097Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:38:49.097Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:38:50.102Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:38:50.102Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:38:51.107Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:40:06.959Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:40:13.364Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:41:36.568Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-30/test_load_config_and_create_cl0/llm_config.yaml
+2026-01-31T14:41:36.576Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-30/test_environment_variable_over0/custom_config.yaml
+2026-01-31T14:41:36.578Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T14:41:36.579Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-30/test_partial_config_with_defau0/partial.yaml
+2026-01-31T14:41:36.582Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T14:41:36.623Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:41:38.179Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:41:40.714Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:41:40.715Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:41:40.715Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:41:40.715Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:41:40.716Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:41:40.716Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:41:40.717Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:41:40.717Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:41:40.717Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:41:40.718Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:41:40.718Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:41:40.718Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:41:40.719Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:41:40.719Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:41:40.719Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:41:40.719Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:41:40.720Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:41:40.720Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:41:40.720Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:41:40.720Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:41:40.721Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 0 Brent records
+2026-01-31T14:41:40.725Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:41:40.725Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:41:40.725Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:41:40.727Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:41:40.727Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:41:40.727Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:41:40.728Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-22 to 2026-01-31
+2026-01-31T14:41:40.728Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:41:40.728Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:41:40.729Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
+2026-01-31T14:41:40.729Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:41:40.729Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:41:40.730Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:41:40.730Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 WTI records
+2026-01-31T14:41:40.730Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
+2026-01-31T14:41:40.731Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:41:40.731Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:41:40.731Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
+2026-01-31T14:41:40.734Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:41:40.735Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:41:40.736Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:41:40.738Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:41:40.742Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:41:40.743Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:41:40.744Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:41:49.422Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:41:51.116Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:43:15.483Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-31/test_load_config_and_create_cl0/llm_config.yaml
+2026-01-31T14:43:15.494Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-31/test_environment_variable_over0/custom_config.yaml
+2026-01-31T14:43:15.496Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T14:43:15.498Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-31/test_partial_config_with_defau0/partial.yaml
+2026-01-31T14:43:15.501Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T14:43:15.521Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:43:16.872Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:43:18.345Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:43:18.345Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:43:18.346Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:43:18.346Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:43:18.347Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:43:18.347Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:43:18.347Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:43:18.348Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:43:18.348Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:43:18.349Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:43:18.349Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:43:18.349Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:43:18.350Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:43:18.350Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:43:18.350Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:43:18.350Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:43:18.351Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:43:18.351Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:43:18.352Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:43:18.352Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:43:18.352Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 0 Brent records
+2026-01-31T14:43:18.357Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:43:18.357Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:43:18.357Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:43:18.358Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:43:18.358Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:43:18.359Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:43:18.360Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-22 to 2026-01-31
+2026-01-31T14:43:18.360Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:43:18.360Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:43:18.361Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
+2026-01-31T14:43:18.361Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:43:18.361Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:43:18.362Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:43:18.362Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 WTI records
+2026-01-31T14:43:18.362Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
+2026-01-31T14:43:18.363Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:43:18.364Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:43:18.364Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
+2026-01-31T14:43:18.367Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:43:18.369Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:43:18.370Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:43:18.371Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:43:18.375Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:43:18.377Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:43:18.378Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:43:18.457Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-31/test_load_from_file0/llm_config.yaml
+2026-01-31T14:43:18.459Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T14:43:18.461Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-31/test_load_from_environment_var0/llm_config.yaml
+2026-01-31T14:43:18.465Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from llm_config.yaml
+2026-01-31T14:43:18.467Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-31/test_load_raises_on_invalid_ya0/invalid.yaml
+2026-01-31T14:43:18.468Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-31/test_load_handles_partial_conf0/partial.yaml
+2026-01-31T14:43:18.471Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-31/test_explicit_path_overrides_e0/llm_config.yaml
+2026-01-31T14:43:18.475Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T14:43:18.481Z | WARNING  | murban_copilot.infrastructure.health.health_checker | Market data health check failed: Market data unavailable
+2026-01-31T14:43:18.492Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:43:19.410Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:43:19.466Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:43:20.332Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:44:41.070Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:44:41.070Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:44:42.076Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:44:42.077Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:44:43.087Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:44:43.087Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:44:44.093Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:49:07.287Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:49:14.632Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:50:41.054Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-32/test_load_config_and_create_cl0/llm_config.yaml
+2026-01-31T14:50:41.062Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-32/test_environment_variable_over0/custom_config.yaml
+2026-01-31T14:50:41.065Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T14:50:41.066Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-32/test_partial_config_with_defau0/partial.yaml
+2026-01-31T14:50:41.069Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T14:50:41.089Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:50:42.207Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:50:44.086Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:50:44.086Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:50:44.087Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:50:44.087Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:50:44.088Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:50:44.088Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:50:44.088Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:50:44.088Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:50:44.089Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:50:44.089Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:50:44.089Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:50:44.090Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:50:44.090Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:50:44.090Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:50:44.091Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:50:44.091Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:50:44.092Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:50:44.092Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:50:44.092Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:50:44.092Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T14:50:44.093Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 0 Brent records
+2026-01-31T14:50:44.097Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:50:44.097Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:50:44.097Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:50:44.098Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:50:44.099Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:50:44.099Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:50:44.100Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-22 to 2026-01-31
+2026-01-31T14:50:44.100Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:50:44.100Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:50:44.101Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
+2026-01-31T14:50:44.101Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:50:44.101Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:50:44.102Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:50:44.102Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 WTI records
+2026-01-31T14:50:44.102Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
+2026-01-31T14:50:44.103Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:50:44.103Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:50:44.103Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
+2026-01-31T14:50:44.110Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:50:44.112Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:50:44.113Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:50:44.114Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:50:44.118Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:50:44.120Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:50:44.121Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T14:50:44.244Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-32/test_load_from_file0/llm_config.yaml
+2026-01-31T14:50:44.246Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T14:50:44.248Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-32/test_load_from_environment_var0/llm_config.yaml
+2026-01-31T14:50:44.251Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from llm_config.yaml
+2026-01-31T14:50:44.254Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-32/test_load_raises_on_invalid_ya0/invalid.yaml
+2026-01-31T14:50:44.255Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-32/test_load_handles_partial_conf0/partial.yaml
+2026-01-31T14:50:44.258Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-32/test_explicit_path_overrides_e0/llm_config.yaml
+2026-01-31T14:50:44.261Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T14:50:44.267Z | WARNING  | murban_copilot.infrastructure.health.health_checker | Market data health check failed: Market data unavailable
+2026-01-31T14:50:44.277Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:50:45.365Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:50:45.422Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:50:46.363Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T14:51:55.839Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:51:55.840Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:51:56.847Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:51:56.847Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:51:57.860Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:51:57.861Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T14:51:58.872Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T14:57:17.681Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T14:57:17.684Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T14:57:17.684Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T14:57:17.684Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T14:57:17.685Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T14:57:17.685Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T14:57:18.127Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T14:57:18.185Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T14:57:18.238Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T14:57:18.239Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T14:57:18.239Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T14:57:18.240Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T14:57:18.240Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T14:57:18.328Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:04:49.519Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:04:49.520Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:04:49.521Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:04:49.521Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:04:49.521Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:04:49.521Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:04:49.908Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:04:49.965Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:04:50.028Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:04:50.029Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:04:50.029Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:04:50.030Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:04:50.030Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:04:50.108Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:08:04.632Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:08:04.635Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:08:04.635Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:08:04.635Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:08:04.635Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:08:04.635Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:08:04.644Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:08:04.649Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:08:04.654Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:08:04.654Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:08:04.655Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:08:04.655Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:08:04.655Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:08:04.673Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:18:59.563Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:18:59.565Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:18:59.565Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:18:59.566Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:18:59.566Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:18:59.566Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:18:59.979Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:19:00.064Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:19:00.127Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:19:00.127Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:19:00.128Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:19:00.131Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:19:00.132Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:19:00.223Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:19:30.195Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:19:30.206Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:19:30.215Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:19:30.216Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:19:30.216Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:19:30.216Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:19:30.217Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:19:31.005Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:19:31.015Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:19:31.025Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:19:31.025Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:19:31.025Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:19:31.026Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:19:31.026Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:19:31.052Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:23:25.516Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:23:25.518Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:23:25.518Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:23:25.518Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:23:25.518Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:23:25.518Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:23:25.853Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:23:25.909Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:23:25.974Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:23:25.975Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:23:25.976Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:23:25.977Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:23:25.977Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:23:26.061Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:24:00.233Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:24:00.237Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:24:00.237Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:24:00.237Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:24:00.237Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:24:00.237Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:24:00.243Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:24:00.250Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:24:00.256Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:24:00.256Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:24:00.256Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:24:00.257Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:24:00.257Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:24:00.277Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:27:00.542Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:27:00.547Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:27:00.547Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:27:00.547Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:27:00.548Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:27:00.548Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:27:00.558Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:27:00.569Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:27:00.578Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:27:00.578Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:27:00.579Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:27:00.579Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:27:00.579Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:27:00.604Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:38:40.334Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:38:40.336Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:38:40.336Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:38:40.336Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:38:40.337Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:38:40.337Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:38:40.342Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:38:40.346Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:38:40.351Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:38:40.352Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:38:40.352Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:38:40.352Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:38:40.352Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:38:40.372Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:38:46.909Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:38:46.920Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:38:46.928Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:38:46.929Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:38:46.929Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:38:46.929Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:38:46.929Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:38:47.529Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:38:47.539Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:38:47.547Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:38:47.547Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:38:47.548Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:38:47.548Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:38:47.548Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:38:47.575Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:38:49.930Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:38:49.941Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:38:49.950Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:38:49.951Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:38:49.951Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:38:49.951Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:38:49.951Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:38:50.630Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:38:50.641Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:38:50.649Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:38:50.649Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:38:50.650Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:38:50.650Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:38:50.650Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:38:50.677Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:40:10.611Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:40:10.615Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:40:10.615Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:40:10.615Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:40:10.615Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:40:10.615Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:40:10.620Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:40:10.626Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:40:10.631Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:40:10.631Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:40:10.631Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:40:10.631Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:40:10.631Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:40:10.651Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:40:13.903Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-18 to 2026-01-31
+2026-01-31T15:40:14.044Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 54 WTI records
+2026-01-31T15:40:14.110Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 54 Brent records
+2026-01-31T15:40:14.111Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 54 WTI and 54 Brent records
+2026-01-31T15:40:14.112Z | INFO     | murban_copilot.application.analyze_spread | Calculated 54 spread data points
+2026-01-31T15:40:14.113Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:40:14.113Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:40:14.148Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:43:05.720Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:43:05.723Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:43:05.724Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:43:05.724Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:43:05.724Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:43:05.724Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:43:05.730Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:43:05.735Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:43:05.740Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:43:05.740Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:43:05.741Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:43:05.741Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:43:05.741Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:43:05.760Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:44:55.147Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:44:55.150Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:44:55.150Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:44:55.150Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:44:55.151Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:44:55.151Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:44:55.157Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:44:55.164Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:44:55.169Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:44:55.170Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:44:55.170Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:44:55.170Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:44:55.171Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:44:55.192Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:47:15.962Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T15:47:15.965Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T15:47:15.965Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T15:47:15.965Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T15:47:15.966Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:47:15.966Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T15:47:15.971Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:47:15.978Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:47:15.983Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:47:15.983Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:47:15.984Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:47:15.984Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:47:15.984Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T15:47:16.014Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:58:52.494Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:58:52.494Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:58:52.495Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:58:52.495Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T15:58:52.495Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:58:52.496Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:58:52.496Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:58:52.496Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T15:58:52.497Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:58:52.497Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:58:52.497Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:58:52.497Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T15:58:52.498Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:58:52.498Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:58:52.498Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:58:52.498Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T15:58:52.499Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T15:58:52.499Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T15:58:52.499Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T15:58:52.499Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bullish
+2026-01-31T15:58:52.500Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 0 Brent records
+2026-01-31T15:58:52.503Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:58:52.503Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:58:52.504Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:58:52.505Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:58:52.505Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:58:52.505Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:58:52.506Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-22 to 2026-01-31
+2026-01-31T15:58:52.506Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:58:52.506Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:58:52.507Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2023-12-06 to 2024-01-15
+2026-01-31T15:58:52.507Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:58:52.507Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T15:58:52.508Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:58:52.508Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 WTI records
+2026-01-31T15:58:52.508Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 1 Brent records
+2026-01-31T15:58:52.509Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T15:58:52.509Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T15:58:52.509Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 0 Brent records
+2026-01-31T15:58:52.512Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:58:52.513Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:58:52.514Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:58:52.515Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:58:52.519Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:58:52.520Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:58:52.521Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T15:58:52.563Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-33/test_load_from_file0/llm_config.yaml
+2026-01-31T15:58:52.565Z | INFO     | murban_copilot.infrastructure.config.config_loader | No config file found, using default configuration
+2026-01-31T15:58:52.567Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-33/test_load_from_environment_var0/llm_config.yaml
+2026-01-31T15:58:52.570Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from llm_config.yaml
+2026-01-31T15:58:52.572Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-33/test_load_raises_on_invalid_ya0/invalid.yaml
+2026-01-31T15:58:52.573Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-33/test_load_handles_partial_conf0/partial.yaml
+2026-01-31T15:58:52.576Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from /private/var/folders/13/z7y8f7gs7pj3fvhgqz479g0c0000gn/T/pytest-of-Sachin/pytest-33/test_explicit_path_overrides_e0/llm_config.yaml
+2026-01-31T15:58:52.579Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading configuration from config/llm_config.yaml
+2026-01-31T15:58:52.585Z | WARNING  | murban_copilot.infrastructure.health.health_checker | Market data health check failed: Market data unavailable
+2026-01-31T15:58:52.696Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:59:01.310Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T15:59:01.798Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T15:59:02.986Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T16:00:25.068Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T16:00:25.068Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T16:00:26.073Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T16:00:26.075Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T16:00:27.080Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T16:00:27.080Z | INFO     | murban_copilot.infrastructure.market_data.yahoo_client | Retrying murban_copilot.infrastructure.market_data.yahoo_client.YahooFinanceClient._fetch_with_retry.<locals>._do_fetch in 1.0 seconds as it raised ConnectionError: Network unreachable.
+2026-01-31T16:00:28.085Z | WARNING  | murban_copilot.infrastructure.market_data.yahoo_client | Retryable error fetching BZ=F: Network unreachable
+2026-01-31T16:00:51.999Z | INFO     | murban_copilot.infrastructure.config.config_loader | Loading application configuration from config/llm_config.yaml
+2026-01-31T16:00:52.001Z | INFO     | murban_copilot.__main__ | Loaded application config from: config/llm_config.yaml
+2026-01-31T16:00:52.002Z | INFO     | murban_copilot.__main__ | Initialized market client with tickers: WTI=CL=F, Brent=BZ=F
+2026-01-31T16:00:52.002Z | INFO     | murban_copilot.__main__ | Initialized spread calculator with MA windows: 5/20
+2026-01-31T16:00:52.002Z | INFO     | murban_copilot.__main__ | Initialized analysis LLM: MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T16:00:52.002Z | INFO     | murban_copilot.__main__ | Initialized extraction LLM: bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T16:00:52.414Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-22 to 2026-01-31
+2026-01-31T16:00:52.484Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 WTI records
+2026-01-31T16:00:52.543Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 30 Brent records
+2026-01-31T16:00:52.543Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 30 WTI and 30 Brent records
+2026-01-31T16:00:52.544Z | INFO     | murban_copilot.application.analyze_spread | Calculated 30 spread data points
+2026-01-31T16:00:52.544Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T16:00:52.544Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T16:00:52.647Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T16:01:01.258Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-12-15 to 2026-01-31
+2026-01-31T16:01:02.300Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 35 WTI records
+2026-01-31T16:01:03.822Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 35 Brent records
+2026-01-31T16:01:03.823Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 35 WTI and 35 Brent records
+2026-01-31T16:01:03.823Z | INFO     | murban_copilot.application.analyze_spread | Calculated 35 spread data points
+2026-01-31T16:01:03.824Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T16:01:03.824Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T16:01:03.883Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T16:02:05.646Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-27 to 2026-01-31
+2026-01-31T16:02:05.788Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 46 WTI records
+2026-01-31T16:02:05.850Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 46 Brent records
+2026-01-31T16:02:05.851Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 46 WTI and 46 Brent records
+2026-01-31T16:02:05.851Z | INFO     | murban_copilot.application.analyze_spread | Calculated 46 spread data points
+2026-01-31T16:02:05.852Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T16:02:05.852Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T16:02:05.893Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T16:02:05.981Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from MaziyarPanahi/gemma-3-12b-it-GGUF/gemma-3-12b-it.Q6_K.gguf
+2026-01-31T16:02:10.548Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-09 to 2026-01-31
+2026-01-31T16:02:10.837Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 60 WTI records
+2026-01-31T16:02:10.888Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 60 Brent records
+2026-01-31T16:02:10.889Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 60 WTI and 60 Brent records
+2026-01-31T16:02:10.889Z | INFO     | murban_copilot.application.analyze_spread | Calculated 60 spread data points
+2026-01-31T16:02:10.889Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T16:02:10.889Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T16:02:10.917Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
+2026-01-31T16:02:12.697Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T16:04:02.315Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Downloading model from bartowski/gemma-2-9b-it-GGUF/gemma-2-9b-it-Q4_K_M.gguf
+2026-01-31T16:05:07.493Z | INFO     | murban_copilot.infrastructure.llm.llm_client | Model loaded successfully
+2026-01-31T16:07:18.958Z | INFO     | murban_copilot.application.fetch_market_data | Fetching market data from 2025-11-25 to 2026-01-31
+2026-01-31T16:07:19.097Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 49 WTI records
+2026-01-31T16:07:19.151Z | INFO     | murban_copilot.application.fetch_market_data | Fetched 49 Brent records
+2026-01-31T16:07:19.151Z | INFO     | murban_copilot.application.analyze_spread | Analyzing spread with 49 WTI and 49 Brent records
+2026-01-31T16:07:19.152Z | INFO     | murban_copilot.application.analyze_spread | Calculated 49 spread data points
+2026-01-31T16:07:19.153Z | INFO     | murban_copilot.application.analyze_spread | Calculated moving averages
+2026-01-31T16:07:19.153Z | INFO     | murban_copilot.application.analyze_spread | Trend signal: bearish
+2026-01-31T16:07:19.220Z | INFO     | murban_copilot.application.generate_signal | Generating market signal
