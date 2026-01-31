@@ -10,6 +10,23 @@ from murban_copilot.domain.exceptions import LLMInferenceError, ValidationError
 from murban_copilot.infrastructure.llm.llm_client import MockLlamaClient
 
 
+class TrackingMockLLM:
+    """Mock LLM that tracks which step it was called for."""
+
+    def __init__(self, name: str):
+        self.name = name
+        self.call_count = 0
+        self.prompts = []
+
+    def generate(self, prompt: str, max_tokens: int = 512, temperature: float = 0.7, use_cache: bool = True) -> str:
+        self.call_count += 1
+        self.prompts.append(prompt)
+        return f"SIGNAL: neutral\nCONFIDENCE: 0.5\n{self.name} response"
+
+    def is_available(self) -> bool:
+        return True
+
+
 class TestGenerateSignalUseCase:
     """Tests for GenerateSignalUseCase."""
 
@@ -160,3 +177,107 @@ class TestGenerateSignalUseCase:
                 sample_moving_averages,
                 sample_trend_summary,
             )
+
+
+class TestDualLLMConfiguration:
+    """Tests for dual-LLM configuration support."""
+
+    def test_uses_separate_clients_for_analysis_and_extraction(
+        self,
+        sample_spread_data,
+        sample_moving_averages,
+        sample_trend_summary,
+    ):
+        """Test that separate clients are used for analysis and extraction."""
+        analysis_llm = TrackingMockLLM("analysis")
+        extraction_llm = TrackingMockLLM("extraction")
+
+        use_case = GenerateSignalUseCase(
+            llm_client=analysis_llm,
+            extraction_client=extraction_llm,
+        )
+
+        use_case.execute(
+            sample_spread_data,
+            sample_moving_averages,
+            sample_trend_summary,
+        )
+
+        assert analysis_llm.call_count == 1
+        assert extraction_llm.call_count == 1
+
+    def test_defaults_extraction_to_llm_client(
+        self,
+        sample_spread_data,
+        sample_moving_averages,
+        sample_trend_summary,
+    ):
+        """Test that extraction defaults to llm_client if not provided."""
+        mock_llm = MockLlamaClient()
+
+        use_case = GenerateSignalUseCase(llm_client=mock_llm)
+
+        use_case.execute(
+            sample_spread_data,
+            sample_moving_averages,
+            sample_trend_summary,
+        )
+
+        # Both calls go to the same client
+        assert mock_llm.call_count == 2
+
+    def test_custom_inference_parameters(
+        self,
+        sample_spread_data,
+        sample_moving_averages,
+        sample_trend_summary,
+    ):
+        """Test that custom inference parameters are used."""
+        analysis_llm = TrackingMockLLM("analysis")
+        extraction_llm = TrackingMockLLM("extraction")
+
+        use_case = GenerateSignalUseCase(
+            llm_client=analysis_llm,
+            extraction_client=extraction_llm,
+            analysis_max_tokens=4096,
+            analysis_temperature=0.8,
+            extraction_max_tokens=512,
+            extraction_temperature=0.2,
+        )
+
+        # Just verify the use case can be created with custom params
+        assert use_case.analysis_max_tokens == 4096
+        assert use_case.analysis_temperature == 0.8
+        assert use_case.extraction_max_tokens == 512
+        assert use_case.extraction_temperature == 0.2
+
+    def test_is_llm_available_checks_both_clients(self):
+        """Test LLM availability check works with dual clients."""
+        analysis_llm = TrackingMockLLM("analysis")
+        extraction_llm = TrackingMockLLM("extraction")
+
+        use_case = GenerateSignalUseCase(
+            llm_client=analysis_llm,
+            extraction_client=extraction_llm,
+        )
+
+        assert use_case.is_llm_available() is True
+
+    def test_is_llm_available_false_if_extraction_unavailable(self):
+        """Test availability is False if extraction client unavailable."""
+        class UnavailableLLM:
+            def generate(self, *args, **kwargs):
+                return "response"
+
+            def is_available(self):
+                return False
+
+        analysis_llm = TrackingMockLLM("analysis")
+        extraction_llm = UnavailableLLM()
+
+        use_case = GenerateSignalUseCase(
+            llm_client=analysis_llm,
+            extraction_client=extraction_llm,
+        )
+
+        assert use_case.is_llm_available() is False

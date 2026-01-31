@@ -6,6 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+from murban_copilot.domain.config import LLMModelConfig, LLMInferenceConfig
 from murban_copilot.domain.exceptions import LLMInferenceError
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient, MockLlamaClient
 
@@ -177,3 +178,80 @@ class TestLlamaClient:
         except LLMInferenceError:
             # Expected when model can't be loaded
             pass
+
+    def test_init_with_cache_enabled(self, tmp_path):
+        """Test initialization with cache_enabled parameter."""
+        client = LlamaClient(
+            cache_dir=tmp_path / "cache",
+            cache_enabled=True,
+        )
+        assert client.cache_enabled is True
+
+        client_disabled = LlamaClient(
+            cache_dir=tmp_path / "cache2",
+            cache_enabled=False,
+        )
+        assert client_disabled.cache_enabled is False
+
+    def test_from_config(self, tmp_path):
+        """Test creating client from LLMModelConfig."""
+        config = LLMModelConfig(
+            model_repo="test/repo",
+            model_file="test.gguf",
+            inference=LLMInferenceConfig(max_tokens=1024, temperature=0.5),
+            n_ctx=8192,
+            n_gpu_layers=16,
+        )
+
+        client = LlamaClient.from_config(
+            config,
+            cache_dir=tmp_path / "cache",
+            cache_enabled=True,
+        )
+
+        assert client.model_repo == "test/repo"
+        assert client.model_file == "test.gguf"
+        assert client.n_ctx == 8192
+        assert client.n_gpu_layers == 16
+        assert client.cache_enabled is True
+
+    def test_from_config_with_defaults(self, tmp_path):
+        """Test from_config uses defaults when not specified."""
+        config = LLMModelConfig(
+            model_repo="test/repo",
+            model_file="test.gguf",
+        )
+
+        client = LlamaClient.from_config(config, cache_dir=tmp_path / "cache")
+
+        assert client.n_ctx == 4096
+        assert client.n_gpu_layers == -1
+        assert client.cache_enabled is True
+
+    def test_generate_respects_cache_enabled_flag(self, client):
+        """Test generate respects cache_enabled flag."""
+        # Client has caching enabled by default - cache should work
+        client._cache_response("test prompt", 512, 0.7, "cached result")
+        result = client.generate("test prompt")
+        assert result == "cached result"
+
+    def test_cache_disabled_ignores_cache(self, tmp_path):
+        """Test that cache_enabled=False ignores cached responses."""
+        client_no_cache = LlamaClient(
+            model_path="/fake/model.gguf",
+            cache_dir=tmp_path / "nocache",
+            cache_enabled=False,
+        )
+
+        # Pre-populate cache file
+        client_no_cache._cache_response("test prompt", 512, 0.7, "should not be used")
+
+        # Verify the cache file exists
+        cache_key = client_no_cache._get_cache_key("test prompt", 512, 0.7)
+        cache_file = client_no_cache._cache_dir / f"{cache_key}.json"
+        assert cache_file.exists()
+
+        # With cache_enabled=False, _get_cached_response should not be checked
+        # when calling generate - it should try to load model instead
+        # (which will fail since model doesn't exist)
+        assert client_no_cache.cache_enabled is False

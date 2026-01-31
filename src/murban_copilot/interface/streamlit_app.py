@@ -7,14 +7,19 @@ from datetime import datetime, timedelta
 from typing import Sequence
 
 
+from pathlib import Path
+
 from murban_copilot.domain.entities import MovingAverages, SpreadData, MarketSignal
 from murban_copilot.domain.spread_calculator import SpreadCalculator
 from murban_copilot.infrastructure.market_data.yahoo_client import YahooFinanceClient
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient, MockLlamaClient
-from murban_copilot.infrastructure.logging import setup_logging
+from murban_copilot.infrastructure.config import ConfigLoader
+from murban_copilot.infrastructure.logging import setup_logging, get_logger
 from murban_copilot.application.fetch_market_data import FetchMarketDataUseCase
 from murban_copilot.application.analyze_spread import AnalyzeSpreadUseCase
 from murban_copilot.application.generate_signal import GenerateSignalUseCase
+
+logger = get_logger(__name__)
 
 
 # Page config
@@ -71,8 +76,55 @@ def init_services():
         st.session_state.market_client = YahooFinanceClient()
     if "spread_calculator" not in st.session_state:
         st.session_state.spread_calculator = SpreadCalculator()
-    if "llm_client" not in st.session_state:
-        st.session_state.llm_client = LlamaClient()
+
+    # Load LLM configuration
+    if "llm_config" not in st.session_state:
+        config_loader = ConfigLoader()
+        st.session_state.llm_config = config_loader.load()
+        config_path = config_loader.get_config_path()
+        if config_path:
+            logger.info(f"Loaded LLM config from: {config_path}")
+        else:
+            logger.info("Using default LLM configuration")
+
+    config = st.session_state.llm_config
+    cache_dir = Path.cwd() / config.cache.directory
+
+    # Initialize analysis LLM client
+    if "analysis_llm_client" not in st.session_state:
+        if config.analysis:
+            st.session_state.analysis_llm_client = LlamaClient.from_config(
+                config.analysis,
+                cache_dir=cache_dir,
+                cache_enabled=config.cache.enabled,
+                verbose=config.defaults.verbose,
+            )
+            logger.info(
+                f"Initialized analysis LLM: {config.analysis.model_repo}/{config.analysis.model_file}"
+            )
+        else:
+            st.session_state.analysis_llm_client = LlamaClient(
+                cache_dir=cache_dir,
+                cache_enabled=config.cache.enabled,
+            )
+            logger.info("Initialized analysis LLM with defaults")
+
+    # Initialize extraction LLM client
+    if "extraction_llm_client" not in st.session_state:
+        if config.extraction:
+            st.session_state.extraction_llm_client = LlamaClient.from_config(
+                config.extraction,
+                cache_dir=cache_dir,
+                cache_enabled=config.cache.enabled,
+                verbose=config.defaults.verbose,
+            )
+            logger.info(
+                f"Initialized extraction LLM: {config.extraction.model_repo}/{config.extraction.model_file}"
+            )
+        else:
+            # Fall back to using analysis client for extraction
+            st.session_state.extraction_llm_client = st.session_state.analysis_llm_client
+            logger.info("Using analysis LLM for extraction")
 
 
 def create_spread_chart(
@@ -363,7 +415,30 @@ def main():
 
         with st.spinner("Generating AI analysis..."):
             try:
-                signal_use_case = GenerateSignalUseCase(st.session_state.llm_client)
+                config = st.session_state.llm_config
+
+                # Get inference parameters from config
+                analysis_max_tokens = 2048
+                analysis_temperature = 0.7
+                extraction_max_tokens = 1024
+                extraction_temperature = 0.3
+
+                if config.analysis and config.analysis.inference:
+                    analysis_max_tokens = config.analysis.inference.max_tokens
+                    analysis_temperature = config.analysis.inference.temperature
+
+                if config.extraction and config.extraction.inference:
+                    extraction_max_tokens = config.extraction.inference.max_tokens
+                    extraction_temperature = config.extraction.inference.temperature
+
+                signal_use_case = GenerateSignalUseCase(
+                    llm_client=st.session_state.analysis_llm_client,
+                    extraction_client=st.session_state.extraction_llm_client,
+                    analysis_max_tokens=analysis_max_tokens,
+                    analysis_temperature=analysis_temperature,
+                    extraction_max_tokens=extraction_max_tokens,
+                    extraction_temperature=extraction_temperature,
+                )
                 signal = signal_use_case.execute(
                     spread_data, moving_averages, trend_summary
                 )

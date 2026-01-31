@@ -20,14 +20,33 @@ logger = get_logger(__name__)
 class GenerateSignalUseCase:
     """Use case for generating AI-powered market signals."""
 
-    def __init__(self, llm_client: LLMInference) -> None:
+    def __init__(
+        self,
+        llm_client: LLMInference,
+        extraction_client: LLMInference | None = None,
+        analysis_max_tokens: int = 2048,
+        analysis_temperature: float = 0.7,
+        extraction_max_tokens: int = 1024,
+        extraction_temperature: float = 0.3,
+    ) -> None:
         """
         Initialize the use case.
 
         Args:
-            llm_client: LLM client for inference
+            llm_client: LLM client for analysis inference
+            extraction_client: Optional separate LLM client for extraction.
+                               Defaults to llm_client if not provided.
+            analysis_max_tokens: Max tokens for analysis generation
+            analysis_temperature: Temperature for analysis generation
+            extraction_max_tokens: Max tokens for extraction
+            extraction_temperature: Temperature for extraction
         """
         self.llm = llm_client
+        self.extraction_llm = extraction_client or llm_client
+        self.analysis_max_tokens = analysis_max_tokens
+        self.analysis_temperature = analysis_temperature
+        self.extraction_max_tokens = extraction_max_tokens
+        self.extraction_temperature = extraction_temperature
 
     def execute(
         self,
@@ -66,17 +85,17 @@ class GenerateSignalUseCase:
             # Step 1: Generate comprehensive analysis
             analysis = self.llm.generate(
                 prompt,
-                max_tokens=2048,  # Increased for detailed analysis
-                temperature=0.7,
+                max_tokens=self.analysis_max_tokens,
+                temperature=self.analysis_temperature,
             )
             logger.debug("Step 1 complete: Generated analysis")
 
             # Step 2: Extract structured signal using dedicated prompt
             extraction_prompt = SignalExtractionTemplate.format_extraction_prompt(analysis)
-            extraction_response = self.llm.generate(
+            extraction_response = self.extraction_llm.generate(
                 extraction_prompt,
-                max_tokens=1024,
-                temperature=0.3,  # Lower temperature for more consistent extraction
+                max_tokens=self.extraction_max_tokens,
+                temperature=self.extraction_temperature,
             )
             logger.debug("Step 2 complete: Extracted signal")
 
@@ -160,6 +179,6 @@ class GenerateSignalUseCase:
         Check if the LLM is available.
 
         Returns:
-            True if LLM is ready for inference
+            True if both analysis and extraction LLMs are ready for inference
         """
-        return self.llm.is_available()
+        return self.llm.is_available() and self.extraction_llm.is_available()

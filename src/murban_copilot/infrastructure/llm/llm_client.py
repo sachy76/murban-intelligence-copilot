@@ -1,13 +1,18 @@
 """LLM client using llama-cpp-python with GGUF models."""
 
+from __future__ import annotations
+
 import hashlib
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from murban_copilot.domain.exceptions import LLMInferenceError
 from murban_copilot.infrastructure.logging import get_logger
+
+if TYPE_CHECKING:
+    from murban_copilot.domain.config import LLMModelConfig
 
 logger = get_logger(__name__)
 
@@ -28,6 +33,7 @@ class LlamaClient:
         n_ctx: int = 4096,
         n_gpu_layers: int = -1,  # -1 means use all available GPU layers
         cache_dir: Optional[Path] = None,
+        cache_enabled: bool = True,
         verbose: bool = False,
     ) -> None:
         """
@@ -40,6 +46,7 @@ class LlamaClient:
             n_ctx: Context window size
             n_gpu_layers: Number of layers to offload to GPU (-1 for all)
             cache_dir: Directory for response caching
+            cache_enabled: Whether to enable response caching (default: True)
             verbose: Whether to enable verbose output
         """
         self.model_path = model_path
@@ -47,11 +54,42 @@ class LlamaClient:
         self.model_file = model_file or self.DEFAULT_MODEL_FILE
         self.n_ctx = n_ctx
         self.n_gpu_layers = n_gpu_layers
+        self.cache_enabled = cache_enabled
         self.verbose = verbose
 
         self._model = None
         self._cache_dir = cache_dir or Path.cwd() / ".llm_cache"
         self._cache_dir.mkdir(parents=True, exist_ok=True)
+
+    @classmethod
+    def from_config(
+        cls,
+        config: "LLMModelConfig",
+        cache_dir: Optional[Path] = None,
+        cache_enabled: bool = True,
+        verbose: bool = False,
+    ) -> "LlamaClient":
+        """
+        Create a LlamaClient from an LLMModelConfig.
+
+        Args:
+            config: Model configuration
+            cache_dir: Directory for response caching
+            cache_enabled: Whether to enable response caching
+            verbose: Whether to enable verbose output
+
+        Returns:
+            Configured LlamaClient instance
+        """
+        return cls(
+            model_repo=config.model_repo,
+            model_file=config.model_file,
+            n_ctx=config.n_ctx,
+            n_gpu_layers=config.n_gpu_layers,
+            cache_dir=cache_dir,
+            cache_enabled=cache_enabled,
+            verbose=verbose,
+        )
 
     def _load_model(self) -> None:
         """Load the LLM model."""
@@ -114,7 +152,10 @@ class LlamaClient:
         Raises:
             LLMInferenceError: If generation fails
         """
-        if use_cache:
+        # Respect both instance-level and call-level cache settings
+        should_use_cache = self.cache_enabled and use_cache
+
+        if should_use_cache:
             cached = self._get_cached_response(prompt, max_tokens, temperature)
             if cached is not None:
                 logger.debug("Using cached response")
@@ -133,7 +174,7 @@ class LlamaClient:
 
             generated_text = response["choices"][0]["text"].strip()
 
-            if use_cache:
+            if should_use_cache:
                 self._cache_response(prompt, max_tokens, temperature, generated_text)
 
             return generated_text
