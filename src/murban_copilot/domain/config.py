@@ -1,7 +1,15 @@
 """Domain configuration entities for application settings."""
 
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Any, Optional
+
+
+class ModelType(str, Enum):
+    """Type of model backend to use."""
+
+    LLAMA = "llama"  # llama-cpp-python for GGUF models
+    TRANSFORMERS = "transformers"  # HuggingFace transformers
 
 
 # =============================================================================
@@ -188,10 +196,15 @@ class LLMModelConfig:
     """Configuration for a specific LLM model."""
 
     model_repo: str
-    model_file: str
+    model_file: str = ""  # Optional for transformers models
+    model_type: ModelType = ModelType.LLAMA
     inference: LLMInferenceConfig = field(default_factory=LLMInferenceConfig)
+    # Llama-specific settings
     n_ctx: int = 4096
     n_gpu_layers: int = -1
+    # Transformers-specific settings
+    task: str = "text-generation"  # or "sentiment-analysis", "text-classification"
+    device: str = "auto"  # "auto", "cpu", "cuda", "mps"
 
     @classmethod
     def from_dict(
@@ -206,12 +219,22 @@ class LLMModelConfig:
         inference_data = data.get("inference", {})
         inference = LLMInferenceConfig.from_dict(inference_data)
 
+        # Parse model_type
+        model_type_str = data.get("model_type", "llama")
+        try:
+            model_type = ModelType(model_type_str.lower())
+        except ValueError:
+            model_type = ModelType.LLAMA
+
         return cls(
             model_repo=data.get("model_repo", ""),
             model_file=data.get("model_file", ""),
+            model_type=model_type,
             inference=inference,
             n_ctx=data.get("n_ctx", defaults.n_ctx),
             n_gpu_layers=data.get("n_gpu_layers", defaults.n_gpu_layers),
+            task=data.get("task", "text-generation"),
+            device=data.get("device", "auto"),
         )
 
 
@@ -280,6 +303,7 @@ class LLMConfig:
         analysis = LLMModelConfig(
             model_repo="MaziyarPanahi/gemma-3-12b-it-GGUF",
             model_file="gemma-3-12b-it.Q6_K.gguf",
+            model_type=ModelType.LLAMA,
             inference=LLMInferenceConfig(max_tokens=2048, temperature=0.7),
             n_ctx=defaults.n_ctx,
             n_gpu_layers=defaults.n_gpu_layers,
@@ -288,6 +312,7 @@ class LLMConfig:
         extraction = LLMModelConfig(
             model_repo="bartowski/gemma-2-9b-it-GGUF",
             model_file="gemma-2-9b-it-Q4_K_M.gguf",
+            model_type=ModelType.LLAMA,
             inference=LLMInferenceConfig(max_tokens=1024, temperature=0.3),
             n_ctx=defaults.n_ctx,
             n_gpu_layers=defaults.n_gpu_layers,

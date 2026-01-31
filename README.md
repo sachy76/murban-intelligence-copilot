@@ -6,11 +6,12 @@ AI-powered trading analysis application for WTI-Brent crude oil spread analysis.
 
 - **Real-time Market Data**: Fetches WTI and Brent crude oil prices from Yahoo Finance
 - **Spread Analysis**: Calculates WTI-Brent spread with configurable moving averages
-- **AI-Powered Insights**: Generates market signals using local LLM inference (llama-cpp-python)
+- **AI-Powered Insights**: Generates market signals using local LLM inference
 - **Interactive Dashboard**: Streamlit-based UI with Plotly charts and dark theme
 - **Config-Driven**: All parameters configurable via YAML configuration file
 - **Docker Support**: Production-ready containerization with health checks
 - **Dual-LLM Architecture**: Separate models for analysis and signal extraction
+- **Flexible Model Backend**: Switch between llama-cpp-python (GGUF) and HuggingFace Transformers
 
 ## Architecture
 
@@ -24,7 +25,10 @@ src/murban_copilot/
 │   └── exceptions.py
 ├── infrastructure/      # External integrations
 │   ├── market_data/     # Yahoo Finance client
-│   ├── llm/             # LLM inference with llama-cpp-python
+│   ├── llm/             # LLM inference (llama-cpp + transformers)
+│   │   ├── llm_client.py        # Llama/GGUF models
+│   │   ├── transformers_client.py  # HuggingFace models
+│   │   └── factory.py           # Model factory
 │   ├── config/          # YAML configuration loader
 │   ├── health/          # Health check infrastructure
 │   └── logging/         # Structured logging
@@ -90,16 +94,21 @@ llm:
     n_gpu_layers: -1
     cache_enabled: true
 
+  # Analysis model (generates comprehensive market analysis)
   analysis:
+    model_type: "llama"  # Options: "llama" | "transformers"
     model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
     model_file: "gemma-3-12b-it.Q6_K.gguf"
     inference:
       max_tokens: 2048
       temperature: 0.7
 
+  # Extraction model (extracts structured signals)
   extraction:
-    model_repo: "bartowski/gemma-2-9b-it-GGUF"
-    model_file: "gemma-2-9b-it-Q4_K_M.gguf"
+    model_type: "transformers"  # Use HuggingFace sentiment model
+    model_repo: "ProsusAI/finbert"
+    task: "sentiment-analysis"
+    device: "auto"
     inference:
       max_tokens: 1024
       temperature: 0.3
@@ -130,6 +139,44 @@ ui:
   max_historical_days: 90
   default_historical_days: 30
 ```
+
+### Model Type Switching
+
+The application supports two model backends that can be configured independently for analysis and extraction:
+
+| Model Type | Backend | Use Case | Example Models |
+|------------|---------|----------|----------------|
+| `llama` | llama-cpp-python | Text generation with GGUF models | Gemma, Llama, Mistral |
+| `transformers` | HuggingFace Transformers | Sentiment classification | FinBERT, DistilRoBERTa |
+
+#### Using Llama/GGUF Models (Default for Analysis)
+
+```yaml
+analysis:
+  model_type: "llama"
+  model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
+  model_file: "gemma-3-12b-it.Q6_K.gguf"
+  n_ctx: 4096
+  n_gpu_layers: -1
+```
+
+#### Using HuggingFace Transformers (Recommended for Extraction)
+
+```yaml
+extraction:
+  model_type: "transformers"
+  model_repo: "ProsusAI/finbert"  # Financial sentiment model
+  task: "sentiment-analysis"
+  device: "auto"  # Options: "auto" | "cpu" | "cuda" | "mps"
+```
+
+#### Available Sentiment Models
+
+| Model | Description | Size |
+|-------|-------------|------|
+| `ProsusAI/finbert` | FinBERT - Financial sentiment | ~110M params |
+| `mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis` | DistilRoBERTa fine-tuned on financial news | ~66M params |
+| `yiyanghkust/finbert-tone` | FinBERT for financial tone | ~110M params |
 
 ### Environment Variables
 
@@ -354,11 +401,21 @@ open htmlcov/index.html
 
 ### Dual-LLM Architecture
 
-The application uses a two-step LLM approach:
-1. **Analysis LLM**: Generates comprehensive market analysis (higher temperature)
-2. **Extraction LLM**: Extracts structured signal and confidence (lower temperature)
+The application uses a two-step LLM approach with configurable model backends:
 
-This separation allows for optimized models for each task.
+1. **Analysis Model**: Generates comprehensive market analysis
+   - Recommended: Large generative LLM (Gemma, Llama)
+   - Backend: `llama` (llama-cpp-python with GGUF models)
+   - Temperature: 0.7 (creative, varied output)
+
+2. **Extraction Model**: Extracts structured signal and confidence
+   - Recommended: Domain-specific sentiment classifier
+   - Backend: `transformers` (HuggingFace models like FinBERT)
+   - Provides: bullish/bearish/neutral signal with confidence score
+
+This separation allows each model to be optimized for its specific task:
+- Use a large generative model for rich, contextual analysis
+- Use a fine-tuned sentiment model for accurate signal extraction
 
 ### Data Handling
 
@@ -404,7 +461,8 @@ murban-intelligence-copilot/
 
 ### AI/ML
 - pytorch >= 2.0
-- llama-cpp-python >= 0.2.0
+- llama-cpp-python >= 0.2.0 (for GGUF models)
+- transformers >= 4.30 (for HuggingFace models)
 - huggingface_hub >= 0.19
 
 ### Testing

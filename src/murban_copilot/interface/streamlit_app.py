@@ -10,10 +10,11 @@ from typing import Sequence
 
 from pathlib import Path
 
-from murban_copilot.domain.config import LLMConfig
+from murban_copilot.domain.config import LLMConfig, ModelType
 from murban_copilot.domain.entities import MarketData, MovingAverages, SpreadData, MarketSignal
 from murban_copilot.domain.spread_calculator import SpreadCalculator
 from murban_copilot.infrastructure.market_data.yahoo_client import YahooFinanceClient
+from murban_copilot.infrastructure.llm import create_llm_client, get_client_type_name
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient, MockLlamaClient
 from murban_copilot.infrastructure.config import ConfigLoader
 from murban_copilot.infrastructure.health import HealthChecker, HealthStatus
@@ -201,17 +202,18 @@ def init_services():
 
     cache_dir = Path.cwd() / config.llm.cache.directory
 
-    # Initialize analysis LLM client
+    # Initialize analysis LLM client using factory
     if "analysis_llm_client" not in st.session_state:
         if config.llm.analysis:
-            st.session_state.analysis_llm_client = LlamaClient.from_config(
-                config.llm.analysis,
+            st.session_state.analysis_llm_client = create_llm_client(
+                config=config.llm.analysis,
                 cache_dir=cache_dir,
                 cache_enabled=config.llm.cache.enabled,
                 verbose=config.llm.defaults.verbose,
             )
+            client_type = get_client_type_name(st.session_state.analysis_llm_client)
             logger.info(
-                f"Initialized analysis LLM: {config.llm.analysis.model_repo}/{config.llm.analysis.model_file}"
+                f"Initialized analysis LLM [{client_type}]: {config.llm.analysis.model_repo}"
             )
         else:
             st.session_state.analysis_llm_client = LlamaClient(
@@ -220,17 +222,18 @@ def init_services():
             )
             logger.info("Initialized analysis LLM with defaults")
 
-    # Initialize extraction LLM client
+    # Initialize extraction LLM client using factory
     if "extraction_llm_client" not in st.session_state:
         if config.llm.extraction:
-            st.session_state.extraction_llm_client = LlamaClient.from_config(
-                config.llm.extraction,
+            st.session_state.extraction_llm_client = create_llm_client(
+                config=config.llm.extraction,
                 cache_dir=cache_dir,
                 cache_enabled=config.llm.cache.enabled,
                 verbose=config.llm.defaults.verbose,
             )
+            client_type = get_client_type_name(st.session_state.extraction_llm_client)
             logger.info(
-                f"Initialized extraction LLM: {config.llm.extraction.model_repo}/{config.llm.extraction.model_file}"
+                f"Initialized extraction LLM [{client_type}]: {config.llm.extraction.model_repo}"
             )
         else:
             # Fall back to using analysis client for extraction
@@ -649,6 +652,14 @@ def main():
                 emoji = status_emoji.get(component.status, "⚪")
                 latency = f" ({component.latency_ms:.0f}ms)" if component.latency_ms else ""
                 st.markdown(f"- {emoji} **{component.name}**{latency}")
+
+            # Show model types
+            st.markdown("---")
+            st.markdown("**Model Configuration:**")
+            analysis_type = get_client_type_name(st.session_state.analysis_llm_client)
+            extraction_type = get_client_type_name(st.session_state.extraction_llm_client)
+            st.markdown(f"- Analysis: {analysis_type}")
+            st.markdown(f"- Extraction: {extraction_type}")
 
     # Main content
     with st.spinner("Fetching market data..."):

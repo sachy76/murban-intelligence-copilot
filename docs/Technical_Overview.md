@@ -26,11 +26,17 @@ This system **automates the entire workflow**, providing instant analysis and AI
 | **Risk Managers** | Early warning indicators for spread movements |
 
 ### LLM Technology Used
-The system uses **local LLM inference** with two specialized AI models:
-- **Gemma-3-12B-IT** — A 12-billion parameter model for comprehensive market analysis
-- **Gemma-2-9B-IT** — A 9-billion parameter model for structured signal extraction
+The system uses a **flexible dual-model architecture** with configurable backends:
 
-Both models run locally (no cloud API calls), ensuring **data privacy** and **zero per-query costs**.
+| Stage | Default Model | Backend | Purpose |
+|-------|---------------|---------|---------|
+| **Analysis** | Gemma-3-12B-IT | llama-cpp-python | Comprehensive market analysis |
+| **Extraction** | ProsusAI/FinBERT | HuggingFace Transformers | Sentiment classification |
+
+**Key Benefits:**
+- Models run locally (no cloud API calls) — **data privacy** and **zero per-query costs**
+- Configurable model switching via YAML — swap models without code changes
+- Domain-specific extraction — FinBERT is trained on financial text for better accuracy
 
 ---
 
@@ -88,7 +94,8 @@ Both models run locally (no cloud API calls), ensuring **data privacy** and **ze
 | **User Interface** | Interactive dashboard for visualization and control | Streamlit, Plotly |
 | **Application Layer** | Orchestrates business workflows | Python use cases |
 | **Market Data Service** | Fetches real-time crude oil prices | Yahoo Finance API |
-| **LLM Engine** | Generates AI-powered analysis and signals | llama-cpp-python (local) |
+| **LLM Engine** | Generates AI-powered analysis and signals | llama-cpp-python + HuggingFace Transformers |
+| **Model Factory** | Creates appropriate client based on config | Python factory pattern |
 | **Analytics Engine** | Calculates spreads, moving averages, trends | NumPy, custom algorithms |
 | **Persistence** | Caches responses, stores logs | File-based JSON cache |
 
@@ -153,12 +160,13 @@ flowchart TB
 
 ### Dual-Model Pipeline
 
-The system uses a **two-stage AI pipeline** for reliable signal generation:
+The system uses a **two-stage AI pipeline** with configurable model backends:
 
 ```
                     ┌─────────────────────────┐
     Market Data ───▶│   ANALYSIS MODEL        │
                     │   (Gemma-3-12B)         │
+                    │   Backend: llama-cpp    │
                     │                         │
                     │ • Comprehensive review  │
                     │ • Technical analysis    │
@@ -171,12 +179,12 @@ The system uses a **two-stage AI pipeline** for reliable signal generation:
                                 ▼
                     ┌─────────────────────────┐
                     │   EXTRACTION MODEL      │
-                    │   (Gemma-2-9B)          │
+                    │   (FinBERT)             │
+                    │   Backend: transformers │
                     │                         │
                     │ • Signal: bullish/      │
                     │   bearish/neutral       │
                     │ • Confidence: 0.0-1.0   │
-                    │ • Summary: one sentence │
                     └───────────┬─────────────┘
                                 │
                     Structured Signal
@@ -188,16 +196,29 @@ The system uses a **two-stage AI pipeline** for reliable signal generation:
                     └─────────────────────────┘
 ```
 
-### Why Two Models?
+### Configurable Model Backends
 
-| Stage | Model | Purpose | Configuration |
-|-------|-------|---------|---------------|
-| **Analysis** | Gemma-3-12B | Creative, comprehensive market analysis | Temperature: 0.7 (more varied output) |
-| **Extraction** | Gemma-2-9B | Deterministic, structured parsing | Temperature: 0.3 (consistent output) |
+The system supports two model backends that can be mixed and matched:
 
-This separation ensures:
-- Rich, detailed analysis from a larger model
-- Reliable, structured signals from a focused extraction step
+| Backend | Type | Best For | Configuration |
+|---------|------|----------|---------------|
+| `llama` | llama-cpp-python | Text generation with GGUF models | `model_type: "llama"` |
+| `transformers` | HuggingFace | Sentiment classification | `model_type: "transformers"` |
+
+### Default Model Configuration
+
+| Stage | Model | Backend | Purpose |
+|-------|-------|---------|---------|
+| **Analysis** | Gemma-3-12B-IT | llama | Creative market analysis (temp: 0.7) |
+| **Extraction** | ProsusAI/FinBERT | transformers | Financial sentiment classification |
+
+### Why This Architecture?
+
+This separation provides key advantages:
+- **Optimized for task**: Large generative model for analysis, specialized classifier for signals
+- **Domain expertise**: FinBERT is trained on financial text for better sentiment accuracy
+- **Flexibility**: Swap models via configuration without code changes
+- **Cost efficiency**: Smaller extraction model reduces compute requirements
 
 ### Prompt Templates
 
@@ -252,40 +273,58 @@ The architecture could be extended to include:
 
 ## 6. Model Overview
 
-### Analysis Model: Gemma-3-12B-IT
+### Model Backend Options
+
+The system supports two model backends, configurable per stage:
+
+| Backend | Library | Model Format | Best For |
+|---------|---------|--------------|----------|
+| **llama** | llama-cpp-python | GGUF (quantized) | Text generation, analysis |
+| **transformers** | HuggingFace Transformers | PyTorch | Classification, sentiment |
+
+### Analysis Model: Gemma-3-12B-IT (Default)
 
 | Property | Value |
 |----------|-------|
 | **Model Type** | Instruction-tuned transformer |
+| **Backend** | llama (llama-cpp-python) |
 | **Parameters** | 12 billion |
 | **Quantization** | Q6_K (6-bit, high quality) |
 | **Source** | HuggingFace (MaziyarPanahi) |
-| **Hosting** | Local inference via llama-cpp-python |
 | **Context Window** | 4,096 tokens |
 | **Capabilities** | Market analysis, technical writing, reasoning |
 | **Limitations** | Cannot access live data; relies on provided context |
 
-### Extraction Model: Gemma-2-9B-IT
+### Extraction Model: ProsusAI/FinBERT (Default)
 
 | Property | Value |
 |----------|-------|
-| **Model Type** | Instruction-tuned transformer |
-| **Parameters** | 9 billion |
-| **Quantization** | Q4_K_M (4-bit, balanced) |
-| **Source** | HuggingFace (bartowski) |
-| **Hosting** | Local inference via llama-cpp-python |
-| **Context Window** | 4,096 tokens |
-| **Capabilities** | Structured extraction, format compliance |
-| **Limitations** | Smaller capacity; focused on parsing tasks |
+| **Model Type** | Fine-tuned BERT for financial sentiment |
+| **Backend** | transformers (HuggingFace) |
+| **Parameters** | ~110 million |
+| **Training Data** | Financial news, SEC filings, analyst reports |
+| **Task** | Sentiment classification |
+| **Output** | positive/negative/neutral → bullish/bearish/neutral |
+| **Capabilities** | Domain-specific financial sentiment detection |
+| **Limitations** | Classification only; no text generation |
 
-### Why Local Inference?
+### Alternative Extraction Models
+
+| Model | Parameters | Description |
+|-------|------------|-------------|
+| `mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis` | ~66M | Lightweight, fast inference |
+| `yiyanghkust/finbert-tone` | ~110M | Financial tone analysis |
+| `bartowski/gemma-2-9b-it-GGUF` | 9B | Generative extraction (llama backend) |
+
+### Why This Model Combination?
 
 | Benefit | Description |
 |---------|-------------|
-| **Privacy** | No data sent to external APIs |
-| **Cost** | Zero per-query costs after initial setup |
-| **Latency** | No network round-trips; GPU-accelerated |
-| **Control** | Full control over model versions and behavior |
+| **Domain Expertise** | FinBERT trained specifically on financial text |
+| **Accuracy** | Sentiment classifiers outperform prompted LLMs for this task |
+| **Efficiency** | 110M params vs 9B for extraction — faster, lower cost |
+| **Privacy** | All models run locally, no external API calls |
+| **Flexibility** | Switch models via config without code changes |
 
 ---
 
@@ -394,18 +433,18 @@ The sidebar displays real-time health status:
 | Dynamic prompt selection | Adapt to market conditions | Medium |
 
 ### Improved Analysis Quality
-| Opportunity | Benefit | Effort |
-|-------------|---------|--------|
-| RAG with market news | Real-time context awareness | High |
-| Sentiment analysis integration | Multi-source signals | Medium |
-| Technical indicator library | More sophisticated analysis | Medium |
+| Opportunity | Benefit | Effort | Status |
+|-------------|---------|--------|--------|
+| RAG with market news | Real-time context awareness | High | Planned |
+| ~~Sentiment analysis integration~~ | ~~Multi-source signals~~ | ~~Medium~~ | **Implemented** (FinBERT) |
+| Technical indicator library | More sophisticated analysis | Medium | Planned |
 
 ### Model Upgrades
-| Opportunity | Benefit | Effort |
-|-------------|---------|--------|
-| Larger analysis model | Deeper reasoning capability | Low |
-| Fine-tuned extraction model | Better signal accuracy | High |
-| Ensemble approach | More robust predictions | High |
+| Opportunity | Benefit | Effort | Status |
+|-------------|---------|--------|--------|
+| Larger analysis model | Deeper reasoning capability | Low | Planned |
+| ~~Fine-tuned extraction model~~ | ~~Better signal accuracy~~ | ~~High~~ | **Implemented** (FinBERT) |
+| Ensemble approach | More robust predictions | High | Planned |
 
 ### Scalability & Reliability
 | Opportunity | Benefit | Effort |
@@ -437,6 +476,9 @@ The sidebar displays real-time health status:
 | **GGUF** | Model file format for llama.cpp inference |
 | **Quantization** | Model compression technique (Q4, Q6, etc.) |
 | **RAG** | Retrieval-Augmented Generation; combining search with LLM |
+| **FinBERT** | BERT model fine-tuned on financial text for sentiment analysis |
+| **Transformers** | HuggingFace library for pre-trained NLP models |
+| **Sentiment Classification** | Categorizing text as positive, negative, or neutral |
 
 ---
 
@@ -448,12 +490,24 @@ The sidebar displays real-time health status:
 # config/llm_config.yaml
 
 llm:
+  # Analysis model (text generation)
   analysis:
+    model_type: "llama"  # Options: "llama" | "transformers"
     model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
-    temperature: 0.7
+    model_file: "gemma-3-12b-it.Q6_K.gguf"
+    inference:
+      temperature: 0.7
+      max_tokens: 2048
+
+  # Extraction model (sentiment classification)
   extraction:
-    model_repo: "bartowski/gemma-2-9b-it-GGUF"
-    temperature: 0.3
+    model_type: "transformers"  # Use HuggingFace model
+    model_repo: "ProsusAI/finbert"
+    task: "sentiment-analysis"
+    device: "auto"  # Options: "auto" | "cpu" | "cuda" | "mps"
+    inference:
+      temperature: 0.3
+      max_tokens: 1024
 
 market_data:
   wti_ticker: "CL=F"
