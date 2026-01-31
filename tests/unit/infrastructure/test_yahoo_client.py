@@ -149,3 +149,82 @@ class TestYahooFinanceClient:
         """Test convenience methods exist."""
         assert hasattr(client, "fetch_wti_data")
         assert hasattr(client, "fetch_brent_data")
+
+    def test_init_with_retry_config(self):
+        """Test initialization with retry configuration."""
+        client = YahooFinanceClient(
+            timeout=30,
+            max_retries=5,
+            min_retry_wait=2,
+            max_retry_wait=20,
+        )
+
+        assert client.timeout == 30
+        assert client.max_retries == 5
+        assert client.min_retry_wait == 2
+        assert client.max_retry_wait == 20
+
+    def test_default_retry_config(self, client):
+        """Test default retry configuration."""
+        assert client.max_retries == 3
+        assert client.min_retry_wait == 1
+        assert client.max_retry_wait == 10
+
+    @patch("yfinance.Ticker")
+    def test_retry_on_connection_error(self, mock_ticker, sample_df):
+        """Test retry behavior on connection error."""
+        mock_instance = MagicMock()
+        # Fail twice, then succeed
+        mock_instance.history.side_effect = [
+            ConnectionError("Network unreachable"),
+            ConnectionError("Network unreachable"),
+            sample_df,
+        ]
+        mock_ticker.return_value = mock_instance
+
+        client = YahooFinanceClient(max_retries=3, min_retry_wait=0, max_retry_wait=1)
+        result = client.fetch_historical_data(
+            "BZ=F",
+            datetime(2024, 1, 1),
+            datetime(2024, 1, 15),
+        )
+
+        assert len(result) == 10
+        assert mock_instance.history.call_count == 3
+
+    @patch("yfinance.Ticker")
+    def test_retry_exhausted(self, mock_ticker):
+        """Test that retries are exhausted properly."""
+        mock_instance = MagicMock()
+        mock_instance.history.side_effect = ConnectionError("Network unreachable")
+        mock_ticker.return_value = mock_instance
+
+        client = YahooFinanceClient(max_retries=2, min_retry_wait=0, max_retry_wait=1)
+
+        with pytest.raises(MarketDataFetchError, match="after 2 retries"):
+            client.fetch_historical_data(
+                "BZ=F",
+                datetime(2024, 1, 1),
+                datetime(2024, 1, 15),
+            )
+
+        assert mock_instance.history.call_count == 2
+
+    @patch("yfinance.Ticker")
+    def test_no_retry_on_non_retryable_error(self, mock_ticker):
+        """Test that non-retryable errors are not retried."""
+        mock_instance = MagicMock()
+        mock_instance.history.side_effect = ValueError("Invalid parameter")
+        mock_ticker.return_value = mock_instance
+
+        client = YahooFinanceClient(max_retries=3)
+
+        with pytest.raises(MarketDataFetchError, match="Failed to fetch"):
+            client.fetch_historical_data(
+                "BZ=F",
+                datetime(2024, 1, 1),
+                datetime(2024, 1, 15),
+            )
+
+        # Should only be called once (no retries)
+        assert mock_instance.history.call_count == 1

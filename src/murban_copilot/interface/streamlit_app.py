@@ -14,6 +14,7 @@ from murban_copilot.domain.spread_calculator import SpreadCalculator
 from murban_copilot.infrastructure.market_data.yahoo_client import YahooFinanceClient
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient, MockLlamaClient
 from murban_copilot.infrastructure.config import ConfigLoader
+from murban_copilot.infrastructure.health import HealthChecker, HealthStatus
 from murban_copilot.infrastructure.logging import setup_logging, get_logger
 from murban_copilot.application.fetch_market_data import FetchMarketDataUseCase
 from murban_copilot.application.analyze_spread import AnalyzeSpreadUseCase
@@ -307,6 +308,28 @@ def main():
         if st.button("Refresh Data", type="primary", use_container_width=True):
             st.cache_data.clear()
             st.rerun()
+
+        # Health Status
+        st.divider()
+        with st.expander("System Health", expanded=False):
+            health_checker = HealthChecker(
+                market_client=st.session_state.market_client,
+                llm_client=st.session_state.analysis_llm_client,
+            )
+            health_result = health_checker.check_all()
+
+            status_emoji = {
+                HealthStatus.HEALTHY: "🟢",
+                HealthStatus.DEGRADED: "🟡",
+                HealthStatus.UNHEALTHY: "🔴",
+            }
+
+            st.markdown(f"**Overall:** {status_emoji.get(health_result.status, '⚪')} {health_result.status.value.title()}")
+
+            for component in health_result.components:
+                emoji = status_emoji.get(component.status, "⚪")
+                latency = f" ({component.latency_ms:.0f}ms)" if component.latency_ms else ""
+                st.markdown(f"- {emoji} **{component.name}**{latency}")
 
     # Main content
     with st.spinner("Fetching market data..."):
