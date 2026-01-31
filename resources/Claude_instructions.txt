@@ -150,3 +150,117 @@ Users wants to drill down on below data points:
 - Any other derived data points which are useful to user.
 Suggest a plan for drill down screen.
 After the changes, I would like to test them and be able to rollback the changes if I don't like the functionality.
+===============================================================
+
+
+You are an expert LLM systems analyst and technical writer.
+
+Your task is to read and understand the entire LLM‑based project codebase provided to you.
+Using that understanding, produce a **business‑friendly, high‑level technical document in clean Markdown format**.
+
+## 🎯 Objectives
+Explain the system in a way that:
+- Business stakeholders and product leaders can easily understand.
+- Focuses on value, workflow, and reasoning rather than low‑level code.
+- Clarifies how the LLM is used, how data flows, and how outputs are generated.
+
+## 📘 The Document MUST Include:
+
+### 1. Executive Summary
+- What the LLM system does.
+- The business problem it solves.
+- Who uses it and how it creates value.
+- High‑level description of the LLM(s) involved (e.g., GPT, Claude, custom fine‑tuned models).
+
+### 2. High‑Level System Architecture
+Describe the major components:
+- Prompt orchestration layer
+- Retrieval or vector search (if applicable)
+- Knowledge base or embeddings store
+- Model inference layer
+- Post‑processing or business logic layer
+- Integrations (APIs, databases, external tools)
+- UI or application layer
+
+Explain how these components interact to produce outputs.
+
+### 3. End‑to‑End Data & Request Flow
+Explain the full lifecycle of a user request:
+- Input collection (UI, API, chat interface, automation)
+- Preprocessing (normalization, classification, routing)
+- Prompt construction or template selection
+- Retrieval‑augmented generation (if used)
+- LLM inference
+- Post‑processing (validation, formatting, filtering)
+- Final output delivered to the user or downstream system
+
+Use:
+- Numbered steps
+- Bullet points
+- Optional mermaid diagrams
+
+### 4. Prompting & Orchestration Logic
+Explain the key logic behind:
+- Prompt templates and their purpose
+- System prompts, role prompts, or guardrails
+- Routing logic (e.g., which model or prompt is chosen)
+- Chain‑of‑thought or multi‑step reasoning flows
+- Tool‑use or function‑calling logic (if implemented)
+
+Describe these in business‑friendly terms.
+
+### 5. Retrieval / Knowledge Integration (if applicable)
+Explain:
+- Data sources used for retrieval
+- How embeddings are generated and stored
+- How vector search works at a high level
+- How retrieved context influences the LLM’s output
+- Any caching or ranking logic
+
+### 6. Model Overview
+For each model used:
+- Model type (base model, fine‑tuned model, custom model)
+- What it is responsible for
+- Key capabilities and limitations
+- How it is hosted or accessed (API, local inference, cloud service)
+
+### 7. Safety, Guardrails & Validation
+Describe:
+- Input validation
+- Output filtering or moderation
+- Business rules applied after model inference
+- Safeguards to prevent harmful or incorrect outputs
+
+### 8. Monitoring & Performance
+Explain:
+- How system performance is tracked (latency, cost, accuracy)
+- How model quality is evaluated
+- Logging and observability
+- Any automated retraining or prompt updates
+
+### 9. Assumptions, Constraints & Limitations
+Include:
+- Data or context limitations
+- Model behavior constraints
+- Known risks (hallucinations, bias, context window limits)
+- Operational constraints (rate limits, cost considerations)
+
+### 10. Opportunities for Improvement
+Provide high‑level suggestions for:
+- Better prompting
+- Improved retrieval quality
+- Model upgrades or fine‑tuning
+- Scalability and reliability
+- Business impact expansion
+
+## 📝 Style Requirements
+- Use clear, simple language suitable for business audiences.
+- Avoid LLM jargon unless necessary; explain it when used.
+- Use headings, subheadings, tables, and diagrams for readability.
+- Do NOT include raw code unless essential for explanation.
+
+## 📦 Input
+You will be given the LLM‑based project codebase. Analyze all files before writing the document.
+
+## 📤 Output
+Produce a single, well‑structured Markdown document that a business stakeholder can read and understand.
