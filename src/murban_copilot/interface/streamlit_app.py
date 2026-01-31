@@ -35,38 +35,136 @@ st.set_page_config(
 # Dark theme CSS
 st.markdown("""
 <style>
+    /* Base app styling */
     .stApp {
         background-color: #0e1117;
         color: #fafafa;
     }
+
+    /* Main content text */
+    .stApp h1, .stApp h2, .stApp h3, .stApp h4 {
+        color: #ffffff !important;
+    }
+    .stApp p, .stApp span, .stApp label, .stApp div {
+        color: #fafafa;
+    }
+    .stMarkdown, .stMarkdown p, .stMarkdown span {
+        color: #fafafa !important;
+    }
+
+    /* Subheader styling */
+    [data-testid="stSubheader"] {
+        color: #ffffff !important;
+    }
+
+    /* Caption/footer styling */
+    .stCaption, [data-testid="stCaption"], small {
+        color: #a0aec0 !important;
+    }
+
+    /* Expander styling */
+    [data-testid="stExpander"] summary,
+    [data-testid="stExpander"] summary span,
+    .streamlit-expanderHeader,
+    .streamlit-expanderHeader p {
+        color: #fafafa !important;
+    }
+    [data-testid="stExpander"] [data-testid="stMarkdownContainer"] p {
+        color: #fafafa !important;
+    }
+
+    /* Divider styling */
+    [data-testid="stHorizontalRule"], hr {
+        border-color: #2d3748 !important;
+    }
+
+    /* Sidebar styling */
     .stSidebar {
         background-color: #1a1f2c;
     }
+    .stSidebar .stMarkdown,
+    .stSidebar label,
+    .stSidebar .stSelectbox label,
+    .stSidebar .stSlider label,
+    .stSidebar .stCheckbox label,
+    .stSidebar .stCheckbox span,
+    .stSidebar .stCheckbox p,
+    .stSidebar [data-testid="stCheckbox"] label,
+    .stSidebar [data-testid="stCheckbox"] span,
+    .stSidebar [data-testid="stSidebarContent"] {
+        color: #fafafa !important;
+    }
+    .stSidebar .stSlider [data-testid="stTickBarMin"],
+    .stSidebar .stSlider [data-testid="stTickBarMax"] {
+        color: #a0aec0 !important;
+    }
+    .stSidebar h1, .stSidebar h2, .stSidebar h3 {
+        color: #ffffff !important;
+    }
+
+    /* Main dashboard metric styling */
+    [data-testid="stMetric"] label,
+    [data-testid="stMetricLabel"] {
+        color: #a0aec0 !important;
+    }
+    [data-testid="stMetric"] [data-testid="stMetricValue"],
+    [data-testid="stMetricValue"] {
+        color: #fafafa !important;
+    }
+    [data-testid="stMetric"] [data-testid="stMetricDelta"],
+    [data-testid="stMetricDelta"] {
+        color: #48bb78 !important;
+    }
+
+    /* Custom metric card styling */
     .metric-card {
         background-color: #1a1f2c;
         padding: 1rem;
         border-radius: 0.5rem;
         border: 1px solid #2d3748;
+        color: #fafafa;
     }
+    .metric-card h3 {
+        color: #ffffff !important;
+        margin-bottom: 0.5rem;
+    }
+    .metric-card p {
+        color: #fafafa !important;
+        margin: 0.25rem 0;
+    }
+
+    /* Signal colors */
     .signal-bullish {
-        color: #48bb78;
+        color: #48bb78 !important;
         font-weight: bold;
     }
     .signal-bearish {
-        color: #fc8181;
+        color: #fc8181 !important;
         font-weight: bold;
     }
     .signal-neutral {
-        color: #ecc94b;
+        color: #ecc94b !important;
         font-weight: bold;
     }
+
+    /* Disclaimer styling */
     .disclaimer {
         font-size: 0.75rem;
-        color: #a0aec0;
+        color: #a0aec0 !important;
         padding: 1rem;
         background-color: #1a1f2c;
         border-radius: 0.5rem;
         margin-top: 1rem;
+    }
+
+    /* Spinner text */
+    .stSpinner > div > span {
+        color: #fafafa !important;
+    }
+
+    /* Alert/message styling */
+    [data-testid="stAlert"] p {
+        color: #fafafa !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -236,22 +334,29 @@ def create_spread_chart(
         template="plotly_dark",
         paper_bgcolor="#0e1117",
         plot_bgcolor="#0e1117",
+        font=dict(color="#fafafa"),
         legend=dict(
             orientation="h",
             yanchor="bottom",
             y=1.02,
             xanchor="right",
             x=1,
+            font=dict(color="#fafafa"),
+            bgcolor="rgba(0,0,0,0)",
         ),
         hovermode="x unified",
         height=600,
         margin=dict(l=50, r=50, t=80, b=50),
     )
 
-    fig.update_xaxes(gridcolor="#2d3748", showgrid=True)
-    fig.update_yaxes(gridcolor="#2d3748", showgrid=True)
+    fig.update_xaxes(gridcolor="#2d3748", showgrid=True, tickfont=dict(color="#a0aec0"), title_font=dict(color="#fafafa"))
+    fig.update_yaxes(gridcolor="#2d3748", showgrid=True, tickfont=dict(color="#a0aec0"), title_font=dict(color="#fafafa"))
     fig.update_yaxes(title_text="Price ($/barrel)", row=1, col=1)
     fig.update_yaxes(title_text="Spread ($)", row=2, col=1)
+
+    # Update subplot titles (annotations) color
+    for annotation in fig.layout.annotations:
+        annotation.font.color = "#fafafa"
 
     return fig
 
@@ -296,12 +401,6 @@ def main():
     # Sidebar
     with st.sidebar:
         st.header("Settings")
-
-        ticker_option = st.selectbox(
-            "Base Ticker",
-            options=["WTI vs Brent", "Custom"],
-            index=0,
-        )
 
         days = st.slider(
             "Historical Days",
