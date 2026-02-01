@@ -264,3 +264,13 @@ You will be given the LLM‑based project codebase. Analyze all files before wri
 
 ## 📤 Output
 Produce a single, well‑structured Markdown document that a business stakeholder can read and understand.
+
+===============================================================
+update project documentation (including Technical_overview.md, readme.md) with above changes.
+===============================================================
+Create new branch for this development.
+  I would like to rollback the changes if changes are not working.
+  Make a configuration switch in config file to swith on/off selecting the models for both,
+  Analysis and Extraction prompts. Configuration should also take care of switching between
+  Huggingface transformers or llama  llm loading based on model selection.
+===============================================================

@@ -49,13 +49,13 @@ llm:
     #model_repo: "bartowski/gemma-2-9b-it-GGUF"
     #model_file: "gemma-2-9b-it-Q4_K_M.gguf"
     # --- Alternative: Financial Sentiment Model (transformers) ---
-    #model_type: "transformers"
-    #model_repo: "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
+    model_type: "transformers"
+    model_repo: "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
     # task: "sentiment-analysis"
     # device: "auto"  # Options: "auto" | "cpu" | "cuda" | "mps"
     # --- Alternative: ProsusAI FinBERT ---
-    model_type: "transformers"
-    model_repo: "ProsusAI/finbert"
+    #model_type: "transformers"
+    #model_repo: "ProsusAI/finbert"
     # task: "sentiment-analysis"
     # device: "auto"
     inference:
