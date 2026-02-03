@@ -91,7 +91,7 @@ class TestTraderTalkTemplate:
 
         # Should include both system prompt and analysis
         assert "trader" in prompt.lower()
-        assert "Current Market Data" in prompt
+        assert "INPUT DATA" in prompt
 
 
 class TestSignalExtractionTemplate:

@@ -28,6 +28,10 @@ class LLMInference(Protocol):
         max_tokens: int = 512,
         temperature: float = 0.7,
         use_cache: bool = True,
+        top_p: Optional[float] = None,
+        top_k: Optional[int] = None,
+        frequency_penalty: Optional[float] = None,
+        presence_penalty: Optional[float] = None,
     ) -> str:
         """Generate text from the given prompt."""
         ...
@@ -79,6 +83,10 @@ class BaseLLMClient(ABC):
         prompt: str,
         max_tokens: int,
         temperature: float,
+        top_p: Optional[float] = None,
+        top_k: Optional[int] = None,
+        frequency_penalty: Optional[float] = None,
+        presence_penalty: Optional[float] = None,
     ) -> str:
         """
         Perform the actual generation (without caching).
@@ -87,6 +95,10 @@ class BaseLLMClient(ABC):
             prompt: The input prompt
             max_tokens: Maximum tokens to generate
             temperature: Sampling temperature
+            top_p: Nucleus sampling threshold (0.0-1.0)
+            top_k: Top-k sampling (number of top tokens to consider)
+            frequency_penalty: Penalty for frequent tokens (0.0-2.0)
+            presence_penalty: Penalty for repeated tokens (0.0-2.0)
 
         Returns:
             Generated text
@@ -99,6 +111,10 @@ class BaseLLMClient(ABC):
         max_tokens: int = 512,
         temperature: float = 0.7,
         use_cache: bool = True,
+        top_p: Optional[float] = None,
+        top_k: Optional[int] = None,
+        frequency_penalty: Optional[float] = None,
+        presence_penalty: Optional[float] = None,
     ) -> str:
         """
         Generate text from the given prompt.
@@ -108,6 +124,10 @@ class BaseLLMClient(ABC):
             max_tokens: Maximum tokens to generate
             temperature: Sampling temperature (0.0 to 1.0)
             use_cache: Whether to use response caching
+            top_p: Nucleus sampling threshold (0.0-1.0)
+            top_k: Top-k sampling (number of top tokens to consider)
+            frequency_penalty: Penalty for frequent tokens (0.0-2.0)
+            presence_penalty: Penalty for repeated tokens (0.0-2.0)
 
         Returns:
             Generated text
@@ -126,7 +146,12 @@ class BaseLLMClient(ABC):
         self._load_model()
 
         try:
-            result = self._do_generate(prompt, max_tokens, temperature)
+            result = self._do_generate(
+                prompt, max_tokens, temperature,
+                top_p=top_p, top_k=top_k,
+                frequency_penalty=frequency_penalty,
+                presence_penalty=presence_penalty,
+            )
 
             if should_use_cache:
                 self._cache_response(prompt, max_tokens, temperature, result)

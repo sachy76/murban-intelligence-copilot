@@ -146,11 +146,20 @@ class TransformersClient(BaseLLMClient):
         prompt: str,
         max_tokens: int,
         temperature: float,
+        top_p: Optional[float] = None,
+        top_k: Optional[int] = None,
+        frequency_penalty: Optional[float] = None,
+        presence_penalty: Optional[float] = None,
     ) -> str:
         """Perform generation or classification."""
         if self.task in ("sentiment-analysis", "text-classification"):
             return self._run_classification(prompt)
-        return self._run_generation(prompt, max_tokens, temperature)
+        return self._run_generation(
+            prompt, max_tokens, temperature,
+            top_p=top_p, top_k=top_k,
+            frequency_penalty=frequency_penalty,
+            presence_penalty=presence_penalty,
+        )
 
     def _run_classification(self, text: str) -> str:
         """
@@ -187,6 +196,10 @@ SUMMARY: Financial sentiment analysis indicates {signal} outlook based on the pr
         prompt: str,
         max_tokens: int,
         temperature: float,
+        top_p: Optional[float] = None,
+        top_k: Optional[int] = None,
+        frequency_penalty: Optional[float] = None,
+        presence_penalty: Optional[float] = None,
     ) -> str:
         """
         Run text generation.
@@ -195,17 +208,33 @@ SUMMARY: Financial sentiment analysis indicates {signal} outlook based on the pr
             prompt: Input prompt
             max_tokens: Maximum tokens to generate
             temperature: Sampling temperature
+            top_p: Nucleus sampling threshold
+            top_k: Top-k sampling
+            frequency_penalty: Penalty for frequent tokens (mapped to repetition_penalty)
+            presence_penalty: Penalty for repeated tokens (mapped to repetition_penalty)
 
         Returns:
             Generated text
         """
-        results = self._pipeline(
-            prompt,
-            max_new_tokens=max_tokens,
-            temperature=temperature,
-            do_sample=temperature > 0,
-            return_full_text=False,
-        )
+        kwargs = {
+            "max_new_tokens": max_tokens,
+            "temperature": temperature,
+            "do_sample": temperature > 0,
+            "return_full_text": False,
+        }
+        if top_p is not None:
+            kwargs["top_p"] = top_p
+        if top_k is not None:
+            kwargs["top_k"] = top_k
+        # Transformers uses repetition_penalty instead of frequency/presence penalty
+        # Map them to repetition_penalty (average if both provided)
+        if frequency_penalty is not None or presence_penalty is not None:
+            # Convert to repetition_penalty (1.0 = no penalty, >1.0 = penalty)
+            freq = frequency_penalty or 0.0
+            pres = presence_penalty or 0.0
+            kwargs["repetition_penalty"] = 1.0 + (freq + pres) / 2
+
+        results = self._pipeline(prompt, **kwargs)
 
         if isinstance(results, list) and len(results) > 0:
             return results[0].get("generated_text", "").strip()

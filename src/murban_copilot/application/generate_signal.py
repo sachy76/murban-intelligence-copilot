@@ -69,6 +69,10 @@ class GenerateSignalUseCase:
         defaults = llm_defaults or _get_llm_defaults()
         self.analysis_max_tokens = analysis_max_tokens or defaults.analysis_inference.max_tokens
         self.analysis_temperature = analysis_temperature if analysis_temperature is not None else defaults.analysis_inference.temperature
+        self.analysis_top_p = defaults.analysis_inference.top_p
+        self.analysis_top_k = defaults.analysis_inference.top_k
+        self.analysis_frequency_penalty = defaults.analysis_inference.frequency_penalty
+        self.analysis_presence_penalty = defaults.analysis_inference.presence_penalty
         self.extraction_max_tokens = extraction_max_tokens or defaults.extraction_inference.max_tokens
         self.extraction_temperature = extraction_temperature if extraction_temperature is not None else defaults.extraction_inference.temperature
 
@@ -123,6 +127,10 @@ class GenerateSignalUseCase:
                 prompt,
                 max_tokens=self.analysis_max_tokens,
                 temperature=self.analysis_temperature,
+                top_p=self.analysis_top_p,
+                top_k=self.analysis_top_k,
+                frequency_penalty=self.analysis_frequency_penalty,
+                presence_penalty=self.analysis_presence_penalty,
             )
             logger.debug("Step 1 complete: Generated analysis")
 

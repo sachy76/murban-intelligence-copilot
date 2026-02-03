@@ -182,6 +182,10 @@ class LLMInferenceConfig:
 
     max_tokens: int = 512
     temperature: float = 0.7
+    top_p: Optional[float] = None  # Nucleus sampling threshold
+    top_k: Optional[int] = None  # Top-k sampling
+    frequency_penalty: Optional[float] = None  # Penalize frequent tokens
+    presence_penalty: Optional[float] = None  # Penalize repeated tokens
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "LLMInferenceConfig":
@@ -201,7 +205,14 @@ class LLMDefaultsConfig:
     inference: LLMInferenceConfig = field(default_factory=LLMInferenceConfig)
     # Analysis-specific inference defaults
     analysis_inference: LLMInferenceConfig = field(
-        default_factory=lambda: LLMInferenceConfig(max_tokens=2048, temperature=0.7)
+        default_factory=lambda: LLMInferenceConfig(
+            max_tokens=2048,
+            temperature=0.7,
+            top_p=0.9,
+            top_k=50,
+            frequency_penalty=0.3,
+            presence_penalty=0.1,
+        )
     )
     # Extraction-specific inference defaults
     extraction_inference: LLMInferenceConfig = field(
@@ -213,7 +224,14 @@ class LLMDefaultsConfig:
         """Create config from dictionary."""
         # Handle nested inference configs with specific defaults
         if "analysis_inference" not in data:
-            data = {**data, "analysis_inference": {"max_tokens": 2048, "temperature": 0.7}}
+            data = {**data, "analysis_inference": {
+                "max_tokens": 2048,
+                "temperature": 0.7,
+                "top_p": 0.9,
+                "top_k": 50,
+                "frequency_penalty": 0.3,
+                "presence_penalty": 0.1,
+            }}
         if "extraction_inference" not in data:
             data = {**data, "extraction_inference": {"max_tokens": 1024, "temperature": 0.3}}
 

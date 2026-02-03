@@ -25,6 +25,10 @@ class MockLlamaClient:
         max_tokens: int = 512,
         temperature: float = 0.7,
         use_cache: bool = True,
+        top_p: Optional[float] = None,
+        top_k: Optional[int] = None,
+        frequency_penalty: Optional[float] = None,
+        presence_penalty: Optional[float] = None,
     ) -> str:
         """Generate a mock response."""
         self.call_count += 1

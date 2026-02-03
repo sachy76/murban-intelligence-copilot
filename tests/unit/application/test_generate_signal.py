@@ -18,7 +18,17 @@ class TrackingMockLLM:
         self.call_count = 0
         self.prompts = []
 
-    def generate(self, prompt: str, max_tokens: int = 512, temperature: float = 0.7, use_cache: bool = True) -> str:
+    def generate(
+        self,
+        prompt: str,
+        max_tokens: int = 512,
+        temperature: float = 0.7,
+        use_cache: bool = True,
+        top_p: float = None,
+        top_k: int = None,
+        frequency_penalty: float = None,
+        presence_penalty: float = None,
+    ) -> str:
         self.call_count += 1
         self.prompts.append(prompt)
         return f"SIGNAL: neutral\nCONFIDENCE: 0.5\n{self.name} response"

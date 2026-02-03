@@ -102,6 +102,6 @@ class TestPromptTemplates:
         assert "crude oil trader" in prompt.lower()
 
         # Should contain data sections
-        assert "Current Market Data" in prompt
+        assert "INPUT DATA" in prompt
         assert "Recent Spread History" in prompt
-        assert "Your Task" in prompt
+        assert "TASK" in prompt

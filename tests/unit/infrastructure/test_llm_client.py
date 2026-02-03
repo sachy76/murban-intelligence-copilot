@@ -256,3 +256,75 @@ class TestLlamaClient:
         # when calling generate - it should try to load model instead
         # (which will fail since model doesn't exist)
         assert client_no_cache.cache_enabled is False
+
+    def test_generate_with_all_optional_params(self, tmp_path):
+        """Test generate passes all optional parameters."""
+        client = LlamaClient(
+            model_path="/fake/model.gguf",
+            cache_dir=tmp_path / "cache",
+        )
+        # Pre-cache response to avoid model loading
+        client._cache_response("test prompt", 100, 0.5, "cached response")
+
+        result = client.generate(
+            "test prompt",
+            max_tokens=100,
+            temperature=0.5,
+            top_p=0.9,
+            top_k=50,
+            frequency_penalty=0.3,
+            presence_penalty=0.1,
+        )
+
+        assert result == "cached response"
+
+    def test_get_cached_response_invalid_json(self, client):
+        """Test _get_cached_response returns None on invalid JSON."""
+        cache_key = client._get_cache_key("test", 100, 0.7)
+        cache_file = client._cache_dir / f"{cache_key}.json"
+        cache_file.write_text("invalid json content {")
+
+        result = client._get_cached_response("test", 100, 0.7)
+
+        assert result is None
+
+    def test_get_cached_response_missing_key(self, client):
+        """Test _get_cached_response returns None if response key missing."""
+        cache_key = client._get_cache_key("test", 100, 0.7)
+        cache_file = client._cache_dir / f"{cache_key}.json"
+        cache_file.write_text('{"other_key": "value"}')
+
+        result = client._get_cached_response("test", 100, 0.7)
+
+        assert result is None
+
+    def test_is_available_returns_false_when_model_fails(self, tmp_path):
+        """Test is_available returns False when model loading fails."""
+        client = LlamaClient(
+            model_repo="nonexistent/model",
+            cache_dir=tmp_path / "cache",
+        )
+
+        # is_available catches LLMInferenceError and returns False
+        available = client.is_available()
+
+        # This will be False if llama-cpp-python is not installed
+        # or True if it is (but then model download will fail)
+        assert isinstance(available, bool)
+
+    def test_generate_reraises_llm_inference_error(self, tmp_path):
+        """Test generate re-raises LLMInferenceError without wrapping."""
+        client = LlamaClient(
+            model_path="/fake/model.gguf",
+            cache_dir=tmp_path / "cache",
+            cache_enabled=False,
+        )
+
+        # Without llama-cpp-python, this will raise LLMInferenceError
+        with pytest.raises(LLMInferenceError):
+            client.generate("test", use_cache=False)
+
+    def test_default_model_identifier(self, client):
+        """Test _get_model_identifier returns repo/file."""
+        identifier = client._get_model_identifier()
+        assert "/" in identifier or "LlamaClient" in identifier

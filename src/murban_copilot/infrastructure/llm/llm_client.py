@@ -134,13 +134,27 @@ class LlamaClient(BaseLLMClient):
         prompt: str,
         max_tokens: int,
         temperature: float,
+        top_p: Optional[float] = None,
+        top_k: Optional[int] = None,
+        frequency_penalty: Optional[float] = None,
+        presence_penalty: Optional[float] = None,
     ) -> str:
         """Perform generation using llama-cpp."""
-        response = self._model(
-            prompt,
-            max_tokens=max_tokens,
-            temperature=temperature,
-            stop=["</s>", "<|end|>", "<|eot_id|>"],
-            echo=False,
-        )
+        # Build kwargs with only non-None values
+        kwargs = {
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "stop": ["</s>", "<|end|>", "<|eot_id|>"],
+            "echo": False,
+        }
+        if top_p is not None:
+            kwargs["top_p"] = top_p
+        if top_k is not None:
+            kwargs["top_k"] = top_k
+        if frequency_penalty is not None:
+            kwargs["frequency_penalty"] = frequency_penalty
+        if presence_penalty is not None:
+            kwargs["presence_penalty"] = presence_penalty
+
+        response = self._model(prompt, **kwargs)
         return response["choices"][0]["text"].strip()

@@ -25,10 +25,18 @@ llm:
     analysis_inference:
       max_tokens: 2048
       temperature: 0.7
+      top_p: 0.9
+      top_k: 50
+      frequency_penalty: 0.3
+      presence_penalty: 0.1
     # Extraction-specific inference defaults
     extraction_inference:
-      max_tokens: 1024
-      temperature: 0.3
+      max_tokens: 150
+      temperature: 0.1
+      top_p: 0.65
+      top_k: 25
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
 
   # -------------------------------------------------------------------------
   # Analysis Model Configuration
@@ -46,6 +54,10 @@ llm:
     inference:
       max_tokens: 2048
       temperature: 0.7
+      top_p: 0.9
+      top_k: 50
+      frequency_penalty: 0.3
+      presence_penalty: 0.1
 
   # -------------------------------------------------------------------------
   # Extraction Model Configuration
@@ -71,11 +83,15 @@ llm:
     # task: "sentiment-analysis"
     # device: "auto"
     inference:
-      max_tokens: 1024
-      temperature: 0.3
+      max_tokens: 150   # Forces brevity
+      temperature: 0.1  # Prevents interpretive drift
+      top_p: 0.65       # Tight probability mass
+      top_k: 25         # Constrained vocabulary
+      frequency_penalty: 0.0  # No repetition risk
+      presence_penalty: 0.0   # Prevents new ideas
     # Transformers-specific settings (only used when model_type is "transformers")
     task: "sentiment-analysis"
-    device: "auto"
+    device: "cpu"  # Use CPU to avoid MPS memory issues
 
 # -----------------------------------------------------------------------------
 # Cache Configuration
