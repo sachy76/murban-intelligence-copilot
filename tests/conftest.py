@@ -12,7 +12,7 @@ from murban_copilot.domain.entities import (
     SpreadData,
 )
 from murban_copilot.domain.spread_calculator import SpreadCalculator
-from murban_copilot.infrastructure.llm.llm_client import MockLlamaClient
+from murban_copilot.infrastructure.llm.mock_client import MockLlamaClient
 
 
 @pytest.fixture

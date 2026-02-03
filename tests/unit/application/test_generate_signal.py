@@ -7,7 +7,7 @@ import pytest
 from murban_copilot.application.generate_signal import GenerateSignalUseCase
 from murban_copilot.domain.entities import MarketSignal
 from murban_copilot.domain.exceptions import LLMInferenceError, ValidationError
-from murban_copilot.infrastructure.llm.llm_client import MockLlamaClient
+from murban_copilot.infrastructure.llm.mock_client import MockLlamaClient
 
 
 class TrackingMockLLM:

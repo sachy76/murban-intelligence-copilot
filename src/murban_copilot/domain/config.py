@@ -179,15 +179,37 @@ class LLMDefaultsConfig:
     n_gpu_layers: int = -1
     cache_enabled: bool = True
     verbose: bool = False
+    # Default inference parameters
+    inference: LLMInferenceConfig = field(default_factory=LLMInferenceConfig)
+    # Analysis-specific inference defaults
+    analysis_inference: LLMInferenceConfig = field(
+        default_factory=lambda: LLMInferenceConfig(max_tokens=2048, temperature=0.7)
+    )
+    # Extraction-specific inference defaults
+    extraction_inference: LLMInferenceConfig = field(
+        default_factory=lambda: LLMInferenceConfig(max_tokens=1024, temperature=0.3)
+    )
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "LLMDefaultsConfig":
         """Create config from dictionary."""
+        # Parse inference configs
+        inference = LLMInferenceConfig.from_dict(data.get("inference", {}))
+        analysis_inference = LLMInferenceConfig.from_dict(
+            data.get("analysis_inference", {"max_tokens": 2048, "temperature": 0.7})
+        )
+        extraction_inference = LLMInferenceConfig.from_dict(
+            data.get("extraction_inference", {"max_tokens": 1024, "temperature": 0.3})
+        )
+
         return cls(
             n_ctx=data.get("n_ctx", 4096),
             n_gpu_layers=data.get("n_gpu_layers", -1),
             cache_enabled=data.get("cache_enabled", True),
             verbose=data.get("verbose", False),
+            inference=inference,
+            analysis_inference=analysis_inference,
+            extraction_inference=extraction_inference,
         )
 
 
@@ -292,19 +314,14 @@ class LLMConfig:
 
     @classmethod
     def get_default(cls) -> "LLMConfig":
-        """Get the default configuration matching hardcoded defaults."""
-        defaults = LLMDefaultsConfig(
-            n_ctx=4096,
-            n_gpu_layers=-1,
-            cache_enabled=True,
-            verbose=False,
-        )
+        """Get the default configuration using centralized defaults."""
+        defaults = LLMDefaultsConfig()
 
         analysis = LLMModelConfig(
             model_repo="MaziyarPanahi/gemma-3-12b-it-GGUF",
             model_file="gemma-3-12b-it.Q6_K.gguf",
             model_type=ModelType.LLAMA,
-            inference=LLMInferenceConfig(max_tokens=2048, temperature=0.7),
+            inference=defaults.analysis_inference,
             n_ctx=defaults.n_ctx,
             n_gpu_layers=defaults.n_gpu_layers,
         )
@@ -313,12 +330,12 @@ class LLMConfig:
             model_repo="bartowski/gemma-2-9b-it-GGUF",
             model_file="gemma-2-9b-it-Q4_K_M.gguf",
             model_type=ModelType.LLAMA,
-            inference=LLMInferenceConfig(max_tokens=1024, temperature=0.3),
+            inference=defaults.extraction_inference,
             n_ctx=defaults.n_ctx,
             n_gpu_layers=defaults.n_gpu_layers,
         )
 
-        cache = CacheConfig(directory=".llm_cache", enabled=True)
+        cache = CacheConfig()
 
         return cls(
             defaults=defaults,

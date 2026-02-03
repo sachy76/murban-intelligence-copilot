@@ -15,7 +15,8 @@ from murban_copilot.domain.entities import MarketData, MovingAverages, SpreadDat
 from murban_copilot.domain.spread_calculator import SpreadCalculator
 from murban_copilot.infrastructure.market_data.yahoo_client import YahooFinanceClient
 from murban_copilot.infrastructure.llm import create_llm_client, get_client_type_name
-from murban_copilot.infrastructure.llm.llm_client import LlamaClient, MockLlamaClient
+from murban_copilot.infrastructure.llm.llm_client import LlamaClient
+from murban_copilot.infrastructure.llm.mock_client import MockLlamaClient
 from murban_copilot.infrastructure.config import ConfigLoader
 from murban_copilot.infrastructure.health import HealthChecker, HealthStatus
 from murban_copilot.infrastructure.logging import setup_logging, get_logger

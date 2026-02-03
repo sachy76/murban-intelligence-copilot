@@ -2,7 +2,8 @@
 
 import pytest
 
-from murban_copilot.infrastructure.llm.llm_client import LlamaClient, MockLlamaClient
+from murban_copilot.infrastructure.llm.llm_client import LlamaClient
+from murban_copilot.infrastructure.llm.mock_client import MockLlamaClient
 from murban_copilot.infrastructure.llm.protocols import LLMInference
 
 

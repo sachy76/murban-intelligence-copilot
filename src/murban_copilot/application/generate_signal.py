@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from datetime import datetime
-from typing import Sequence, TYPE_CHECKING
+from typing import Sequence, TYPE_CHECKING, Optional
 
 from murban_copilot.domain.entities import MarketSignal, MovingAverages, SpreadData
 from murban_copilot.domain.exceptions import LLMInferenceError, ValidationError
@@ -17,15 +17,27 @@ from murban_copilot.infrastructure.llm.protocols import LLMInference
 from murban_copilot.infrastructure.logging import get_logger
 
 if TYPE_CHECKING:
-    from murban_copilot.domain.config import SignalConfig
+    from murban_copilot.domain.config import LLMDefaultsConfig, SignalConfig
 
 logger = get_logger(__name__)
 
-# Default fallback values
+# Default fallback values (used only when no config provided)
 DEFAULT_SIGNAL = "neutral"
 DEFAULT_CONFIDENCE = 0.5
 DEFAULT_BULLISH_KEYWORDS = ["bullish", "upward", "positive", "buy"]
 DEFAULT_BEARISH_KEYWORDS = ["bearish", "downward", "negative", "sell"]
+
+
+def _get_default_inference_params() -> tuple[int, float, int, float]:
+    """Get default inference parameters from config."""
+    from murban_copilot.domain.config import LLMDefaultsConfig
+    defaults = LLMDefaultsConfig()
+    return (
+        defaults.analysis_inference.max_tokens,
+        defaults.analysis_inference.temperature,
+        defaults.extraction_inference.max_tokens,
+        defaults.extraction_inference.temperature,
+    )
 
 
 class GenerateSignalUseCase:
@@ -35,11 +47,12 @@ class GenerateSignalUseCase:
         self,
         llm_client: LLMInference,
         extraction_client: LLMInference | None = None,
-        analysis_max_tokens: int = 2048,
-        analysis_temperature: float = 0.7,
-        extraction_max_tokens: int = 1024,
-        extraction_temperature: float = 0.3,
+        analysis_max_tokens: Optional[int] = None,
+        analysis_temperature: Optional[float] = None,
+        extraction_max_tokens: Optional[int] = None,
+        extraction_temperature: Optional[float] = None,
         signal_config: "SignalConfig | None" = None,
+        llm_defaults: "LLMDefaultsConfig | None" = None,
     ) -> None:
         """
         Initialize the use case.
@@ -48,18 +61,34 @@ class GenerateSignalUseCase:
             llm_client: LLM client for analysis inference
             extraction_client: Optional separate LLM client for extraction.
                                Defaults to llm_client if not provided.
-            analysis_max_tokens: Max tokens for analysis generation
-            analysis_temperature: Temperature for analysis generation
-            extraction_max_tokens: Max tokens for extraction
-            extraction_temperature: Temperature for extraction
+            analysis_max_tokens: Max tokens for analysis generation (from config if None)
+            analysis_temperature: Temperature for analysis generation (from config if None)
+            extraction_max_tokens: Max tokens for extraction (from config if None)
+            extraction_temperature: Temperature for extraction (from config if None)
             signal_config: Optional signal configuration for defaults and keywords
+            llm_defaults: Optional LLM defaults config for inference parameters
         """
         self.llm = llm_client
         self.extraction_llm = extraction_client or llm_client
-        self.analysis_max_tokens = analysis_max_tokens
-        self.analysis_temperature = analysis_temperature
-        self.extraction_max_tokens = extraction_max_tokens
-        self.extraction_temperature = extraction_temperature
+
+        # Get defaults from config if not explicitly provided
+        if llm_defaults:
+            default_analysis_max = llm_defaults.analysis_inference.max_tokens
+            default_analysis_temp = llm_defaults.analysis_inference.temperature
+            default_extraction_max = llm_defaults.extraction_inference.max_tokens
+            default_extraction_temp = llm_defaults.extraction_inference.temperature
+        else:
+            (
+                default_analysis_max,
+                default_analysis_temp,
+                default_extraction_max,
+                default_extraction_temp,
+            ) = _get_default_inference_params()
+
+        self.analysis_max_tokens = analysis_max_tokens if analysis_max_tokens is not None else default_analysis_max
+        self.analysis_temperature = analysis_temperature if analysis_temperature is not None else default_analysis_temp
+        self.extraction_max_tokens = extraction_max_tokens if extraction_max_tokens is not None else default_extraction_max
+        self.extraction_temperature = extraction_temperature if extraction_temperature is not None else default_extraction_temp
 
         # Signal extraction configuration
         if signal_config:

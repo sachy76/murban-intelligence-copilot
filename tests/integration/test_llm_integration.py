@@ -3,7 +3,8 @@
 import pytest
 
 from murban_copilot.domain.exceptions import LLMInferenceError
-from murban_copilot.infrastructure.llm.llm_client import LlamaClient, MockLlamaClient
+from murban_copilot.infrastructure.llm.llm_client import LlamaClient
+from murban_copilot.infrastructure.llm.mock_client import MockLlamaClient
 from murban_copilot.infrastructure.llm.prompt_templates import TraderTalkTemplate
 
 

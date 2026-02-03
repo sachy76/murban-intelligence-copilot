@@ -11,6 +11,7 @@ class LLMInference(Protocol):
         prompt: str,
         max_tokens: int = 512,
         temperature: float = 0.7,
+        use_cache: bool = True,
     ) -> str:
         """
         Generate text from the given prompt.
@@ -19,6 +20,7 @@ class LLMInference(Protocol):
             prompt: The input prompt
             max_tokens: Maximum tokens to generate
             temperature: Sampling temperature (0.0 to 1.0)
+            use_cache: Whether to use response caching
 
         Returns:
             Generated text

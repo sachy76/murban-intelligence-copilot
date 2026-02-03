@@ -17,6 +17,18 @@ llm:
     n_gpu_layers: -1
     cache_enabled: true
     verbose: false
+    # Default inference parameters (used when not specified per-model)
+    inference:
+      max_tokens: 512
+      temperature: 0.7
+    # Analysis-specific inference defaults
+    analysis_inference:
+      max_tokens: 2048
+      temperature: 0.7
+    # Extraction-specific inference defaults
+    extraction_inference:
+      max_tokens: 1024
+      temperature: 0.3
 
   # -------------------------------------------------------------------------
   # Analysis Model Configuration
