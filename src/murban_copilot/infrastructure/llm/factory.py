@@ -7,7 +7,7 @@ from murban_copilot.domain.config import LLMModelConfig, ModelType
 from murban_copilot.infrastructure.logging import get_logger
 from .llm_client import LlamaClient
 from .transformers_client import TransformersClient
-from .protocols import LLMInference
+from .base_client import LLMInference
 
 logger = get_logger(__name__)
 

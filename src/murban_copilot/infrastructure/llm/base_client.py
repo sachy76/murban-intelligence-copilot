@@ -1,4 +1,4 @@
-"""Base class for LLM clients with shared caching functionality."""
+"""Base class and protocol for LLM clients."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ import json
 from abc import ABC, abstractmethod
 from datetime import datetime
 from pathlib import Path
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, Protocol, TYPE_CHECKING, runtime_checkable
 
 from murban_copilot.domain.exceptions import LLMInferenceError
 from murban_copilot.infrastructure.logging import get_logger
@@ -16,6 +16,25 @@ if TYPE_CHECKING:
     from murban_copilot.domain.config import LLMModelConfig
 
 logger = get_logger(__name__)
+
+
+@runtime_checkable
+class LLMInference(Protocol):
+    """Protocol for LLM inference implementations (supports duck typing)."""
+
+    def generate(
+        self,
+        prompt: str,
+        max_tokens: int = 512,
+        temperature: float = 0.7,
+        use_cache: bool = True,
+    ) -> str:
+        """Generate text from the given prompt."""
+        ...
+
+    def is_available(self) -> bool:
+        """Check if the LLM is available and loaded."""
+        ...
 
 
 class BaseLLMClient(ABC):

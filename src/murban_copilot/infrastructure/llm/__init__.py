@@ -1,7 +1,6 @@
 """LLM infrastructure."""
 
-from .protocols import LLMInference
-from .base_client import BaseLLMClient
+from .base_client import LLMInference, BaseLLMClient
 from .llm_client import LlamaClient
 from .transformers_client import TransformersClient
 from .mock_client import MockLlamaClient

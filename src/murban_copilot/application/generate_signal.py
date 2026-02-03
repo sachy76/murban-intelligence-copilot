@@ -13,7 +13,7 @@ from murban_copilot.infrastructure.llm.prompt_templates import (
     SignalExtractionTemplate,
     TraderTalkTemplate,
 )
-from murban_copilot.infrastructure.llm.protocols import LLMInference
+from murban_copilot.infrastructure.llm import LLMInference
 from murban_copilot.infrastructure.logging import get_logger
 
 if TYPE_CHECKING:
@@ -28,16 +28,10 @@ DEFAULT_BULLISH_KEYWORDS = ["bullish", "upward", "positive", "buy"]
 DEFAULT_BEARISH_KEYWORDS = ["bearish", "downward", "negative", "sell"]
 
 
-def _get_default_inference_params() -> tuple[int, float, int, float]:
-    """Get default inference parameters from config."""
+def _get_llm_defaults() -> "LLMDefaultsConfig":
+    """Get default LLM configuration."""
     from murban_copilot.domain.config import LLMDefaultsConfig
-    defaults = LLMDefaultsConfig()
-    return (
-        defaults.analysis_inference.max_tokens,
-        defaults.analysis_inference.temperature,
-        defaults.extraction_inference.max_tokens,
-        defaults.extraction_inference.temperature,
-    )
+    return LLMDefaultsConfig()
 
 
 class GenerateSignalUseCase:
@@ -71,24 +65,12 @@ class GenerateSignalUseCase:
         self.llm = llm_client
         self.extraction_llm = extraction_client or llm_client
 
-        # Get defaults from config if not explicitly provided
-        if llm_defaults:
-            default_analysis_max = llm_defaults.analysis_inference.max_tokens
-            default_analysis_temp = llm_defaults.analysis_inference.temperature
-            default_extraction_max = llm_defaults.extraction_inference.max_tokens
-            default_extraction_temp = llm_defaults.extraction_inference.temperature
-        else:
-            (
-                default_analysis_max,
-                default_analysis_temp,
-                default_extraction_max,
-                default_extraction_temp,
-            ) = _get_default_inference_params()
-
-        self.analysis_max_tokens = analysis_max_tokens if analysis_max_tokens is not None else default_analysis_max
-        self.analysis_temperature = analysis_temperature if analysis_temperature is not None else default_analysis_temp
-        self.extraction_max_tokens = extraction_max_tokens if extraction_max_tokens is not None else default_extraction_max
-        self.extraction_temperature = extraction_temperature if extraction_temperature is not None else default_extraction_temp
+        # Resolve inference parameters (explicit > llm_defaults > global defaults)
+        defaults = llm_defaults or _get_llm_defaults()
+        self.analysis_max_tokens = analysis_max_tokens or defaults.analysis_inference.max_tokens
+        self.analysis_temperature = analysis_temperature if analysis_temperature is not None else defaults.analysis_inference.temperature
+        self.extraction_max_tokens = extraction_max_tokens or defaults.extraction_inference.max_tokens
+        self.extraction_temperature = extraction_temperature if extraction_temperature is not None else defaults.extraction_inference.temperature
 
         # Signal extraction configuration
         if signal_config:

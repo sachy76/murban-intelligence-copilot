@@ -1,14 +1,16 @@
 """Prompt templates for LLM-based market analysis."""
 
-from dataclasses import dataclass
 from typing import Sequence
 
 from murban_copilot.domain.entities import MovingAverages, SpreadData
 
 
-@dataclass
 class TraderTalkTemplate:
-    """Template for generating trader-style market analysis."""
+    """Template for generating trader-style market analysis.
+
+    Note: This is a utility class with only class attributes and classmethods.
+    No instantiation needed.
+    """
 
     DISCLAIMER = (
         "DISCLAIMER: This is AI-generated analysis for informational purposes only. "
@@ -144,9 +146,12 @@ Generate a comprehensive "Executive Trading Brief" with the following sections:
         return f"{cls.SYSTEM_PROMPT}\n\n{analysis_prompt}"
 
 
-@dataclass
 class SignalExtractionTemplate:
-    """Template for extracting structured signals from LLM output."""
+    """Template for extracting structured signals from LLM output.
+
+    Note: This is a utility class with only class attributes and classmethods.
+    No instantiation needed.
+    """
 
     EXTRACTION_PROMPT = """Based on the following market analysis, extract the key signal information.
 

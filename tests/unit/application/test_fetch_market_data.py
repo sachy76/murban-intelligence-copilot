@@ -81,7 +81,7 @@ class TestFetchMarketDataUseCase:
         )
         use_case = FetchMarketDataUseCase(mock_data_source)
 
-        with pytest.raises(MarketDataFetchError, match="No Brent data"):
+        with pytest.raises(MarketDataFetchError, match="No BRENT data"):
             use_case.execute()
 
     def test_fetch_single_ticker(self, use_case, mock_data_source):

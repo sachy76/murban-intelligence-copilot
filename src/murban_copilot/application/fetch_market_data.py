@@ -58,47 +58,50 @@ class FetchMarketDataUseCase:
             f"Fetching market data from {start_date.date()} to {end_date.date()}"
         )
 
-        try:
-            wti_data = self.data_source.fetch_historical_data(
-                "wti", start_date, end_date
-            )
-            logger.info(f"Fetched {len(wti_data)} WTI records")
-        except MarketDataFetchError:
-            raise
-        except Exception as e:
-            raise MarketDataFetchError(
-                f"Failed to fetch WTI data: {str(e)}",
-                ticker="wti",
-                original_error=e,
-            )
-
-        try:
-            brent_data = self.data_source.fetch_historical_data(
-                "brent", start_date, end_date
-            )
-            logger.info(f"Fetched {len(brent_data)} Brent records")
-        except MarketDataFetchError:
-            raise
-        except Exception as e:
-            raise MarketDataFetchError(
-                f"Failed to fetch Brent data: {str(e)}",
-                ticker="brent",
-                original_error=e,
-            )
-
-        if not wti_data:
-            raise MarketDataFetchError(
-                "No WTI data available",
-                ticker="wti",
-            )
-
-        if not brent_data:
-            raise MarketDataFetchError(
-                "No Brent data available",
-                ticker="brent",
-            )
+        wti_data = self._fetch_ticker("wti", start_date, end_date)
+        brent_data = self._fetch_ticker("brent", start_date, end_date)
 
         return wti_data, brent_data
+
+    def _fetch_ticker(
+        self,
+        ticker: str,
+        start_date: datetime,
+        end_date: datetime,
+    ) -> Sequence[MarketData]:
+        """
+        Fetch data for a single ticker with error handling.
+
+        Args:
+            ticker: Ticker symbol
+            start_date: Start date
+            end_date: End date
+
+        Returns:
+            Sequence of MarketData
+
+        Raises:
+            MarketDataFetchError: If fetching fails or no data available
+        """
+        try:
+            data = self.data_source.fetch_historical_data(ticker, start_date, end_date)
+            logger.info(f"Fetched {len(data)} {ticker.upper()} records")
+        except MarketDataFetchError:
+            raise
+        except Exception as e:
+            raise MarketDataFetchError(
+                f"Failed to fetch {ticker.upper()} data: {str(e)}",
+                ticker=ticker,
+                original_error=e,
+            )
+
+        if not data:
+            raise MarketDataFetchError(
+                f"No {ticker.upper()} data available",
+                ticker=ticker,
+            )
+
+        return data
 
     def fetch_single_ticker(
         self,

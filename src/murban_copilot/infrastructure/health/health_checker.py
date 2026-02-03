@@ -172,22 +172,39 @@ class HealthChecker:
                 latency_ms=round(latency, 2),
             )
 
+    def _check_component(
+        self,
+        client,
+        name: str,
+        check_fn,
+    ) -> ComponentHealth:
+        """
+        Generic component health check wrapper.
+
+        Args:
+            client: The client to check (may be None)
+            name: Component name for reporting
+            check_fn: Function to call if client is configured
+
+        Returns:
+            ComponentHealth result
+        """
+        if client is None:
+            return ComponentHealth(
+                name=name,
+                status=HealthStatus.UNHEALTHY,
+                message=f"{name.replace('_', ' ').title()} client not configured",
+            )
+        return check_fn()
+
     def check_market_data(self) -> ComponentHealth:
         """Public method to check only market data health."""
-        if self.market_client is None:
-            return ComponentHealth(
-                name="market_data",
-                status=HealthStatus.UNHEALTHY,
-                message="Market client not configured",
-            )
-        return self._check_market_client()
+        return self._check_component(
+            self.market_client, "market_data", self._check_market_client
+        )
 
     def check_llm(self) -> ComponentHealth:
         """Public method to check only LLM health."""
-        if self.llm_client is None:
-            return ComponentHealth(
-                name="llm",
-                status=HealthStatus.UNHEALTHY,
-                message="LLM client not configured",
-            )
-        return self._check_llm_client()
+        return self._check_component(
+            self.llm_client, "llm", self._check_llm_client
+        )
