@@ -1,8 +1,50 @@
 """Domain configuration entities for application settings."""
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields, MISSING
 from enum import Enum
-from typing import Any, Optional
+from typing import Any, Optional, TypeVar, Type
+
+T = TypeVar("T")
+
+
+def config_from_dict(
+    cls: Type[T],
+    data: dict[str, Any],
+    nested: Optional[dict[str, tuple]] = None,
+) -> T:
+    """
+    Generic factory to create a config dataclass from a dictionary.
+
+    Uses dataclass field introspection to automatically map dict keys to fields,
+    applying default values when keys are missing.
+
+    Args:
+        cls: The dataclass type to instantiate
+        data: Dictionary with config values
+        nested: Optional mapping of field names to (config_class, extra_args) tuples
+                for nested config objects. Use empty dict {} for extra_args if none needed.
+
+    Returns:
+        Instance of cls populated from data
+    """
+    kwargs = {}
+    for f in fields(cls):
+        if nested and f.name in nested:
+            nested_cls, extra_args = nested[f.name]
+            nested_data = data.get(f.name, {})
+            if extra_args:
+                kwargs[f.name] = nested_cls.from_dict(nested_data, **extra_args)
+            else:
+                kwargs[f.name] = nested_cls.from_dict(nested_data)
+        elif f.name in data:
+            kwargs[f.name] = data[f.name]
+        elif f.default is not MISSING:
+            kwargs[f.name] = f.default
+        elif f.default_factory is not MISSING:
+            kwargs[f.name] = f.default_factory()
+        # else: required field, let dataclass raise error
+
+    return cls(**kwargs)
 
 
 class ModelType(str, Enum):
@@ -19,11 +61,14 @@ class ModelType(str, Enum):
 
 @dataclass
 class MarketDataConfig:
-    """Configuration for market data fetching."""
+    """Configuration for market data fetching.
 
-    # Ticker symbols
-    wti_ticker: str = "CL=F"
-    brent_ticker: str = "BZ=F"
+    Ticker symbols should be provided via YAML config.
+    """
+
+    # Ticker symbols (from YAML - no Python defaults)
+    wti_ticker: str = field(default="")
+    brent_ticker: str = field(default="")
 
     # Request settings
     timeout: int = 60
@@ -37,17 +82,15 @@ class MarketDataConfig:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "MarketDataConfig":
-        """Create config from dictionary."""
-        return cls(
-            wti_ticker=data.get("wti_ticker", "CL=F"),
-            brent_ticker=data.get("brent_ticker", "BZ=F"),
-            timeout=data.get("timeout", 60),
-            max_retries=data.get("max_retries", 3),
-            min_retry_wait=data.get("min_retry_wait", 1),
-            max_retry_wait=data.get("max_retry_wait", 10),
-            buffer_days=data.get("buffer_days", 10),
-            latest_price_lookback_days=data.get("latest_price_lookback_days", 7),
-        )
+        """Create config from dictionary (typically from YAML)."""
+        return config_from_dict(cls, data)
+
+    def __post_init__(self):
+        """Validate required fields are provided."""
+        if not self.wti_ticker:
+            raise ValueError("wti_ticker must be provided in config")
+        if not self.brent_ticker:
+            raise ValueError("brent_ticker must be provided in config")
 
 
 # =============================================================================
@@ -73,13 +116,7 @@ class AnalysisConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "AnalysisConfig":
         """Create config from dictionary."""
-        return cls(
-            short_ma_window=data.get("short_ma_window", 5),
-            long_ma_window=data.get("long_ma_window", 20),
-            outlier_threshold=data.get("outlier_threshold", 3.0),
-            gap_fill_threshold=data.get("gap_fill_threshold", 2),
-            min_data_points=data.get("min_data_points", 5),
-        )
+        return config_from_dict(cls, data)
 
 
 # =============================================================================
@@ -106,16 +143,7 @@ class SignalConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "SignalConfig":
         """Create config from dictionary."""
-        return cls(
-            default_signal=data.get("default_signal", "neutral"),
-            default_confidence=data.get("default_confidence", 0.5),
-            bullish_keywords=data.get(
-                "bullish_keywords", ["bullish", "upward", "positive", "buy"]
-            ),
-            bearish_keywords=data.get(
-                "bearish_keywords", ["bearish", "downward", "negative", "sell"]
-            ),
-        )
+        return config_from_dict(cls, data)
 
 
 # =============================================================================
@@ -140,14 +168,7 @@ class UIConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "UIConfig":
         """Create config from dictionary."""
-        return cls(
-            min_historical_days=data.get("min_historical_days", 7),
-            max_historical_days=data.get("max_historical_days", 90),
-            default_historical_days=data.get("default_historical_days", 30),
-            sample_wti_base_price=data.get("sample_wti_base_price", 85.0),
-            sample_brent_base_price=data.get("sample_brent_base_price", 82.0),
-            sample_price_variation=data.get("sample_price_variation", 0.5),
-        )
+        return config_from_dict(cls, data)
 
 
 # =============================================================================
@@ -165,10 +186,7 @@ class LLMInferenceConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "LLMInferenceConfig":
         """Create config from dictionary."""
-        return cls(
-            max_tokens=data.get("max_tokens", 512),
-            temperature=data.get("temperature", 0.7),
-        )
+        return config_from_dict(cls, data)
 
 
 @dataclass
@@ -193,24 +211,17 @@ class LLMDefaultsConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "LLMDefaultsConfig":
         """Create config from dictionary."""
-        # Parse inference configs
-        inference = LLMInferenceConfig.from_dict(data.get("inference", {}))
-        analysis_inference = LLMInferenceConfig.from_dict(
-            data.get("analysis_inference", {"max_tokens": 2048, "temperature": 0.7})
-        )
-        extraction_inference = LLMInferenceConfig.from_dict(
-            data.get("extraction_inference", {"max_tokens": 1024, "temperature": 0.3})
-        )
+        # Handle nested inference configs with specific defaults
+        if "analysis_inference" not in data:
+            data = {**data, "analysis_inference": {"max_tokens": 2048, "temperature": 0.7}}
+        if "extraction_inference" not in data:
+            data = {**data, "extraction_inference": {"max_tokens": 1024, "temperature": 0.3}}
 
-        return cls(
-            n_ctx=data.get("n_ctx", 4096),
-            n_gpu_layers=data.get("n_gpu_layers", -1),
-            cache_enabled=data.get("cache_enabled", True),
-            verbose=data.get("verbose", False),
-            inference=inference,
-            analysis_inference=analysis_inference,
-            extraction_inference=extraction_inference,
-        )
+        return config_from_dict(cls, data, nested={
+            "inference": (LLMInferenceConfig, {}),
+            "analysis_inference": (LLMInferenceConfig, {}),
+            "extraction_inference": (LLMInferenceConfig, {}),
+        })
 
 
 @dataclass
@@ -238,26 +249,24 @@ class LLMModelConfig:
         if defaults is None:
             defaults = LLMDefaultsConfig()
 
-        inference_data = data.get("inference", {})
-        inference = LLMInferenceConfig.from_dict(inference_data)
-
-        # Parse model_type
+        # Parse model_type enum
         model_type_str = data.get("model_type", "llama")
         try:
             model_type = ModelType(model_type_str.lower())
         except ValueError:
             model_type = ModelType.LLAMA
 
-        return cls(
-            model_repo=data.get("model_repo", ""),
-            model_file=data.get("model_file", ""),
-            model_type=model_type,
-            inference=inference,
-            n_ctx=data.get("n_ctx", defaults.n_ctx),
-            n_gpu_layers=data.get("n_gpu_layers", defaults.n_gpu_layers),
-            task=data.get("task", "text-generation"),
-            device=data.get("device", "auto"),
-        )
+        # Apply defaults for n_ctx and n_gpu_layers
+        merged_data = {
+            "n_ctx": defaults.n_ctx,
+            "n_gpu_layers": defaults.n_gpu_layers,
+            **data,
+            "model_type": model_type,  # Use parsed enum
+        }
+
+        return config_from_dict(cls, merged_data, nested={
+            "inference": (LLMInferenceConfig, {}),
+        })
 
 
 @dataclass
@@ -270,10 +279,7 @@ class CacheConfig:
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "CacheConfig":
         """Create config from dictionary."""
-        return cls(
-            directory=data.get("directory", ".llm_cache"),
-            enabled=data.get("enabled", True),
-        )
+        return config_from_dict(cls, data)
 
 
 @dataclass
@@ -355,7 +361,9 @@ class AppConfig:
     """Complete application configuration."""
 
     llm: LLMConfig = field(default_factory=LLMConfig)
-    market_data: MarketDataConfig = field(default_factory=MarketDataConfig)
+    market_data: MarketDataConfig = field(
+        default_factory=lambda: MarketDataConfig(wti_ticker="CL=F", brent_ticker="BZ=F")
+    )
     analysis: AnalysisConfig = field(default_factory=AnalysisConfig)
     signal: SignalConfig = field(default_factory=SignalConfig)
     ui: UIConfig = field(default_factory=UIConfig)
@@ -388,7 +396,7 @@ class AppConfig:
         """Get the default application configuration."""
         return cls(
             llm=LLMConfig.get_default(),
-            market_data=MarketDataConfig(),
+            market_data=MarketDataConfig(wti_ticker="CL=F", brent_ticker="BZ=F"),
             analysis=AnalysisConfig(),
             signal=SignalConfig(),
             ui=UIConfig(),
