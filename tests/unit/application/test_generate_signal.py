@@ -21,13 +21,13 @@ class TrackingMockLLM:
     def generate(
         self,
         prompt: str,
-        max_tokens: int = 512,
-        temperature: float = 0.7,
-        use_cache: bool = True,
-        top_p: float = None,
-        top_k: int = None,
-        frequency_penalty: float = None,
-        presence_penalty: float = None,
+        max_tokens=None,
+        temperature=None,
+        use_cache=None,
+        top_p=None,
+        top_k=None,
+        frequency_penalty=None,
+        presence_penalty=None,
     ) -> str:
         self.call_count += 1
         self.prompts.append(prompt)
@@ -235,31 +235,6 @@ class TestDualLLMConfiguration:
 
         # Both calls go to the same client
         assert mock_llm.call_count == 2
-
-    def test_custom_inference_parameters(
-        self,
-        sample_spread_data,
-        sample_moving_averages,
-        sample_trend_summary,
-    ):
-        """Test that custom inference parameters are used."""
-        analysis_llm = TrackingMockLLM("analysis")
-        extraction_llm = TrackingMockLLM("extraction")
-
-        use_case = GenerateSignalUseCase(
-            llm_client=analysis_llm,
-            extraction_client=extraction_llm,
-            analysis_max_tokens=4096,
-            analysis_temperature=0.8,
-            extraction_max_tokens=512,
-            extraction_temperature=0.2,
-        )
-
-        # Just verify the use case can be created with custom params
-        assert use_case.analysis_max_tokens == 4096
-        assert use_case.analysis_temperature == 0.8
-        assert use_case.extraction_max_tokens == 512
-        assert use_case.extraction_temperature == 0.2
 
     def test_is_llm_available_checks_both_clients(self):
         """Test LLM availability check works with dual clients."""

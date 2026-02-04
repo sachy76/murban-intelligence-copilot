@@ -1,9 +1,8 @@
 """Factory for creating LLM clients based on configuration."""
 
-from pathlib import Path
 from typing import Optional, Union
 
-from murban_copilot.domain.config import LLMModelConfig, ModelType
+from murban_copilot.domain.config import CacheConfig, LLMModelConfig, ModelType
 from murban_copilot.infrastructure.logging import get_logger
 from .llm_client import LlamaClient
 from .transformers_client import TransformersClient
@@ -17,8 +16,7 @@ LLMClient = Union[LlamaClient, TransformersClient]
 
 def create_llm_client(
     config: LLMModelConfig,
-    cache_dir: Optional[Path] = None,
-    cache_enabled: bool = True,
+    cache_config: Optional[CacheConfig] = None,
     verbose: bool = False,
 ) -> LLMClient:
     """
@@ -30,9 +28,8 @@ def create_llm_client(
     - ModelType.TRANSFORMERS: Returns TransformersClient for HuggingFace models
 
     Args:
-        config: Model configuration specifying repo, file, and type
-        cache_dir: Directory for response caching
-        cache_enabled: Whether to enable response caching
+        config: Model configuration specifying repo, file, type, and inference settings
+        cache_config: Cache settings (directory, enabled)
         verbose: Whether to enable verbose output (llama only)
 
     Returns:
@@ -65,8 +62,7 @@ def create_llm_client(
         )
         return TransformersClient.from_config(
             config=config,
-            cache_dir=cache_dir,
-            cache_enabled=cache_enabled,
+            cache_config=cache_config,
         )
     else:
         # Default to LlamaClient for LLAMA type or unknown types
@@ -76,8 +72,7 @@ def create_llm_client(
         )
         return LlamaClient.from_config(
             config=config,
-            cache_dir=cache_dir,
-            cache_enabled=cache_enabled,
+            cache_config=cache_config,
             verbose=verbose,
         )
 

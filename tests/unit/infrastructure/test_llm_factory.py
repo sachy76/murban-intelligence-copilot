@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from murban_copilot.domain.config import LLMModelConfig, ModelType
+from murban_copilot.domain.config import CacheConfig, LLMModelConfig, ModelType
 from murban_copilot.infrastructure.llm.factory import (
     create_llm_client,
     get_client_type_name,
@@ -28,8 +28,7 @@ class TestCreateLLMClient:
 
         client = create_llm_client(
             config,
-            cache_dir=tmp_path / "cache",
-            cache_enabled=True,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache"), enabled=True),
         )
 
         assert isinstance(client, TransformersClient)
@@ -49,8 +48,7 @@ class TestCreateLLMClient:
 
         client = create_llm_client(
             config,
-            cache_dir=tmp_path / "cache",
-            cache_enabled=True,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache"), enabled=True),
             verbose=True,
         )
 
@@ -68,7 +66,10 @@ class TestCreateLLMClient:
             model_type=ModelType.LLAMA,
         )
 
-        client = create_llm_client(config, cache_dir=tmp_path / "cache")
+        client = create_llm_client(
+            config,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
+        )
 
         assert isinstance(client, LlamaClient)
 
@@ -81,11 +82,10 @@ class TestCreateLLMClient:
 
         client = create_llm_client(
             config,
-            cache_dir=tmp_path / "cache",
-            cache_enabled=False,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache"), enabled=False),
         )
 
-        assert client.cache_enabled is False
+        assert client._cache_config.enabled is False
 
 
 class TestGetClientTypeName:
@@ -96,7 +96,7 @@ class TestGetClientTypeName:
         client = LlamaClient(
             model_repo="test/model",
             model_file="model.gguf",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
 
         name = get_client_type_name(client)
@@ -107,7 +107,7 @@ class TestGetClientTypeName:
         """Test name for TransformersClient."""
         client = TransformersClient(
             model_repo="test/model",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
 
         name = get_client_type_name(client)

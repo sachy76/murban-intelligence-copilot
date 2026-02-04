@@ -2,6 +2,7 @@
 
 import pytest
 
+from murban_copilot.domain.config import CacheConfig
 from murban_copilot.domain.exceptions import LLMInferenceError
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient
 from murban_copilot.infrastructure.llm.mock_client import MockLlamaClient
@@ -53,7 +54,7 @@ class TestLLMIntegration:
 
     def test_real_llm_if_available(self, tmp_path):
         """Test real LLM if available."""
-        client = LlamaClient(cache_dir=tmp_path / "cache")
+        client = LlamaClient(cache_config=CacheConfig(directory=str(tmp_path / "cache")))
 
         # This test will skip if the model isn't available
         if not client.is_available():

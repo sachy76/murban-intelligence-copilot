@@ -112,7 +112,6 @@ class TestLLMDefaultsConfig:
 
         assert config.n_ctx == 4096
         assert config.n_gpu_layers == -1
-        assert config.cache_enabled is True
         assert config.verbose is False
 
     def test_create_with_custom_values(self):
@@ -120,13 +119,11 @@ class TestLLMDefaultsConfig:
         config = LLMDefaultsConfig(
             n_ctx=8192,
             n_gpu_layers=32,
-            cache_enabled=False,
             verbose=True,
         )
 
         assert config.n_ctx == 8192
         assert config.n_gpu_layers == 32
-        assert config.cache_enabled is False
         assert config.verbose is True
 
     def test_from_dict(self):
@@ -136,7 +133,6 @@ class TestLLMDefaultsConfig:
 
         assert config.n_ctx == 2048
         assert config.verbose is True
-        assert config.cache_enabled is True  # default
 
 
 class TestCacheConfig:
@@ -237,4 +233,4 @@ class TestLLMConfig:
         assert config.analysis is not None
         assert config.analysis.model_repo == "MaziyarPanahi/gemma-3-12b-it-GGUF"
         assert config.extraction is not None
-        assert config.extraction.model_repo == "bartowski/gemma-2-9b-it-GGUF"
+        assert config.extraction.model_repo == "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"

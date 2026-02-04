@@ -199,47 +199,12 @@ class LLMDefaultsConfig:
 
     n_ctx: int = 4096
     n_gpu_layers: int = -1
-    cache_enabled: bool = True
     verbose: bool = False
-    # Default inference parameters
-    inference: LLMInferenceConfig = field(default_factory=LLMInferenceConfig)
-    # Analysis-specific inference defaults
-    analysis_inference: LLMInferenceConfig = field(
-        default_factory=lambda: LLMInferenceConfig(
-            max_tokens=2048,
-            temperature=0.7,
-            top_p=0.9,
-            top_k=50,
-            frequency_penalty=0.3,
-            presence_penalty=0.1,
-        )
-    )
-    # Extraction-specific inference defaults
-    extraction_inference: LLMInferenceConfig = field(
-        default_factory=lambda: LLMInferenceConfig(max_tokens=1024, temperature=0.3)
-    )
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "LLMDefaultsConfig":
         """Create config from dictionary."""
-        # Handle nested inference configs with specific defaults
-        if "analysis_inference" not in data:
-            data = {**data, "analysis_inference": {
-                "max_tokens": 2048,
-                "temperature": 0.7,
-                "top_p": 0.9,
-                "top_k": 50,
-                "frequency_penalty": 0.3,
-                "presence_penalty": 0.1,
-            }}
-        if "extraction_inference" not in data:
-            data = {**data, "extraction_inference": {"max_tokens": 1024, "temperature": 0.3}}
-
-        return config_from_dict(cls, data, nested={
-            "inference": (LLMInferenceConfig, {}),
-            "analysis_inference": (LLMInferenceConfig, {}),
-            "extraction_inference": (LLMInferenceConfig, {}),
-        })
+        return config_from_dict(cls, data)
 
 
 @dataclass
@@ -345,18 +310,31 @@ class LLMConfig:
             model_repo="MaziyarPanahi/gemma-3-12b-it-GGUF",
             model_file="gemma-3-12b-it.Q6_K.gguf",
             model_type=ModelType.LLAMA,
-            inference=defaults.analysis_inference,
+            inference=LLMInferenceConfig(
+                max_tokens=2048,
+                temperature=0.7,
+                top_p=0.9,
+                top_k=50,
+                frequency_penalty=0.3,
+                presence_penalty=0.1,
+            ),
             n_ctx=defaults.n_ctx,
             n_gpu_layers=defaults.n_gpu_layers,
         )
 
         extraction = LLMModelConfig(
-            model_repo="bartowski/gemma-2-9b-it-GGUF",
-            model_file="gemma-2-9b-it-Q4_K_M.gguf",
-            model_type=ModelType.LLAMA,
-            inference=defaults.extraction_inference,
-            n_ctx=defaults.n_ctx,
-            n_gpu_layers=defaults.n_gpu_layers,
+            model_repo="mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis",
+            model_type=ModelType.TRANSFORMERS,
+            task="sentiment-analysis",
+            device="cpu",
+            inference=LLMInferenceConfig(
+                max_tokens=150,
+                temperature=0.1,
+                top_p=0.65,
+                top_k=25,
+                frequency_penalty=0.0,
+                presence_penalty=0.0,
+            ),
         )
 
         cache = CacheConfig()

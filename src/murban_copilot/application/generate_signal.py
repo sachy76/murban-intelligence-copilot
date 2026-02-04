@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 from datetime import datetime
-from typing import Sequence, TYPE_CHECKING, Optional
+from typing import Sequence, TYPE_CHECKING
 
 from murban_copilot.domain.entities import MarketSignal, MovingAverages, SpreadData
 from murban_copilot.domain.exceptions import LLMInferenceError, ValidationError
@@ -17,7 +17,7 @@ from murban_copilot.infrastructure.llm import LLMInference
 from murban_copilot.infrastructure.logging import get_logger
 
 if TYPE_CHECKING:
-    from murban_copilot.domain.config import LLMDefaultsConfig, SignalConfig
+    from murban_copilot.domain.config import SignalConfig
 
 logger = get_logger(__name__)
 
@@ -28,12 +28,6 @@ DEFAULT_BULLISH_KEYWORDS = ["bullish", "upward", "positive", "buy"]
 DEFAULT_BEARISH_KEYWORDS = ["bearish", "downward", "negative", "sell"]
 
 
-def _get_llm_defaults() -> "LLMDefaultsConfig":
-    """Get default LLM configuration."""
-    from murban_copilot.domain.config import LLMDefaultsConfig
-    return LLMDefaultsConfig()
-
-
 class GenerateSignalUseCase:
     """Use case for generating AI-powered market signals."""
 
@@ -41,40 +35,19 @@ class GenerateSignalUseCase:
         self,
         llm_client: LLMInference,
         extraction_client: LLMInference | None = None,
-        analysis_max_tokens: Optional[int] = None,
-        analysis_temperature: Optional[float] = None,
-        extraction_max_tokens: Optional[int] = None,
-        extraction_temperature: Optional[float] = None,
         signal_config: "SignalConfig | None" = None,
-        llm_defaults: "LLMDefaultsConfig | None" = None,
     ) -> None:
         """
         Initialize the use case.
 
         Args:
-            llm_client: LLM client for analysis inference
+            llm_client: LLM client for analysis inference (uses its own config defaults)
             extraction_client: Optional separate LLM client for extraction.
                                Defaults to llm_client if not provided.
-            analysis_max_tokens: Max tokens for analysis generation (from config if None)
-            analysis_temperature: Temperature for analysis generation (from config if None)
-            extraction_max_tokens: Max tokens for extraction (from config if None)
-            extraction_temperature: Temperature for extraction (from config if None)
             signal_config: Optional signal configuration for defaults and keywords
-            llm_defaults: Optional LLM defaults config for inference parameters
         """
         self.llm = llm_client
         self.extraction_llm = extraction_client or llm_client
-
-        # Resolve inference parameters (explicit > llm_defaults > global defaults)
-        defaults = llm_defaults or _get_llm_defaults()
-        self.analysis_max_tokens = analysis_max_tokens or defaults.analysis_inference.max_tokens
-        self.analysis_temperature = analysis_temperature if analysis_temperature is not None else defaults.analysis_inference.temperature
-        self.analysis_top_p = defaults.analysis_inference.top_p
-        self.analysis_top_k = defaults.analysis_inference.top_k
-        self.analysis_frequency_penalty = defaults.analysis_inference.frequency_penalty
-        self.analysis_presence_penalty = defaults.analysis_inference.presence_penalty
-        self.extraction_max_tokens = extraction_max_tokens or defaults.extraction_inference.max_tokens
-        self.extraction_temperature = extraction_temperature if extraction_temperature is not None else defaults.extraction_inference.temperature
 
         # Signal extraction configuration
         if signal_config:
@@ -122,25 +95,13 @@ class GenerateSignalUseCase:
         logger.debug(f"Generated prompt length: {len(prompt)} chars")
 
         try:
-            # Step 1: Generate comprehensive analysis
-            analysis = self.llm.generate(
-                prompt,
-                max_tokens=self.analysis_max_tokens,
-                temperature=self.analysis_temperature,
-                top_p=self.analysis_top_p,
-                top_k=self.analysis_top_k,
-                frequency_penalty=self.analysis_frequency_penalty,
-                presence_penalty=self.analysis_presence_penalty,
-            )
+            # Step 1: Generate comprehensive analysis (uses client's config defaults)
+            analysis = self.llm.generate(prompt)
             logger.debug("Step 1 complete: Generated analysis")
 
             # Step 2: Extract structured signal using dedicated prompt
             extraction_prompt = SignalExtractionTemplate.format_extraction_prompt(analysis)
-            extraction_response = self.extraction_llm.generate(
-                extraction_prompt,
-                max_tokens=self.extraction_max_tokens,
-                temperature=self.extraction_temperature,
-            )
+            extraction_response = self.extraction_llm.generate(extraction_prompt)
             logger.debug("Step 2 complete: Extracted signal")
 
         except Exception as e:

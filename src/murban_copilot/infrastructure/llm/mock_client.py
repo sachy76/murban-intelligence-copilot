@@ -22,9 +22,9 @@ class MockLlamaClient:
     def generate(
         self,
         prompt: str,
-        max_tokens: int = 512,
-        temperature: float = 0.7,
-        use_cache: bool = True,
+        max_tokens: Optional[int] = None,
+        temperature: Optional[float] = None,
+        use_cache: Optional[bool] = None,
         top_p: Optional[float] = None,
         top_k: Optional[int] = None,
         frequency_penalty: Optional[float] = None,

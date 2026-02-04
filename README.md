@@ -13,6 +13,138 @@ AI-powered trading analysis application for WTI-Brent crude oil spread analysis.
 - **Dual-LLM Architecture**: Separate models for analysis and signal extraction
 - **Flexible Model Backend**: Switch between llama-cpp-python (GGUF) and HuggingFace Transformers
 
+## Quick Start
+
+### Local Development
+
+1. Clone and setup:
+   ```bash
+   git clone <repository-url>
+   cd murban-intelligence-copilot
+   conda env create -f environment.yml
+   conda activate murban-copilot
+   ```
+
+2. Run the dashboard:
+   ```bash
+   PYTHONPATH=src streamlit run src/murban_copilot/interface/streamlit_app.py
+   ```
+
+### Using Docker
+
+```bash
+docker-compose up --build
+```
+
+Dashboard available at `http://localhost:8501`
+
+## Configuration
+
+The application is fully config-driven via `config/llm_config.yaml`:
+
+```yaml
+llm:
+  defaults:
+    n_ctx: 4096
+    n_gpu_layers: -1
+    verbose: false
+
+  # Analysis model (generates comprehensive market analysis)
+  analysis:
+    model_type: "llama"
+    model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
+    model_file: "gemma-3-12b-it.Q6_K.gguf"
+    inference:
+      max_tokens: 2048
+      temperature: 0.7
+      top_p: 0.9
+      top_k: 50
+      frequency_penalty: 0.3
+      presence_penalty: 0.1
+
+  # Extraction model (extracts structured signals)
+  extraction:
+    model_type: "transformers"
+    model_repo: "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
+    task: "sentiment-analysis"
+    device: "cpu"
+    inference:
+      max_tokens: 150
+      temperature: 0.1
+      top_p: 0.65
+      top_k: 25
+
+market_data:
+  wti_ticker: "CL=F"
+  brent_ticker: "BZ=F"
+  timeout: 60
+  max_retries: 3
+
+analysis:
+  short_ma_window: 5
+  long_ma_window: 20
+  outlier_threshold: 3.0
+
+signal:
+  default_signal: "neutral"
+  default_confidence: 0.5
+  bullish_keywords: ["bullish", "upward", "positive", "buy"]
+  bearish_keywords: ["bearish", "downward", "negative", "sell"]
+
+ui:
+  min_historical_days: 7
+  max_historical_days: 90
+  default_historical_days: 30
+```
+
+**Note:** `wti_ticker` and `brent_ticker` are required in the configuration file.
+
+### Model Type Switching
+
+The application supports two model backends:
+
+| Model Type | Backend | Use Case | Example Models |
+|------------|---------|----------|----------------|
+| `llama` | llama-cpp-python | Text generation with GGUF models | Gemma, Llama, Mistral |
+| `transformers` | HuggingFace Transformers | Sentiment classification | FinBERT, DistilRoBERTa |
+
+#### Using Llama/GGUF Models (Default for Analysis)
+
+```yaml
+analysis:
+  model_type: "llama"
+  model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
+  model_file: "gemma-3-12b-it.Q6_K.gguf"
+  n_ctx: 4096
+  n_gpu_layers: -1
+```
+
+#### Using HuggingFace Transformers (Recommended for Extraction)
+
+```yaml
+extraction:
+  model_type: "transformers"
+  model_repo: "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
+  task: "sentiment-analysis"
+  device: "cpu"  # Options: "cpu" | "cuda" | "mps"
+```
+
+#### Available Sentiment Models
+
+| Model | Description | Size |
+|-------|-------------|------|
+| `mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis` | DistilRoBERTa fine-tuned on financial news | ~66M params |
+| `ProsusAI/finbert` | FinBERT - Financial sentiment | ~110M params |
+| `yiyanghkust/finbert-tone` | FinBERT for financial tone | ~110M params |
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `MURBAN_CONFIG` | Path to application config file | `config/llm_config.yaml` |
+| `MURBAN_LLM_CONFIG` | Path to LLM config (legacy) | `config/llm_config.yaml` |
+| `MURBAN_LOG_LEVEL` | Logging level | `INFO` |
+
 ## Architecture
 
 ```
@@ -40,12 +172,43 @@ src/murban_copilot/
     └── streamlit_app.py
 ```
 
-## Quick Start
+## Technical Details
 
-### Using Docker (Recommended)
+### Spread Calculation
+
+- **Spread**: WTI Close - Brent Close ($/barrel)
+- **5-Day MA**: Short-term moving average for trend detection (configurable)
+- **20-Day MA**: Long-term moving average for trend confirmation (configurable)
+- **Outlier Handling**: Median Absolute Deviation (MAD) for robust statistics
+
+### Dual-LLM Architecture
+
+The application uses a two-step LLM approach with configurable model backends:
+
+1. **Analysis Model**: Generates comprehensive market analysis
+   - Recommended: Large generative LLM (Gemma, Llama)
+   - Backend: `llama` (llama-cpp-python with GGUF models)
+   - Temperature: 0.7 (creative, varied output)
+
+2. **Extraction Model**: Extracts structured signal and confidence
+   - Recommended: Domain-specific sentiment classifier
+   - Backend: `transformers` (HuggingFace models like DistilRoBERTa)
+   - Provides: bullish/bearish/neutral signal with confidence score
+
+This separation allows each model to be optimized for its specific task.
+
+### Data Handling
+
+- **Missing Data**: Forward fill (≤2 days), linear interpolation (longer gaps)
+- **Retry Logic**: Exponential backoff with configurable retries
+- **Caching**: LLM responses cached locally for performance
+
+## Docker Deployment
+
+### Building and Running
 
 ```bash
-# Build and run with Docker Compose
+# Build and run with Docker Compose (recommended)
 docker-compose up --build
 
 # Or build manually
@@ -53,289 +216,31 @@ docker build -t murban-copilot .
 docker run -p 8501:8501 murban-copilot
 ```
 
-The dashboard will be available at `http://localhost:8501`.
-
-### Local Installation
-
-#### Prerequisites
-
-- Conda or Miniconda
-- Python 3.11+
-- (Optional) GGUF model for LLM inference
-
-#### Setup
-
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd murban-intelligence-copilot
-   ```
-
-2. Create and activate the conda environment:
-   ```bash
-   conda env create -f environment.yml
-   conda activate murban-copilot
-   ```
-
-3. Run the dashboard:
-   ```bash
-   PYTHONPATH=src streamlit run src/murban_copilot/interface/streamlit_app.py
-   ```
-
-## Configuration
-
-The application is fully config-driven via `config/llm_config.yaml`:
-
-```yaml
-# LLM Configuration
-llm:
-  defaults:
-    n_ctx: 4096
-    n_gpu_layers: -1
-    cache_enabled: true
-
-  # Analysis model (generates comprehensive market analysis)
-  analysis:
-    model_type: "llama"  # Options: "llama" | "transformers"
-    model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
-    model_file: "gemma-3-12b-it.Q6_K.gguf"
-    inference:
-      max_tokens: 2048
-      temperature: 0.7
-
-  # Extraction model (extracts structured signals)
-  extraction:
-    model_type: "transformers"  # Use HuggingFace sentiment model
-    model_repo: "ProsusAI/finbert"
-    task: "sentiment-analysis"
-    device: "auto"
-    inference:
-      max_tokens: 1024
-      temperature: 0.3
-
-# Market Data Configuration
-market_data:
-  wti_ticker: "CL=F"
-  brent_ticker: "BZ=F"
-  timeout: 60
-  max_retries: 3
-
-# Analysis Configuration
-analysis:
-  short_ma_window: 5
-  long_ma_window: 20
-  outlier_threshold: 3.0
-
-# Signal Generation Configuration
-signal:
-  default_signal: "neutral"
-  default_confidence: 0.5
-  bullish_keywords: ["bullish", "upward", "positive", "buy"]
-  bearish_keywords: ["bearish", "downward", "negative", "sell"]
-
-# UI Configuration
-ui:
-  min_historical_days: 7
-  max_historical_days: 90
-  default_historical_days: 30
-```
-
-### Model Type Switching
-
-The application supports two model backends that can be configured independently for analysis and extraction:
-
-| Model Type | Backend | Use Case | Example Models |
-|------------|---------|----------|----------------|
-| `llama` | llama-cpp-python | Text generation with GGUF models | Gemma, Llama, Mistral |
-| `transformers` | HuggingFace Transformers | Sentiment classification | FinBERT, DistilRoBERTa |
-
-#### Using Llama/GGUF Models (Default for Analysis)
-
-```yaml
-analysis:
-  model_type: "llama"
-  model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
-  model_file: "gemma-3-12b-it.Q6_K.gguf"
-  n_ctx: 4096
-  n_gpu_layers: -1
-```
-
-#### Using HuggingFace Transformers (Recommended for Extraction)
-
-```yaml
-extraction:
-  model_type: "transformers"
-  model_repo: "ProsusAI/finbert"  # Financial sentiment model
-  task: "sentiment-analysis"
-  device: "auto"  # Options: "auto" | "cpu" | "cuda" | "mps"
-```
-
-#### Available Sentiment Models
-
-| Model | Description | Size |
-|-------|-------------|------|
-| `ProsusAI/finbert` | FinBERT - Financial sentiment | ~110M params |
-| `mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis` | DistilRoBERTa fine-tuned on financial news | ~66M params |
-| `yiyanghkust/finbert-tone` | FinBERT for financial tone | ~110M params |
-
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `MURBAN_CONFIG` | Path to application config file | `config/llm_config.yaml` |
-| `MURBAN_LLM_CONFIG` | Path to LLM config (legacy) | `config/llm_config.yaml` |
-| `MURBAN_LOG_LEVEL` | Logging level | `INFO` |
-
-### Configuration Sections
-
-| Section | Description |
-|---------|-------------|
-| `llm` | LLM models, inference parameters, context settings |
-| `cache` | LLM response caching settings |
-| `market_data` | Ticker symbols, API timeouts, retry logic |
-| `analysis` | Moving average windows, outlier detection |
-| `signal` | Default values, classification keywords |
-| `ui` | Dashboard slider bounds, sample data settings |
-
-## Docker Deployment
-
-### Building the Image
+### Custom Configuration
 
 ```bash
-# Build using Docker directly
-docker build -t murban-copilot:latest .
-
-# Build with a specific tag
-docker build -t murban-copilot:v1.0.0 .
-
-# Build using Docker Compose
-docker-compose build
-
-# Build with no cache (clean build)
-docker build --no-cache -t murban-copilot:latest .
-```
-
-### Running the Container
-
-```bash
-# Run with Docker (basic)
-docker run -p 8501:8501 murban-copilot:latest
-
-# Run in detached mode (background)
-docker run -d -p 8501:8501 --name murban-copilot murban-copilot:latest
-
 # Run with custom config file
-docker run -d -p 8501:8501 \
+docker run -p 8501:8501 \
   -v $(pwd)/config:/app/config:ro \
   -e MURBAN_CONFIG=/app/config/llm_config.yaml \
-  murban-copilot:latest
-
-# Run with persistent cache and logs
-docker run -d -p 8501:8501 \
-  -v murban-llm-cache:/app/.llm_cache \
-  -v murban-logs:/app/logs \
-  --name murban-copilot \
-  murban-copilot:latest
-
-# Run with Docker Compose (recommended)
-docker-compose up -d
+  murban-copilot
 ```
 
-### Managing the Container
+### Health Check
 
-```bash
-# View running containers
-docker ps
+The application exposes a health endpoint at `/_stcore/health`. The docker-compose.yml includes:
 
-# View container logs
-docker logs murban-copilot
-docker logs -f murban-copilot  # Follow logs
-
-# Check container health
-docker inspect --format='{{.State.Health.Status}}' murban-copilot
-
-# Stop the container
-docker stop murban-copilot
-
-# Start a stopped container
-docker start murban-copilot
-
-# Restart the container
-docker restart murban-copilot
-
-# Remove the container
-docker rm murban-copilot
-
-# Stop and remove with Docker Compose
-docker-compose down
-
-# Stop, remove, and delete volumes
-docker-compose down -v
-```
-
-### Docker Compose Commands
-
-```bash
-# Start services in background
-docker-compose up -d
-
-# Start and rebuild if needed
-docker-compose up -d --build
-
-# View logs
-docker-compose logs
-docker-compose logs -f  # Follow logs
-
-# Check service status
-docker-compose ps
-
-# Scale services (if needed)
-docker-compose up -d --scale murban-copilot=2
-
-# Stop services
-docker-compose stop
-
-# Stop and remove containers
-docker-compose down
-
-# Remove everything including volumes
-docker-compose down -v --rmi all
-```
-
-### Production Deployment
-
-```bash
-# Pull/build the latest image
-docker-compose pull || docker-compose build
-
-# Deploy with zero downtime (recreate containers)
-docker-compose up -d --force-recreate
-
-# View resource usage
-docker stats murban-copilot
-```
-
-### Docker Compose Configuration
-
-The `docker-compose.yml` includes:
 - Health checks with 60s start period
 - Automatic restart (`unless-stopped`)
 - Memory limits (4GB limit, 2GB reserved)
 - Persistent volumes for cache and logs
 
 ```yaml
-version: '3.8'
 services:
   murban-copilot:
     build: .
     ports:
       - "8501:8501"
-    environment:
-      - MURBAN_LLM_CONFIG=/app/config/llm_config.yaml
-      - MURBAN_LOG_LEVEL=INFO
-    volumes:
-      - llm_cache:/app/.llm_cache
-      - logs:/app/logs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
       interval: 30s
@@ -343,28 +248,6 @@ services:
       retries: 3
       start_period: 60s
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 4G
-        reservations:
-          memory: 2G
-
-volumes:
-  llm_cache:
-  logs:
-```
-
-### Health Checks
-
-The application includes health check infrastructure:
-
-```python
-from murban_copilot.infrastructure.health import HealthChecker
-
-checker = HealthChecker(market_client=client, llm_client=llm)
-result = checker.check_all()
-# Returns: HealthResult with status (HEALTHY, DEGRADED, UNHEALTHY)
 ```
 
 ## Running Tests
@@ -390,65 +273,10 @@ python -m pytest tests/ --cov=src/murban_copilot --cov-report=html
 open htmlcov/index.html
 ```
 
-## Technical Details
-
-### Spread Calculation
-
-- **Spread**: WTI Close - Brent Close ($/barrel)
-- **5-Day MA**: Short-term moving average for trend detection (configurable)
-- **20-Day MA**: Long-term moving average for trend confirmation (configurable)
-- **Outlier Handling**: Median Absolute Deviation (MAD) for robust statistics
-
-### Dual-LLM Architecture
-
-The application uses a two-step LLM approach with configurable model backends:
-
-1. **Analysis Model**: Generates comprehensive market analysis
-   - Recommended: Large generative LLM (Gemma, Llama)
-   - Backend: `llama` (llama-cpp-python with GGUF models)
-   - Temperature: 0.7 (creative, varied output)
-
-2. **Extraction Model**: Extracts structured signal and confidence
-   - Recommended: Domain-specific sentiment classifier
-   - Backend: `transformers` (HuggingFace models like FinBERT)
-   - Provides: bullish/bearish/neutral signal with confidence score
-
-This separation allows each model to be optimized for its specific task:
-- Use a large generative model for rich, contextual analysis
-- Use a fine-tuned sentiment model for accurate signal extraction
-
-### Data Handling
-
-- **Missing Data**: Forward fill (≤2 days), linear interpolation (longer gaps)
-- **Retry Logic**: Exponential backoff with configurable retries
-- **Caching**: LLM responses cached locally for performance
-
-## Project Structure
-
-```
-murban-intelligence-copilot/
-├── config/
-│   └── llm_config.yaml    # Application configuration
-├── Dockerfile             # Multi-stage Docker build
-├── docker-compose.yml     # Docker Compose configuration
-├── environment.yml        # Conda environment definition
-├── pytest.ini             # Pytest configuration
-├── .gitignore             # Git ignore patterns
-├── .dockerignore          # Docker ignore patterns
-├── .env.example           # Environment variables template
-├── README.md              # This file
-├── src/
-│   └── murban_copilot/    # Main package
-└── tests/
-    ├── unit/              # Unit tests
-    ├── integration/       # Integration tests
-    └── contract/          # Contract tests
-```
-
 ## Dependencies
 
 ### Core
-- Python 3.11
+- Python 3.10+
 - pandas >= 2.0
 - numpy >= 1.24
 - plotly >= 5.0

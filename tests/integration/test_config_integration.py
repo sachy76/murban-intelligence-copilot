@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 import yaml
 
-from murban_copilot.domain.config import LLMConfig
+from murban_copilot.domain.config import CacheConfig, LLMConfig
 from murban_copilot.infrastructure.config import ConfigLoader
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient
 
@@ -23,7 +23,6 @@ class TestConfigIntegration:
                 "defaults": {
                     "n_ctx": 4096,
                     "n_gpu_layers": -1,
-                    "cache_enabled": True,
                     "verbose": False,
                 },
                 "analysis": {
@@ -59,26 +58,27 @@ class TestConfigIntegration:
         loader = ConfigLoader(config_path=str(config_path))
         config = loader.load()
 
-        # Create clients from config
-        cache_dir = tmp_path / config.cache.directory
+        # Create cache config with directory relative to tmp_path
+        cache_config = CacheConfig(
+            directory=str(tmp_path / config.cache.directory),
+            enabled=config.cache.enabled,
+        )
 
         analysis_client = LlamaClient.from_config(
             config.analysis,
-            cache_dir=cache_dir,
-            cache_enabled=config.cache.enabled,
+            cache_config=cache_config,
         )
 
         extraction_client = LlamaClient.from_config(
             config.extraction,
-            cache_dir=cache_dir,
-            cache_enabled=config.cache.enabled,
+            cache_config=cache_config,
         )
 
         # Verify analysis client
         assert analysis_client.model_repo == "MaziyarPanahi/gemma-3-12b-it-GGUF"
         assert analysis_client.model_file == "gemma-3-12b-it.Q6_K.gguf"
         assert analysis_client.n_ctx == 4096
-        assert analysis_client.cache_enabled is True
+        assert analysis_client._cache_config.enabled is True
 
         # Verify extraction client
         assert extraction_client.model_repo == "bartowski/gemma-2-9b-it-GGUF"

@@ -2,6 +2,7 @@
 
 import pytest
 
+from murban_copilot.domain.config import CacheConfig
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient
 from murban_copilot.infrastructure.llm.mock_client import MockLlamaClient
 from murban_copilot.infrastructure.llm import LLMInference
@@ -19,7 +20,7 @@ class TestLLMInferenceContract:
         elif request.param == "llama":
             return LlamaClient(
                 model_path="/fake/model.gguf",
-                cache_dir=tmp_path / "cache",
+                cache_config=CacheConfig(directory=str(tmp_path / "cache")),
             )
         raise ValueError(f"Unknown client: {request.param}")
 
@@ -103,7 +104,7 @@ class TestLlamaClientContract:
             model_path="/custom/model.gguf",
             n_ctx=2048,
             n_gpu_layers=10,
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
 
         assert client.model_path == "/custom/model.gguf"
@@ -112,7 +113,7 @@ class TestLlamaClientContract:
 
     def test_client_supports_caching(self, tmp_path):
         """Test client supports response caching."""
-        client = LlamaClient(cache_dir=tmp_path / "cache")
+        client = LlamaClient(cache_config=CacheConfig(directory=str(tmp_path / "cache")))
 
         # Cache a response
         client._cache_response("prompt", 100, 0.7, "response")

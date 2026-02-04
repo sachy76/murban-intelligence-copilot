@@ -13,7 +13,7 @@ from murban_copilot.domain.exceptions import LLMInferenceError
 from murban_copilot.infrastructure.logging import get_logger
 
 if TYPE_CHECKING:
-    from murban_copilot.domain.config import LLMModelConfig
+    from murban_copilot.domain.config import CacheConfig, LLMInferenceConfig, LLMModelConfig
 
 logger = get_logger(__name__)
 
@@ -25,9 +25,9 @@ class LLMInference(Protocol):
     def generate(
         self,
         prompt: str,
-        max_tokens: int = 512,
-        temperature: float = 0.7,
-        use_cache: bool = True,
+        max_tokens: Optional[int] = None,
+        temperature: Optional[float] = None,
+        use_cache: Optional[bool] = None,
         top_p: Optional[float] = None,
         top_k: Optional[int] = None,
         frequency_penalty: Optional[float] = None,
@@ -46,18 +46,22 @@ class BaseLLMClient(ABC):
 
     def __init__(
         self,
-        cache_dir: Optional[Path] = None,
-        cache_enabled: bool = True,
+        inference_config: Optional["LLMInferenceConfig"] = None,
+        cache_config: Optional["CacheConfig"] = None,
     ) -> None:
         """
-        Initialize base client with caching support.
+        Initialize base client with config-based defaults.
 
         Args:
-            cache_dir: Directory for response caching
-            cache_enabled: Whether to enable response caching
+            inference_config: Inference parameters (max_tokens, temperature, etc.)
+            cache_config: Cache settings (directory, enabled)
         """
-        self.cache_enabled = cache_enabled
-        self._cache_dir = cache_dir or Path.cwd() / ".llm_cache"
+        # Import here to avoid circular dependency
+        from murban_copilot.domain.config import CacheConfig, LLMInferenceConfig
+
+        self._inference_config = inference_config or LLMInferenceConfig()
+        self._cache_config = cache_config or CacheConfig()
+        self._cache_dir = Path(self._cache_config.directory)
         self._cache_dir.mkdir(parents=True, exist_ok=True)
 
     @classmethod
@@ -65,8 +69,7 @@ class BaseLLMClient(ABC):
     def from_config(
         cls,
         config: "LLMModelConfig",
-        cache_dir: Optional[Path] = None,
-        cache_enabled: bool = True,
+        cache_config: Optional["CacheConfig"] = None,
         **kwargs,
     ) -> "BaseLLMClient":
         """Create a client from configuration."""
@@ -108,9 +111,9 @@ class BaseLLMClient(ABC):
     def generate(
         self,
         prompt: str,
-        max_tokens: int = 512,
-        temperature: float = 0.7,
-        use_cache: bool = True,
+        max_tokens: Optional[int] = None,
+        temperature: Optional[float] = None,
+        use_cache: Optional[bool] = None,
         top_p: Optional[float] = None,
         top_k: Optional[int] = None,
         frequency_penalty: Optional[float] = None,
@@ -121,9 +124,9 @@ class BaseLLMClient(ABC):
 
         Args:
             prompt: The input prompt
-            max_tokens: Maximum tokens to generate
-            temperature: Sampling temperature (0.0 to 1.0)
-            use_cache: Whether to use response caching
+            max_tokens: Maximum tokens to generate (default from config)
+            temperature: Sampling temperature 0.0-1.0 (default from config)
+            use_cache: Whether to use response caching (default from config)
             top_p: Nucleus sampling threshold (0.0-1.0)
             top_k: Top-k sampling (number of top tokens to consider)
             frequency_penalty: Penalty for frequent tokens (0.0-2.0)
@@ -135,7 +138,16 @@ class BaseLLMClient(ABC):
         Raises:
             LLMInferenceError: If generation fails
         """
-        should_use_cache = self.cache_enabled and use_cache
+        # Apply config defaults for None values
+        max_tokens = max_tokens if max_tokens is not None else self._inference_config.max_tokens
+        temperature = temperature if temperature is not None else self._inference_config.temperature
+        use_cache = use_cache if use_cache is not None else self._cache_config.enabled
+        top_p = top_p if top_p is not None else self._inference_config.top_p
+        top_k = top_k if top_k is not None else self._inference_config.top_k
+        frequency_penalty = frequency_penalty if frequency_penalty is not None else self._inference_config.frequency_penalty
+        presence_penalty = presence_penalty if presence_penalty is not None else self._inference_config.presence_penalty
+
+        should_use_cache = self._cache_config.enabled and use_cache
 
         if should_use_cache:
             cached = self._get_cached_response(prompt, max_tokens, temperature)

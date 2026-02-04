@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 from typing import Optional, TYPE_CHECKING, Union
 
 from murban_copilot.domain.exceptions import LLMInferenceError
@@ -10,7 +9,7 @@ from murban_copilot.infrastructure.logging import get_logger
 from .base_client import BaseLLMClient
 
 if TYPE_CHECKING:
-    from murban_copilot.domain.config import LLMModelConfig
+    from murban_copilot.domain.config import CacheConfig, LLMInferenceConfig, LLMModelConfig
 
 logger = get_logger(__name__)
 
@@ -60,8 +59,8 @@ class TransformersClient(BaseLLMClient):
         model_repo: str,
         task: str = "sentiment-analysis",
         device: str = "auto",
-        cache_dir: Optional[Path] = None,
-        cache_enabled: bool = True,
+        inference_config: Optional["LLMInferenceConfig"] = None,
+        cache_config: Optional["CacheConfig"] = None,
     ) -> None:
         """
         Initialize the Transformers client.
@@ -70,10 +69,10 @@ class TransformersClient(BaseLLMClient):
             model_repo: HuggingFace model repository ID
             task: Pipeline task type (e.g., "sentiment-analysis", "text-generation")
             device: Device to run on ("auto", "cpu", "cuda", "mps")
-            cache_dir: Directory for response caching
-            cache_enabled: Whether to enable response caching
+            inference_config: Inference parameters (max_tokens, temperature, etc.)
+            cache_config: Cache settings (directory, enabled)
         """
-        super().__init__(cache_dir=cache_dir, cache_enabled=cache_enabled)
+        super().__init__(inference_config=inference_config, cache_config=cache_config)
 
         self.model_repo = model_repo
         self.task = task
@@ -85,17 +84,15 @@ class TransformersClient(BaseLLMClient):
     def from_config(
         cls,
         config: "LLMModelConfig",
-        cache_dir: Optional[Path] = None,
-        cache_enabled: bool = True,
+        cache_config: Optional["CacheConfig"] = None,
         **kwargs,
     ) -> "TransformersClient":
         """
         Create a TransformersClient from an LLMModelConfig.
 
         Args:
-            config: Model configuration
-            cache_dir: Directory for response caching
-            cache_enabled: Whether to enable response caching
+            config: Model configuration (includes inference settings)
+            cache_config: Cache settings (directory, enabled)
 
         Returns:
             Configured TransformersClient instance
@@ -104,8 +101,8 @@ class TransformersClient(BaseLLMClient):
             model_repo=config.model_repo,
             task=config.task,
             device=config.device,
-            cache_dir=cache_dir,
-            cache_enabled=cache_enabled,
+            inference_config=config.inference,
+            cache_config=cache_config,
         )
 
     def _get_model_identifier(self) -> str:

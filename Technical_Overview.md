@@ -31,12 +31,12 @@ The system uses a **flexible dual-model architecture** with configurable backend
 | Stage | Default Model | Backend | Purpose |
 |-------|---------------|---------|---------|
 | **Analysis** | Gemma-3-12B-IT | llama-cpp-python | Comprehensive market analysis |
-| **Extraction** | ProsusAI/FinBERT | HuggingFace Transformers | Sentiment classification |
+| **Extraction** | DistilRoBERTa (financial) | HuggingFace Transformers | Sentiment classification |
 
 **Key Benefits:**
 - Models run locally (no cloud API calls) — **data privacy** and **zero per-query costs**
 - Configurable model switching via YAML — swap models without code changes
-- Domain-specific extraction — FinBERT is trained on financial text for better accuracy
+- Domain-specific extraction — DistilRoBERTa fine-tuned on financial text for better accuracy
 
 ---
 
@@ -179,7 +179,7 @@ The system uses a **two-stage AI pipeline** with configurable model backends:
                                 ▼
                     ┌─────────────────────────┐
                     │   EXTRACTION MODEL      │
-                    │   (FinBERT)             │
+                    │   (DistilRoBERTa)       │
                     │   Backend: transformers │
                     │                         │
                     │ • Signal: bullish/      │
@@ -210,15 +210,15 @@ The system supports two model backends that can be mixed and matched:
 | Stage | Model | Backend | Purpose |
 |-------|-------|---------|---------|
 | **Analysis** | Gemma-3-12B-IT | llama | Creative market analysis (temp: 0.7) |
-| **Extraction** | ProsusAI/FinBERT | transformers | Financial sentiment classification |
+| **Extraction** | DistilRoBERTa | transformers | Financial sentiment classification |
 
 ### Why This Architecture?
 
 This separation provides key advantages:
 - **Optimized for task**: Large generative model for analysis, specialized classifier for signals
-- **Domain expertise**: FinBERT is trained on financial text for better sentiment accuracy
+- **Domain expertise**: DistilRoBERTa fine-tuned on financial news for better sentiment accuracy
 - **Flexibility**: Swap models via configuration without code changes
-- **Cost efficiency**: Smaller extraction model reduces compute requirements
+- **Cost efficiency**: Smaller extraction model (~66M params) reduces compute requirements
 
 ### Prompt Templates
 
@@ -295,14 +295,14 @@ The system supports two model backends, configurable per stage:
 | **Capabilities** | Market analysis, technical writing, reasoning |
 | **Limitations** | Cannot access live data; relies on provided context |
 
-### Extraction Model: ProsusAI/FinBERT (Default)
+### Extraction Model: DistilRoBERTa (Default)
 
 | Property | Value |
 |----------|-------|
-| **Model Type** | Fine-tuned BERT for financial sentiment |
+| **Model Type** | Fine-tuned DistilRoBERTa for financial sentiment |
 | **Backend** | transformers (HuggingFace) |
-| **Parameters** | ~110 million |
-| **Training Data** | Financial news, SEC filings, analyst reports |
+| **Parameters** | ~66 million |
+| **Training Data** | Financial news articles |
 | **Task** | Sentiment classification |
 | **Output** | positive/negative/neutral → bullish/bearish/neutral |
 | **Capabilities** | Domain-specific financial sentiment detection |
@@ -312,7 +312,7 @@ The system supports two model backends, configurable per stage:
 
 | Model | Parameters | Description |
 |-------|------------|-------------|
-| `mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis` | ~66M | Lightweight, fast inference |
+| `ProsusAI/finbert` | ~110M | Financial sentiment (BERT-based) |
 | `yiyanghkust/finbert-tone` | ~110M | Financial tone analysis |
 | `bartowski/gemma-2-9b-it-GGUF` | 9B | Generative extraction (llama backend) |
 
@@ -320,9 +320,9 @@ The system supports two model backends, configurable per stage:
 
 | Benefit | Description |
 |---------|-------------|
-| **Domain Expertise** | FinBERT trained specifically on financial text |
+| **Domain Expertise** | DistilRoBERTa fine-tuned specifically on financial news |
 | **Accuracy** | Sentiment classifiers outperform prompted LLMs for this task |
-| **Efficiency** | 110M params vs 9B for extraction — faster, lower cost |
+| **Efficiency** | 66M params vs 12B for extraction — faster, lower cost |
 | **Privacy** | All models run locally, no external API calls |
 | **Flexibility** | Switch models via config without code changes |
 
@@ -436,14 +436,14 @@ The sidebar displays real-time health status:
 | Opportunity | Benefit | Effort | Status |
 |-------------|---------|--------|--------|
 | RAG with market news | Real-time context awareness | High | Planned |
-| ~~Sentiment analysis integration~~ | ~~Multi-source signals~~ | ~~Medium~~ | **Implemented** (FinBERT) |
+| ~~Sentiment analysis integration~~ | ~~Multi-source signals~~ | ~~Medium~~ | **Implemented** (DistilRoBERTa) |
 | Technical indicator library | More sophisticated analysis | Medium | Planned |
 
 ### Model Upgrades
 | Opportunity | Benefit | Effort | Status |
 |-------------|---------|--------|--------|
 | Larger analysis model | Deeper reasoning capability | Low | Planned |
-| ~~Fine-tuned extraction model~~ | ~~Better signal accuracy~~ | ~~High~~ | **Implemented** (FinBERT) |
+| ~~Fine-tuned extraction model~~ | ~~Better signal accuracy~~ | ~~High~~ | **Implemented** (DistilRoBERTa) |
 | Ensemble approach | More robust predictions | High | Planned |
 
 ### Scalability & Reliability
@@ -477,6 +477,7 @@ The sidebar displays real-time health status:
 | **Quantization** | Model compression technique (Q4, Q6, etc.) |
 | **RAG** | Retrieval-Augmented Generation; combining search with LLM |
 | **FinBERT** | BERT model fine-tuned on financial text for sentiment analysis |
+| **DistilRoBERTa** | Distilled RoBERTa model, smaller and faster than BERT |
 | **Transformers** | HuggingFace library for pre-trained NLP models |
 | **Sentiment Classification** | Categorizing text as positive, negative, or neutral |
 
@@ -490,6 +491,11 @@ The sidebar displays real-time health status:
 # config/llm_config.yaml
 
 llm:
+  defaults:
+    n_ctx: 4096
+    n_gpu_layers: -1
+    verbose: false
+
   # Analysis model (text generation)
   analysis:
     model_type: "llama"  # Options: "llama" | "transformers"
@@ -498,16 +504,20 @@ llm:
     inference:
       temperature: 0.7
       max_tokens: 2048
+      top_p: 0.9
+      top_k: 50
+      frequency_penalty: 0.3
+      presence_penalty: 0.1
 
   # Extraction model (sentiment classification)
   extraction:
     model_type: "transformers"  # Use HuggingFace model
-    model_repo: "ProsusAI/finbert"
+    model_repo: "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
     task: "sentiment-analysis"
-    device: "auto"  # Options: "auto" | "cpu" | "cuda" | "mps"
+    device: "cpu"  # Options: "auto" | "cpu" | "cuda" | "mps"
     inference:
-      temperature: 0.3
-      max_tokens: 1024
+      temperature: 0.1
+      max_tokens: 150
 
 market_data:
   wti_ticker: "CL=F"
@@ -548,4 +558,4 @@ docker-compose up -d
 ---
 
 *Document generated for Murban Intelligence Copilot v1.0*
-*Last updated: January 2026*
+*Last updated: February 2026*

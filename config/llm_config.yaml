@@ -8,90 +8,44 @@
 # Model type options:
 #   - "llama": Use llama-cpp-python for GGUF models (local inference)
 #   - "transformers": Use HuggingFace transformers (supports classification models)
-#
-# To switch models, change model_type and update model_repo accordingly.
 # -----------------------------------------------------------------------------
 llm:
   defaults:
     n_ctx: 4096
     n_gpu_layers: -1
-    cache_enabled: true
     verbose: false
-    # Default inference parameters (used when not specified per-model)
+
+  # -------------------------------------------------------------------------
+  # Analysis Model - Generates comprehensive market analysis text
+  # -------------------------------------------------------------------------
+  analysis:
+    model_type: "llama"
+    model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
+    model_file: "gemma-3-12b-it.Q6_K.gguf"
     inference:
-      max_tokens: 512
-      temperature: 0.7
-    # Analysis-specific inference defaults
-    analysis_inference:
       max_tokens: 2048
       temperature: 0.7
       top_p: 0.9
       top_k: 50
       frequency_penalty: 0.3
       presence_penalty: 0.1
-    # Extraction-specific inference defaults
-    extraction_inference:
+
+  # -------------------------------------------------------------------------
+  # Extraction Model - Extracts structured signals from analysis
+  # -------------------------------------------------------------------------
+  extraction:
+    model_type: "transformers"
+    model_repo: "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
+    task: "sentiment-analysis"
+    device: "cpu"
+    # Alternative: model_repo: "ProsusAI/finbert"
+    inference:
       max_tokens: 150
       temperature: 0.1
       top_p: 0.65
       top_k: 25
       frequency_penalty: 0.0
       presence_penalty: 0.0
-
-  # -------------------------------------------------------------------------
-  # Analysis Model Configuration
-  # -------------------------------------------------------------------------
-  # This model generates comprehensive market analysis text.
-  # Recommended: Use a generative LLM (llama type) for rich analysis.
-  analysis:
-    model_type: "llama"  # Options: "llama" | "transformers"
-    # --- Llama/GGUF Model (default) ---
-    model_repo: "MaziyarPanahi/gemma-3-12b-it-GGUF"
-    model_file: "gemma-3-12b-it.Q6_K.gguf"
-    # --- Alternative: Smaller Llama model ---
-    # model_repo: "bartowski/gemma-2-9b-it-GGUF"
-    # model_file: "gemma-2-9b-it-Q4_K_M.gguf"
-    inference:
-      max_tokens: 2048
-      temperature: 0.7
-      top_p: 0.9
-      top_k: 50
-      frequency_penalty: 0.3
-      presence_penalty: 0.1
-
-  # -------------------------------------------------------------------------
-  # Extraction Model Configuration
-  # -------------------------------------------------------------------------
-  # This model extracts structured signals from the analysis text.
-  # Options:
-  #   1. Llama (default): Uses prompted extraction with a generative model
-  #   2. Transformers: Uses a fine-tuned sentiment classification model
-  # -------------------------------------------------------------------------
-  extraction:
-    #model_type: "llama"  # Options: "llama" | "transformers"
-    # --- Llama/GGUF Model (default) ---
-    #model_repo: "bartowski/gemma-2-9b-it-GGUF"
-    #model_file: "gemma-2-9b-it-Q4_K_M.gguf"
-    # --- Alternative: Financial Sentiment Model (transformers) ---
-    model_type: "transformers"
-    model_repo: "mrm8488/distilroberta-finetuned-financial-news-sentiment-analysis"
-    # task: "sentiment-analysis"
-    # device: "auto"  # Options: "auto" | "cpu" | "cuda" | "mps"
-    # --- Alternative: ProsusAI FinBERT ---
-    #model_type: "transformers"
-    #model_repo: "ProsusAI/finbert"
-    # task: "sentiment-analysis"
-    # device: "auto"
-    inference:
-      max_tokens: 150   # Forces brevity
-      temperature: 0.1  # Prevents interpretive drift
-      top_p: 0.65       # Tight probability mass
-      top_k: 25         # Constrained vocabulary
-      frequency_penalty: 0.0  # No repetition risk
-      presence_penalty: 0.0   # Prevents new ideas
-    # Transformers-specific settings (only used when model_type is "transformers")
-    task: "sentiment-analysis"
-    device: "cpu"  # Use CPU to avoid MPS memory issues
 
 # -----------------------------------------------------------------------------
 # Cache Configuration

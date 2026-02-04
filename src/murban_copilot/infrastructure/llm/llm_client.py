@@ -10,7 +10,7 @@ from murban_copilot.infrastructure.logging import get_logger
 from .base_client import BaseLLMClient
 
 if TYPE_CHECKING:
-    from murban_copilot.domain.config import LLMModelConfig
+    from murban_copilot.domain.config import CacheConfig, LLMInferenceConfig, LLMModelConfig
 
 logger = get_logger(__name__)
 
@@ -28,8 +28,8 @@ class LlamaClient(BaseLLMClient):
         model_file: Optional[str] = None,
         n_ctx: int = 4096,
         n_gpu_layers: int = -1,
-        cache_dir: Optional[Path] = None,
-        cache_enabled: bool = True,
+        inference_config: Optional["LLMInferenceConfig"] = None,
+        cache_config: Optional["CacheConfig"] = None,
         verbose: bool = False,
     ) -> None:
         """
@@ -41,11 +41,11 @@ class LlamaClient(BaseLLMClient):
             model_file: Model filename in repo (if model_path not provided)
             n_ctx: Context window size
             n_gpu_layers: Number of layers to offload to GPU (-1 for all)
-            cache_dir: Directory for response caching
-            cache_enabled: Whether to enable response caching
+            inference_config: Inference parameters (max_tokens, temperature, etc.)
+            cache_config: Cache settings (directory, enabled)
             verbose: Whether to enable verbose output
         """
-        super().__init__(cache_dir=cache_dir, cache_enabled=cache_enabled)
+        super().__init__(inference_config=inference_config, cache_config=cache_config)
 
         self.model_path = model_path
         self.model_repo = model_repo or self.DEFAULT_MODEL_REPO
@@ -60,17 +60,15 @@ class LlamaClient(BaseLLMClient):
     def from_config(
         cls,
         config: "LLMModelConfig",
-        cache_dir: Optional[Path] = None,
-        cache_enabled: bool = True,
+        cache_config: Optional["CacheConfig"] = None,
         verbose: bool = False,
     ) -> "LlamaClient":
         """
         Create a LlamaClient from an LLMModelConfig.
 
         Args:
-            config: Model configuration
-            cache_dir: Directory for response caching
-            cache_enabled: Whether to enable response caching
+            config: Model configuration (includes inference settings)
+            cache_config: Cache settings (directory, enabled)
             verbose: Whether to enable verbose output
 
         Returns:
@@ -81,8 +79,8 @@ class LlamaClient(BaseLLMClient):
             model_file=config.model_file,
             n_ctx=config.n_ctx,
             n_gpu_layers=config.n_gpu_layers,
-            cache_dir=cache_dir,
-            cache_enabled=cache_enabled,
+            inference_config=config.inference,
+            cache_config=cache_config,
             verbose=verbose,
         )
 

@@ -10,7 +10,6 @@ from typing import Sequence
 
 from pathlib import Path
 
-from murban_copilot.domain.config import LLMConfig, ModelType
 from murban_copilot.domain.entities import MarketData, MovingAverages, SpreadData, MarketSignal
 from murban_copilot.domain.spread_calculator import SpreadCalculator
 from murban_copilot.infrastructure.market_data.yahoo_client import YahooFinanceClient
@@ -169,8 +168,55 @@ st.markdown("""
     [data-testid="stAlert"] p {
         color: #fafafa !important;
     }
+
+    /* Download button styling - high contrast for dark mode */
+    [data-testid="stDownloadButton"] button {
+        background-color: #4299e1 !important;
+        color: #ffffff !important;
+        border: none !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stDownloadButton"] button:hover {
+        background-color: #3182ce !important;
+        color: #ffffff !important;
+    }
 </style>
 """, unsafe_allow_html=True)
+
+
+def _init_llm_client(
+    session_key: str,
+    config,
+    cache_config,
+    verbose: bool,
+    fallback=None,
+) -> None:
+    """Initialize an LLM client in session state.
+
+    Args:
+        session_key: Key to store the client in st.session_state
+        config: LLMModelConfig for the client (or None)
+        cache_config: CacheConfig for caching behavior
+        verbose: Whether to enable verbose logging
+        fallback: Fallback client to use if config is None
+    """
+    if session_key in st.session_state:
+        return
+
+    if config:
+        st.session_state[session_key] = create_llm_client(
+            config=config,
+            cache_config=cache_config,
+            verbose=verbose,
+        )
+        client_type = get_client_type_name(st.session_state[session_key])
+        logger.info(f"Initialized {session_key} [{client_type}]: {config.model_repo}")
+    elif fallback:
+        st.session_state[session_key] = fallback
+        logger.info(f"Using fallback for {session_key}")
+    else:
+        st.session_state[session_key] = LlamaClient(cache_config=cache_config)
+        logger.info(f"Initialized {session_key} with defaults")
 
 
 def init_services():
@@ -201,45 +247,22 @@ def init_services():
     if "llm_config" not in st.session_state:
         st.session_state.llm_config = config.llm
 
-    cache_dir = Path.cwd() / config.llm.cache.directory
-
     # Initialize analysis LLM client using factory
-    if "analysis_llm_client" not in st.session_state:
-        if config.llm.analysis:
-            st.session_state.analysis_llm_client = create_llm_client(
-                config=config.llm.analysis,
-                cache_dir=cache_dir,
-                cache_enabled=config.llm.cache.enabled,
-                verbose=config.llm.defaults.verbose,
-            )
-            client_type = get_client_type_name(st.session_state.analysis_llm_client)
-            logger.info(
-                f"Initialized analysis LLM [{client_type}]: {config.llm.analysis.model_repo}"
-            )
-        else:
-            st.session_state.analysis_llm_client = LlamaClient(
-                cache_dir=cache_dir,
-                cache_enabled=config.llm.cache.enabled,
-            )
-            logger.info("Initialized analysis LLM with defaults")
+    _init_llm_client(
+        session_key="analysis_llm_client",
+        config=config.llm.analysis,
+        cache_config=config.llm.cache,
+        verbose=config.llm.defaults.verbose,
+    )
 
-    # Initialize extraction LLM client using factory
-    if "extraction_llm_client" not in st.session_state:
-        if config.llm.extraction:
-            st.session_state.extraction_llm_client = create_llm_client(
-                config=config.llm.extraction,
-                cache_dir=cache_dir,
-                cache_enabled=config.llm.cache.enabled,
-                verbose=config.llm.defaults.verbose,
-            )
-            client_type = get_client_type_name(st.session_state.extraction_llm_client)
-            logger.info(
-                f"Initialized extraction LLM [{client_type}]: {config.llm.extraction.model_repo}"
-            )
-        else:
-            # Fall back to using analysis client for extraction
-            st.session_state.extraction_llm_client = st.session_state.analysis_llm_client
-            logger.info("Using analysis LLM for extraction")
+    # Initialize extraction LLM client (falls back to analysis client if not configured)
+    _init_llm_client(
+        session_key="extraction_llm_client",
+        config=config.llm.extraction,
+        cache_config=config.llm.cache,
+        verbose=config.llm.defaults.verbose,
+        fallback=st.session_state.analysis_llm_client,
+    )
 
 
 def create_spread_chart(
@@ -391,6 +414,54 @@ def display_signal_card(signal: MarketSignal) -> None:
     """, unsafe_allow_html=True)
 
 
+def _render_data_tab(
+    data: Sequence,
+    display_columns: list[tuple[str, callable]],
+    csv_columns: list[tuple[str, callable]],
+    stats: list[tuple[str, str]],
+    filename: str,
+    download_key: str,
+) -> None:
+    """Render a data explorer tab with table, stats, and download button.
+
+    Args:
+        data: Sequence of data objects to display (must have .date attribute)
+        display_columns: List of (column_name, formatter_func) for display DataFrame
+        csv_columns: List of (column_name, formatter_func) for CSV download
+        stats: List of (label, formatted_value) for summary metrics
+        filename: Display name for download (e.g., "WTI Data (CSV)")
+        download_key: Unique key for the download button widget
+    """
+    # Create display DataFrame
+    display_df = pd.DataFrame([
+        {name: fmt(d) for name, fmt in display_columns}
+        for d in sorted(data, key=lambda x: x.date, reverse=True)
+    ])
+
+    # Summary stats row
+    cols = st.columns(len(stats))
+    for col, (label, value) in zip(cols, stats):
+        with col:
+            st.metric(label, value)
+
+    # Display table
+    st.dataframe(display_df, use_container_width=True, hide_index=True)
+
+    # Download button
+    csv_df = pd.DataFrame([
+        {name: fmt(d) for name, fmt in csv_columns}
+        for d in sorted(data, key=lambda x: x.date, reverse=True)
+    ]).to_csv(index=False)
+
+    st.download_button(
+        f"📥 Download {filename}",
+        csv_df,
+        filename.lower().replace(" ", "_").replace("(csv)", "").strip() + ".csv",
+        "text/csv",
+        key=download_key,
+    )
+
+
 def create_data_explorer(
     wti_data: Sequence[MarketData],
     brent_data: Sequence[MarketData],
@@ -405,195 +476,163 @@ def create_data_explorer(
         "WTI Data", "Brent Data", "Spread Data", "Analysis Summary"
     ])
 
+    # Common column definitions for market data (WTI/Brent)
+    market_display_columns = [
+        ("Date", lambda d: d.date.strftime("%Y-%m-%d")),
+        ("Open", lambda d: f"${d.open:.2f}"),
+        ("High", lambda d: f"${d.high:.2f}"),
+        ("Low", lambda d: f"${d.low:.2f}"),
+        ("Close", lambda d: f"${d.close:.2f}"),
+        ("Volume", lambda d: f"{int(d.volume):,}" if d.volume else "N/A"),
+    ]
+    market_csv_columns = [
+        ("Date", lambda d: d.date.strftime("%Y-%m-%d")),
+        ("Open", lambda d: d.open),
+        ("High", lambda d: d.high),
+        ("Low", lambda d: d.low),
+        ("Close", lambda d: d.close),
+        ("Volume", lambda d: d.volume or ""),
+    ]
+
     # WTI Data Tab
     with tab_wti:
-        wti_df = pd.DataFrame([
-            {
-                "Date": d.date.strftime("%Y-%m-%d"),
-                "Open": f"${d.open:.2f}",
-                "High": f"${d.high:.2f}",
-                "Low": f"${d.low:.2f}",
-                "Close": f"${d.close:.2f}",
-                "Volume": f"{int(d.volume):,}" if d.volume else "N/A",
-            }
-            for d in sorted(wti_data, key=lambda x: x.date, reverse=True)
-        ])
-
-        # Summary stats
         closes = [d.close for d in wti_data]
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.metric("Records", len(wti_data))
-        with col2:
-            st.metric("Min", f"${min(closes):.2f}")
-        with col3:
-            st.metric("Max", f"${max(closes):.2f}")
-        with col4:
-            st.metric("Avg", f"${sum(closes)/len(closes):.2f}")
-
-        st.dataframe(wti_df, use_container_width=True, hide_index=True)
-
-        # Download button
-        csv_wti = pd.DataFrame([
-            {
-                "Date": d.date.strftime("%Y-%m-%d"),
-                "Open": d.open,
-                "High": d.high,
-                "Low": d.low,
-                "Close": d.close,
-                "Volume": d.volume or "",
-            }
-            for d in sorted(wti_data, key=lambda x: x.date, reverse=True)
-        ]).to_csv(index=False)
-        st.download_button(
-            "📥 Download WTI Data (CSV)",
-            csv_wti,
-            "wti_data.csv",
-            "text/csv",
-            key="download_wti",
+        _render_data_tab(
+            data=wti_data,
+            display_columns=market_display_columns,
+            csv_columns=market_csv_columns,
+            stats=[
+                ("Records", str(len(wti_data))),
+                ("Min", f"${min(closes):.2f}"),
+                ("Max", f"${max(closes):.2f}"),
+                ("Avg", f"${sum(closes)/len(closes):.2f}"),
+            ],
+            filename="WTI Data (CSV)",
+            download_key="download_wti",
         )
 
     # Brent Data Tab
     with tab_brent:
-        brent_df = pd.DataFrame([
-            {
-                "Date": d.date.strftime("%Y-%m-%d"),
-                "Open": f"${d.open:.2f}",
-                "High": f"${d.high:.2f}",
-                "Low": f"${d.low:.2f}",
-                "Close": f"${d.close:.2f}",
-                "Volume": f"{int(d.volume):,}" if d.volume else "N/A",
-            }
-            for d in sorted(brent_data, key=lambda x: x.date, reverse=True)
-        ])
-
-        # Summary stats
         closes = [d.close for d in brent_data]
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.metric("Records", len(brent_data))
-        with col2:
-            st.metric("Min", f"${min(closes):.2f}")
-        with col3:
-            st.metric("Max", f"${max(closes):.2f}")
-        with col4:
-            st.metric("Avg", f"${sum(closes)/len(closes):.2f}")
-
-        st.dataframe(brent_df, use_container_width=True, hide_index=True)
-
-        # Download button
-        csv_brent = pd.DataFrame([
-            {
-                "Date": d.date.strftime("%Y-%m-%d"),
-                "Open": d.open,
-                "High": d.high,
-                "Low": d.low,
-                "Close": d.close,
-                "Volume": d.volume or "",
-            }
-            for d in sorted(brent_data, key=lambda x: x.date, reverse=True)
-        ]).to_csv(index=False)
-        st.download_button(
-            "📥 Download Brent Data (CSV)",
-            csv_brent,
-            "brent_data.csv",
-            "text/csv",
-            key="download_brent",
+        _render_data_tab(
+            data=brent_data,
+            display_columns=market_display_columns,
+            csv_columns=market_csv_columns,
+            stats=[
+                ("Records", str(len(brent_data))),
+                ("Min", f"${min(closes):.2f}"),
+                ("Max", f"${max(closes):.2f}"),
+                ("Avg", f"${sum(closes)/len(closes):.2f}"),
+            ],
+            filename="Brent Data (CSV)",
+            download_key="download_brent",
         )
 
     # Spread Data Tab
     with tab_spread:
-        spread_df = pd.DataFrame([
-            {
-                "Date": d.date.strftime("%Y-%m-%d"),
-                "WTI Close": f"${d.wti_close:.2f}",
-                "Brent Close": f"${d.brent_close:.2f}",
-                "Spread": f"${d.spread:.2f}",
-            }
-            for d in sorted(spread_data, key=lambda x: x.date, reverse=True)
-        ])
-
-        # Summary stats
         spreads = [d.spread for d in spread_data]
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.metric("Records", len(spread_data))
-        with col2:
-            st.metric("Min Spread", f"${min(spreads):.2f}")
-        with col3:
-            st.metric("Max Spread", f"${max(spreads):.2f}")
-        with col4:
-            st.metric("Avg Spread", f"${sum(spreads)/len(spreads):.2f}")
-
-        st.dataframe(spread_df, use_container_width=True, hide_index=True)
-
-        # Download button
-        csv_spread = pd.DataFrame([
-            {
-                "Date": d.date.strftime("%Y-%m-%d"),
-                "WTI_Close": d.wti_close,
-                "Brent_Close": d.brent_close,
-                "Spread": d.spread,
-            }
-            for d in sorted(spread_data, key=lambda x: x.date, reverse=True)
-        ]).to_csv(index=False)
-        st.download_button(
-            "📥 Download Spread Data (CSV)",
-            csv_spread,
-            "spread_data.csv",
-            "text/csv",
-            key="download_spread",
+        _render_data_tab(
+            data=spread_data,
+            display_columns=[
+                ("Date", lambda d: d.date.strftime("%Y-%m-%d")),
+                ("WTI Close", lambda d: f"${d.wti_close:.2f}"),
+                ("Brent Close", lambda d: f"${d.brent_close:.2f}"),
+                ("Spread", lambda d: f"${d.spread:.2f}"),
+            ],
+            csv_columns=[
+                ("Date", lambda d: d.date.strftime("%Y-%m-%d")),
+                ("WTI_Close", lambda d: d.wti_close),
+                ("Brent_Close", lambda d: d.brent_close),
+                ("Spread", lambda d: d.spread),
+            ],
+            stats=[
+                ("Records", str(len(spread_data))),
+                ("Min Spread", f"${min(spreads):.2f}"),
+                ("Max Spread", f"${max(spreads):.2f}"),
+                ("Avg Spread", f"${sum(spreads)/len(spreads):.2f}"),
+            ],
+            filename="Spread Data (CSV)",
+            download_key="download_spread",
         )
 
-    # Analysis Summary Tab
+    # Analysis Summary Tab (has different stats pattern - trend counts)
     with tab_analysis:
-        analysis_df = pd.DataFrame([
-            {
-                "Date": d.date.strftime("%Y-%m-%d"),
-                "Spread": f"${d.spread:.2f}",
-                "5-Day MA": f"${d.ma_5:.2f}" if d.ma_5 else "N/A",
-                "20-Day MA": f"${d.ma_20:.2f}" if d.ma_20 else "N/A",
-                "Trend": d.trend_signal.title() if d.trend_signal else "N/A",
-            }
-            for d in sorted(moving_averages, key=lambda x: x.date, reverse=True)
-        ])
-
-        # Summary stats - count trends
         trends = [d.trend_signal for d in moving_averages if d.trend_signal]
         bullish_count = sum(1 for t in trends if t == "bullish")
         bearish_count = sum(1 for t in trends if t == "bearish")
         neutral_count = sum(1 for t in trends if t == "neutral")
 
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.metric("Records", len(moving_averages))
-        with col2:
-            st.metric("📈 Bullish Days", bullish_count)
-        with col3:
-            st.metric("📉 Bearish Days", bearish_count)
-        with col4:
-            st.metric("➡️ Neutral Days", neutral_count)
-
-        st.dataframe(analysis_df, use_container_width=True, hide_index=True)
-
-        # Download button
-        csv_analysis = pd.DataFrame([
-            {
-                "Date": d.date.strftime("%Y-%m-%d"),
-                "Spread": d.spread,
-                "MA_5": d.ma_5 or "",
-                "MA_20": d.ma_20 or "",
-                "Trend": d.trend_signal or "",
-            }
-            for d in sorted(moving_averages, key=lambda x: x.date, reverse=True)
-        ]).to_csv(index=False)
-        st.download_button(
-            "📥 Download Analysis Data (CSV)",
-            csv_analysis,
-            "analysis_data.csv",
-            "text/csv",
-            key="download_analysis",
+        _render_data_tab(
+            data=moving_averages,
+            display_columns=[
+                ("Date", lambda d: d.date.strftime("%Y-%m-%d")),
+                ("Spread", lambda d: f"${d.spread:.2f}"),
+                ("5-Day MA", lambda d: f"${d.ma_5:.2f}" if d.ma_5 else "N/A"),
+                ("20-Day MA", lambda d: f"${d.ma_20:.2f}" if d.ma_20 else "N/A"),
+                ("Trend", lambda d: d.trend_signal.title() if d.trend_signal else "N/A"),
+            ],
+            csv_columns=[
+                ("Date", lambda d: d.date.strftime("%Y-%m-%d")),
+                ("Spread", lambda d: d.spread),
+                ("MA_5", lambda d: d.ma_5 or ""),
+                ("MA_20", lambda d: d.ma_20 or ""),
+                ("Trend", lambda d: d.trend_signal or ""),
+            ],
+            stats=[
+                ("Records", str(len(moving_averages))),
+                ("📈 Bullish Days", str(bullish_count)),
+                ("📉 Bearish Days", str(bearish_count)),
+                ("➡️ Neutral Days", str(neutral_count)),
+            ],
+            filename="Analysis Data (CSV)",
+            download_key="download_analysis",
         )
+
+
+def _generate_sample_data(
+    days: int,
+    ui_config,
+) -> tuple[list[MarketData], list[MarketData]]:
+    """Generate sample market data for demo when real data unavailable.
+
+    Args:
+        days: Number of days of sample data to generate
+        ui_config: UIConfig with sample price settings
+
+    Returns:
+        Tuple of (wti_data, brent_data) lists
+    """
+    import random
+
+    base_date = datetime.now()
+    wti_data, brent_data = [], []
+    wti_base = ui_config.sample_wti_base_price
+    brent_base = ui_config.sample_brent_base_price
+    variation = ui_config.sample_price_variation
+
+    for i in range(days, 0, -1):
+        date = base_date - timedelta(days=i)
+        wti_base += random.uniform(-1, 1)
+        brent_base += random.uniform(-1, 1)
+
+        wti_data.append(MarketData(
+            date=date,
+            open=wti_base - variation,
+            high=wti_base + variation,
+            low=wti_base - variation * 1.4,
+            close=wti_base,
+            ticker="WTI",
+        ))
+        brent_data.append(MarketData(
+            date=date,
+            open=brent_base - variation,
+            high=brent_base + variation,
+            low=brent_base - variation * 1.4,
+            close=brent_base,
+            ticker="BRENT",
+        ))
+
+    return wti_data, brent_data
 
 
 def main():
@@ -673,40 +712,7 @@ def main():
         except Exception as e:
             st.error(f"Failed to fetch market data: {str(e)}")
             st.info("This may be due to market data unavailability. Using sample data for demonstration.")
-
-            # Create sample data for demo using config values
-            from murban_copilot.domain.entities import MarketData
-            import random
-
-            base_date = datetime.now()
-            wti_data = []
-            brent_data = []
-
-            wti_base = ui_config.sample_wti_base_price
-            brent_base = ui_config.sample_brent_base_price
-            variation = ui_config.sample_price_variation
-
-            for i in range(days, 0, -1):
-                date = base_date - timedelta(days=i)
-                wti_base += random.uniform(-1, 1)
-                brent_base += random.uniform(-1, 1)
-
-                wti_data.append(MarketData(
-                    date=date,
-                    open=wti_base - variation,
-                    high=wti_base + variation,
-                    low=wti_base - variation * 1.4,
-                    close=wti_base,
-                    ticker="WTI",
-                ))
-                brent_data.append(MarketData(
-                    date=date,
-                    open=brent_base - variation,
-                    high=brent_base + variation,
-                    low=brent_base - variation * 1.4,
-                    close=brent_base,
-                    ticker="BRENT",
-                ))
+            wti_data, brent_data = _generate_sample_data(days, ui_config)
 
     with st.spinner("Analyzing spread..."):
         try:
@@ -718,6 +724,9 @@ def main():
         except Exception as e:
             st.error(f"Failed to analyze spread: {str(e)}")
             st.stop()
+
+    # Data Explorer (moved up - display right after data is ready)
+    create_data_explorer(wti_data, brent_data, spread_data, moving_averages)
 
     # Metrics row
     col1, col2, col3, col4 = st.columns(4)
@@ -766,9 +775,6 @@ def main():
         with stat_col4:
             st.metric("Std Dev", f"${stats['std']:.2f}" if stats["std"] else "N/A")
 
-    # Data Explorer
-    create_data_explorer(wti_data, brent_data, spread_data, moving_averages)
-
     # AI Signal
     if use_llm:
         st.divider()
@@ -777,32 +783,11 @@ def main():
         with st.spinner("Generating AI analysis..."):
             try:
                 app_config = st.session_state.app_config
-                llm_config = app_config.llm
 
-                # Get inference parameters from config, with defaults from LLMConfig.get_default()
-                default_llm_config = LLMConfig.get_default()
-
-                if llm_config.analysis and llm_config.analysis.inference:
-                    analysis_max_tokens = llm_config.analysis.inference.max_tokens
-                    analysis_temperature = llm_config.analysis.inference.temperature
-                else:
-                    analysis_max_tokens = default_llm_config.analysis.inference.max_tokens
-                    analysis_temperature = default_llm_config.analysis.inference.temperature
-
-                if llm_config.extraction and llm_config.extraction.inference:
-                    extraction_max_tokens = llm_config.extraction.inference.max_tokens
-                    extraction_temperature = llm_config.extraction.inference.temperature
-                else:
-                    extraction_max_tokens = default_llm_config.extraction.inference.max_tokens
-                    extraction_temperature = default_llm_config.extraction.inference.temperature
-
+                # Clients use their own config for inference parameters
                 signal_use_case = GenerateSignalUseCase(
                     llm_client=st.session_state.analysis_llm_client,
                     extraction_client=st.session_state.extraction_llm_client,
-                    analysis_max_tokens=analysis_max_tokens,
-                    analysis_temperature=analysis_temperature,
-                    extraction_max_tokens=extraction_max_tokens,
-                    extraction_temperature=extraction_temperature,
                     signal_config=app_config.signal,
                 )
                 signal = signal_use_case.execute(

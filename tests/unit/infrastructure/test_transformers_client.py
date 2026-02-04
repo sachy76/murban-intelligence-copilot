@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch, PropertyMock
 
 import pytest
 
-from murban_copilot.domain.config import LLMModelConfig, ModelType, LLMInferenceConfig
+from murban_copilot.domain.config import CacheConfig, LLMModelConfig, ModelType, LLMInferenceConfig
 from murban_copilot.domain.exceptions import LLMInferenceError
 from murban_copilot.infrastructure.llm.transformers_client import (
     TransformersClient,
@@ -33,26 +33,28 @@ class TestDetectTorchDevice:
 
     def test_auto_with_cuda_available(self):
         """Test auto preference with CUDA available."""
-        with patch("murban_copilot.infrastructure.llm.transformers_client.torch") as mock_torch:
-            mock_torch.cuda.is_available.return_value = True
+        mock_torch = MagicMock()
+        mock_torch.cuda.is_available.return_value = True
+        with patch.dict("sys.modules", {"torch": mock_torch}):
             result = detect_torch_device("auto")
             assert result == 0
 
     def test_auto_with_mps_available(self):
         """Test auto preference with MPS available (no CUDA)."""
-        with patch("murban_copilot.infrastructure.llm.transformers_client.torch") as mock_torch:
-            mock_torch.cuda.is_available.return_value = False
-            mock_torch.backends.mps.is_available.return_value = True
+        mock_torch = MagicMock()
+        mock_torch.cuda.is_available.return_value = False
+        mock_torch.backends.mps.is_available.return_value = True
+        with patch.dict("sys.modules", {"torch": mock_torch}):
             result = detect_torch_device("auto")
             assert result == "mps"
 
     def test_auto_cpu_fallback(self):
         """Test auto falls back to CPU when no GPU available."""
-        with patch("murban_copilot.infrastructure.llm.transformers_client.torch") as mock_torch:
-            mock_torch.cuda.is_available.return_value = False
-            # Simulate no MPS support
-            mock_torch.backends = MagicMock()
-            mock_torch.backends.mps.is_available.return_value = False
+        mock_torch = MagicMock()
+        mock_torch.cuda.is_available.return_value = False
+        mock_torch.backends = MagicMock()
+        mock_torch.backends.mps.is_available.return_value = False
+        with patch.dict("sys.modules", {"torch": mock_torch}):
             result = detect_torch_device("auto")
             assert result == -1
 
@@ -72,7 +74,7 @@ class TestTransformersClient:
             model_repo="test/model",
             task="sentiment-analysis",
             device="cpu",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
 
     def test_init(self, client):
@@ -87,7 +89,7 @@ class TestTransformersClient:
         client = TransformersClient(model_repo="test/model")
         assert client.task == "sentiment-analysis"
         assert client.device == "auto"
-        assert client.cache_enabled is True
+        assert client._cache_config.enabled is True
 
     def test_get_model_identifier(self, client):
         """Test model identifier returns repo name."""
@@ -104,14 +106,13 @@ class TestTransformersClient:
 
         client = TransformersClient.from_config(
             config,
-            cache_dir=tmp_path / "cache",
-            cache_enabled=False,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache"), enabled=False),
         )
 
         assert client.model_repo == "config/model"
         assert client.task == "text-classification"
         assert client.device == "mps"
-        assert client.cache_enabled is False
+        assert client._cache_config.enabled is False
 
     def test_sentiment_to_signal_mapping(self):
         """Test sentiment label to signal mapping."""
@@ -125,25 +126,23 @@ class TestTransformersClient:
 
     def test_load_model_import_error(self, client):
         """Test _load_model raises on import error."""
-        with patch.dict("sys.modules", {"transformers": None}):
-            with patch(
-                "murban_copilot.infrastructure.llm.transformers_client.pipeline",
-                side_effect=ImportError("transformers not installed"),
-            ):
-                # Force reload attempt
-                client._pipeline = None
-                with pytest.raises(LLMInferenceError) as exc_info:
-                    client._load_model()
-                assert "transformers" in str(exc_info.value).lower()
+        mock_transformers = MagicMock()
+        mock_transformers.pipeline = MagicMock(side_effect=ImportError("transformers not installed"))
+        with patch.dict("sys.modules", {"transformers": mock_transformers}):
+            # Force reload attempt
+            client._pipeline = None
+            with pytest.raises(LLMInferenceError) as exc_info:
+                client._load_model()
+            assert "transformers" in str(exc_info.value).lower()
 
     def test_load_model_success(self, client):
         """Test successful model loading."""
-        mock_pipeline = MagicMock()
+        mock_pipeline_instance = MagicMock()
+        mock_pipeline_fn = MagicMock(return_value=mock_pipeline_instance)
+        mock_transformers = MagicMock()
+        mock_transformers.pipeline = mock_pipeline_fn
 
-        with patch(
-            "murban_copilot.infrastructure.llm.transformers_client.pipeline",
-            return_value=mock_pipeline,
-        ) as mock_pipeline_fn:
+        with patch.dict("sys.modules", {"transformers": mock_transformers}):
             client._load_model()
 
             mock_pipeline_fn.assert_called_once_with(
@@ -151,24 +150,24 @@ class TestTransformersClient:
                 model="test/model",
                 device=-1,  # CPU
             )
-            assert client._pipeline is mock_pipeline
+            assert client._pipeline is mock_pipeline_instance
 
     def test_load_model_already_loaded(self, client):
         """Test _load_model skips if already loaded."""
         client._pipeline = MagicMock()
+        mock_pipeline_fn = MagicMock()
+        mock_transformers = MagicMock()
+        mock_transformers.pipeline = mock_pipeline_fn
 
-        with patch(
-            "murban_copilot.infrastructure.llm.transformers_client.pipeline"
-        ) as mock_pipeline_fn:
+        with patch.dict("sys.modules", {"transformers": mock_transformers}):
             client._load_model()
             mock_pipeline_fn.assert_not_called()
 
     def test_load_model_generic_error(self, client):
         """Test _load_model raises on generic error."""
-        with patch(
-            "murban_copilot.infrastructure.llm.transformers_client.pipeline",
-            side_effect=RuntimeError("Model loading failed"),
-        ):
+        mock_transformers = MagicMock()
+        mock_transformers.pipeline = MagicMock(side_effect=RuntimeError("Model loading failed"))
+        with patch.dict("sys.modules", {"transformers": mock_transformers}):
             client._pipeline = None
             with pytest.raises(LLMInferenceError) as exc_info:
                 client._load_model()
@@ -237,7 +236,7 @@ class TestTransformersClient:
             model_repo="test/model",
             task="text-classification",
             device="cpu",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
         mock_pipeline = MagicMock()
         mock_pipeline.return_value = [{"label": "positive", "score": 0.9}]
@@ -253,7 +252,7 @@ class TestTransformersClient:
             model_repo="test/model",
             task="text-generation",
             device="cpu",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
         mock_pipeline = MagicMock()
         mock_pipeline.return_value = [{"generated_text": "Generated response"}]
@@ -269,7 +268,7 @@ class TestTransformersClient:
             model_repo="test/model",
             task="text-generation",
             device="cpu",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
         mock_pipeline = MagicMock()
         mock_pipeline.return_value = [{"generated_text": "Response"}]
@@ -301,7 +300,7 @@ class TestTransformersClient:
             model_repo="test/model",
             task="text-generation",
             device="cpu",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
         mock_pipeline = MagicMock()
         mock_pipeline.return_value = [{"generated_text": "Response"}]
@@ -324,7 +323,7 @@ class TestTransformersClient:
             model_repo="test/model",
             task="text-generation",
             device="cpu",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
         mock_pipeline = MagicMock()
         mock_pipeline.return_value = []
@@ -340,7 +339,7 @@ class TestTransformersClient:
             model_repo="test/model",
             task="text-generation",
             device="cpu",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
         mock_pipeline = MagicMock()
         mock_pipeline.return_value = [{"generated_text": "Response"}]

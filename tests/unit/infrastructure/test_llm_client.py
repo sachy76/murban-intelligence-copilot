@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from murban_copilot.domain.config import LLMModelConfig, LLMInferenceConfig
+from murban_copilot.domain.config import CacheConfig, LLMModelConfig, LLMInferenceConfig
 from murban_copilot.domain.exceptions import LLMInferenceError
 from murban_copilot.infrastructure.llm.llm_client import LlamaClient
 from murban_copilot.infrastructure.llm.mock_client import MockLlamaClient
@@ -67,7 +67,7 @@ class TestLlamaClient:
         """Return a LlamaClient instance with temp cache dir."""
         return LlamaClient(
             model_path="/fake/model.gguf",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
 
     def test_init_defaults(self):
@@ -137,7 +137,7 @@ class TestLlamaClient:
 
     def test_load_model_requires_llama_cpp(self, tmp_path):
         """Test that model loading requires llama-cpp-python."""
-        client = LlamaClient(cache_dir=tmp_path / "cache")
+        client = LlamaClient(cache_config=CacheConfig(directory=str(tmp_path / "cache")))
 
         # The model loading will fail without llama-cpp-python installed
         # This tests the error handling path
@@ -155,7 +155,7 @@ class TestLlamaClient:
 
         client = LlamaClient(
             model_path=str(model_path),
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
 
         assert client.model_path == str(model_path)
@@ -183,16 +183,14 @@ class TestLlamaClient:
     def test_init_with_cache_enabled(self, tmp_path):
         """Test initialization with cache_enabled parameter."""
         client = LlamaClient(
-            cache_dir=tmp_path / "cache",
-            cache_enabled=True,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache"), enabled=True),
         )
-        assert client.cache_enabled is True
+        assert client._cache_config.enabled is True
 
         client_disabled = LlamaClient(
-            cache_dir=tmp_path / "cache2",
-            cache_enabled=False,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache2"), enabled=False),
         )
-        assert client_disabled.cache_enabled is False
+        assert client_disabled._cache_config.enabled is False
 
     def test_from_config(self, tmp_path):
         """Test creating client from LLMModelConfig."""
@@ -206,15 +204,16 @@ class TestLlamaClient:
 
         client = LlamaClient.from_config(
             config,
-            cache_dir=tmp_path / "cache",
-            cache_enabled=True,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache"), enabled=True),
         )
 
         assert client.model_repo == "test/repo"
         assert client.model_file == "test.gguf"
         assert client.n_ctx == 8192
         assert client.n_gpu_layers == 16
-        assert client.cache_enabled is True
+        assert client._cache_config.enabled is True
+        assert client._inference_config.max_tokens == 1024
+        assert client._inference_config.temperature == 0.5
 
     def test_from_config_with_defaults(self, tmp_path):
         """Test from_config uses defaults when not specified."""
@@ -223,11 +222,14 @@ class TestLlamaClient:
             model_file="test.gguf",
         )
 
-        client = LlamaClient.from_config(config, cache_dir=tmp_path / "cache")
+        client = LlamaClient.from_config(
+            config,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
+        )
 
         assert client.n_ctx == 4096
         assert client.n_gpu_layers == -1
-        assert client.cache_enabled is True
+        assert client._cache_config.enabled is True
 
     def test_generate_respects_cache_enabled_flag(self, client):
         """Test generate respects cache_enabled flag."""
@@ -240,8 +242,7 @@ class TestLlamaClient:
         """Test that cache_enabled=False ignores cached responses."""
         client_no_cache = LlamaClient(
             model_path="/fake/model.gguf",
-            cache_dir=tmp_path / "nocache",
-            cache_enabled=False,
+            cache_config=CacheConfig(directory=str(tmp_path / "nocache"), enabled=False),
         )
 
         # Pre-populate cache file
@@ -255,13 +256,13 @@ class TestLlamaClient:
         # With cache_enabled=False, _get_cached_response should not be checked
         # when calling generate - it should try to load model instead
         # (which will fail since model doesn't exist)
-        assert client_no_cache.cache_enabled is False
+        assert client_no_cache._cache_config.enabled is False
 
     def test_generate_with_all_optional_params(self, tmp_path):
         """Test generate passes all optional parameters."""
         client = LlamaClient(
             model_path="/fake/model.gguf",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
         # Pre-cache response to avoid model loading
         client._cache_response("test prompt", 100, 0.5, "cached response")
@@ -302,7 +303,7 @@ class TestLlamaClient:
         """Test is_available returns False when model loading fails."""
         client = LlamaClient(
             model_repo="nonexistent/model",
-            cache_dir=tmp_path / "cache",
+            cache_config=CacheConfig(directory=str(tmp_path / "cache")),
         )
 
         # is_available catches LLMInferenceError and returns False
@@ -316,13 +317,16 @@ class TestLlamaClient:
         """Test generate re-raises LLMInferenceError without wrapping."""
         client = LlamaClient(
             model_path="/fake/model.gguf",
-            cache_dir=tmp_path / "cache",
-            cache_enabled=False,
+            cache_config=CacheConfig(directory=str(tmp_path / "cache"), enabled=False),
         )
 
-        # Without llama-cpp-python, this will raise LLMInferenceError
-        with pytest.raises(LLMInferenceError):
-            client.generate("test", use_cache=False)
+        # Mock llama_cpp to raise an error during model loading
+        mock_llama = MagicMock(side_effect=RuntimeError("Model loading failed"))
+        mock_llama_cpp = MagicMock()
+        mock_llama_cpp.Llama = mock_llama
+        with patch.dict("sys.modules", {"llama_cpp": mock_llama_cpp}):
+            with pytest.raises(LLMInferenceError):
+                client.generate("test", use_cache=False)
 
     def test_default_model_identifier(self, client):
         """Test _get_model_identifier returns repo/file."""

@@ -274,3 +274,90 @@ Create new branch for this development.
   Analysis and Extraction prompts. Configuration should also take care of switching between
   Huggingface transformers or llama  llm loading based on model selection.
 ===============================================================
+
+
+Planning instructions for Claude (Python refactoring)
+You are a principal Python engineer responsible for maintaining a production-grade codebase.
+Your task is to refactor, simplify, and de-duplicate Python code while preserving identical runtime behaviour.
+Follow the steps below strictly and in order.
+________________________________________
+1. Understand the Python Code First
+Before changing anything:
+Read the full file/module(s).
+Identify:
+Main responsibilities of each function, class, and module
+Mutable state, side effects, and I/O boundaries
+Error-handling patterns (exceptions, return codes, logging)
+Note:
+Use of globals, closures, decorators, or monkey patching
+Implicit Python behaviors (truthiness, mutability, default args)
+Do not refactor yet.
+________________________________________
+2. Identify Python-Specific Issues
+Analyze and list refactoring opportunities, including:
+Duplicate functions, blocks, or near-identical loops
+Overly long functions violating single-responsibility
+Repeated dictionary/list/set manipulation logic
+Manual patterns that can be simplified using:
+List/dict/set comprehensions
+enumerate, zip, any, all, sum
+defaultdict, dataclass, or namedtuple (only if appropriate)
+Redundant conditionals or defensive checks
+Dead code, unreachable branches, or unused imports
+Do not introduce changes yet.
+________________________________________
+3. Define a Safe Refactoring Plan
+Before writing code:
+Propose a concise plan explaining:
+What duplication will be removed and how
+What helpers or private functions will be extracted
+What stays unchanged to preserve behavior
+Explicitly state:
+Whether function signatures remain the same
+Whether exception behavior remains identical
+Avoid:
+Premature abstraction
+Framework or dependency changes
+Style-only churn with no clarity gain
+________________________________________
+4. Apply Pythonic Refactoring
+Refactor the code according to the plan:
+Preserve:
+Inputs, outputs, return types, and exceptions
+Prefer:
+Clear function names over inline logic
+Explicit code over clever one-liners
+Use Python idioms only when they improve clarity
+Keep refactoring scoped and incremental
+Do not add new features or optimizations.
+________________________________________
+5. Validate Behavior Preservation
+After refactoring:
+Verify:
+Control flow and side effects are unchanged
+Edge cases and error paths still behave the same
+Performance characteristics are not unintentionally altered
+If a behavioral change is unavoidable:
+Clearly flag it
+Explain why it is safer or more correct
+________________________________________
+6. Output Format
+Respond in this exact structure:
+Refactoring Summary – what was improved and why
+Refactored Python Code – full, runnable code
+Key Changes Explained – bullets mapping old → new logic
+Focus only on refactoring, not redesign.
+
+
+======================================================
+
+You are a Principal Streamlit engineer rsponsible for maintaining a production-grade codebase.
+Your task is to redesign the Streamlit dashboard.
+Follow the steps below strictly and in order.
+________________________________________
+1. Understand the streamlit_app.py Code First
+2. Bring the Data Explorer on top just after the header.
+3. Color code the download button to contrast of dark mode background
+======================================================
+
+

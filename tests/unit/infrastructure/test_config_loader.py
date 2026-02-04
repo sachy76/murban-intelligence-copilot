@@ -23,7 +23,6 @@ class TestConfigLoader:
                 "defaults": {
                     "n_ctx": 4096,
                     "n_gpu_layers": -1,
-                    "cache_enabled": True,
                     "verbose": False,
                 },
                 "analysis": {
@@ -271,16 +270,14 @@ class TestConfigLoaderAppConfig:
             loader.load_app_config()
 
     def test_load_app_config_empty_file(self, tmp_path):
-        """Test load_app_config with empty YAML file."""
-        from murban_copilot.domain.config import AppConfig
-
+        """Test load_app_config with empty YAML file raises error for missing required fields."""
         config_path = tmp_path / "empty.yaml"
         config_path.write_text("")
 
         loader = ConfigLoader(config_path=str(config_path))
-        config = loader.load_app_config()
-
-        assert isinstance(config, AppConfig)
+        # Empty config is missing required market_data tickers
+        with pytest.raises(ValueError, match="wti_ticker must be provided"):
+            loader.load_app_config()
 
     def test_load_app_config_file_read_error(self, tmp_path, monkeypatch):
         """Test load_app_config raises on file read error."""
@@ -288,21 +285,16 @@ class TestConfigLoaderAppConfig:
         config_path.write_text("llm: {}")
 
         loader = ConfigLoader(config_path=str(config_path))
-        # Force resolved path
-        loader._resolved_path = None
 
-        # Mock open to raise an error after path resolution
+        # Mock open to raise IOError when reading the config file
         original_open = open
 
-        call_count = [0]
-
         def mock_open(path, *args, **kwargs):
-            call_count[0] += 1
-            if call_count[0] > 1 and "config.yaml" in str(path):
+            if str(config_path) in str(path):
                 raise IOError("Read error")
             return original_open(path, *args, **kwargs)
 
         monkeypatch.setattr("builtins.open", mock_open)
 
-        with pytest.raises(ConfigurationError):
+        with pytest.raises(ConfigurationError, match="Failed to read config file"):
             loader.load_app_config()
